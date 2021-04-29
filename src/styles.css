@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global Styling */
+
+.pulsate {
+  animation: pulsate 5s ease-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes pulsate {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.center {
+  text-align: center;
+}
