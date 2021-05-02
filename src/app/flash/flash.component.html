@@ -8,13 +8,13 @@
     <div class="card">
       <div class="card-body">
         <p class="card-title">Vietnamese Word</p>
-        <h1 class="card-text">Word</h1>
+        <h1 class="card-text">{{ card.v_word }}</h1>
       </div>
     </div>
     <div class="card">
       <div class="card-body">
-        <p class="card-title">English Word</p>
-        <h1 class="card-text">Word</h1>
+        <p class="card-title">Translation</p>
+        <h1 class="card-text">{{ card.e_word }}</h1>
       </div>
     </div>
   </div>
@@ -43,11 +43,20 @@
   </div>
   <br />
   <div class="row center">
-    <div class="col-6">
-      <button type="button" class="btn btn-info">Previous</button>
+    <div class="col-4">
+      <button type="button" class="btn btn-info" (click)="previousCard()">
+        Previous
+      </button>
     </div>
-    <div class="col-6">
-      <button type="button" class="btn btn-info">Next</button>
+    <div class="col-4">
+      <button type="button" class="btn btn-info" (click)="randomCard()">
+        Random
+      </button>
+    </div>
+    <div class="col-4">
+      <button type="button" class="btn btn-info" (click)="nextCard()">
+        Next
+      </button>
     </div>
   </div>
 </div>
