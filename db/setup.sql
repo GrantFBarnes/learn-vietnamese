@@ -16,7 +16,7 @@ VALUES ("anh", "older brother; you (male peer)");
 INSERT INTO cards (word, translation)
 VALUES ("áo khoác", "jacket");
 INSERT INTO cards (word, translation)
-VALUES ("ăn", "cat");
+VALUES ("ăn", "eat");
 INSERT INTO cards (word, translation)
 VALUES ("bạn", "friend");
 INSERT INTO cards (word, translation)

@@ -4,59 +4,79 @@
 </div>
 
 <div class="container">
-  <div class="card-deck center">
-    <div class="card">
-      <div class="card-body">
-        <p class="card-title">Vietnamese Word</p>
-        <h1 class="card-text">{{ card.word }}</h1>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-body">
-        <p class="card-title">Translation</p>
-        <h1 class="card-text">{{ card.translation }}</h1>
-      </div>
-    </div>
-  </div>
-  <br />
-  <div class="card-deck">
-    <div class="card">
-      <div class="card-body">
-        <p class="card-title center">Examples</p>
-        <ul>
-          <li>Example Sentence 1</li>
-          <li>Example Sentence 2</li>
-          <li>Example Sentence 3</li>
-        </ul>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-body">
-        <p class="card-title center">Examples</p>
-        <ul>
-          <li>Example Sentence 1</li>
-          <li>Example Sentence 2</li>
-          <li>Example Sentence 3</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <br />
   <div class="row center">
     <div class="col-4">
       <button type="button" class="btn btn-info" (click)="previousCard()">
+        <i class="bi bi-skip-backward"></i>
         Previous
       </button>
     </div>
     <div class="col-4">
       <button type="button" class="btn btn-info" (click)="randomCard()">
         Random
+        <i class="bi bi-shuffle"></i>
       </button>
     </div>
     <div class="col-4">
       <button type="button" class="btn btn-info" (click)="nextCard()">
         Next
+        <i class="bi bi-skip-forward"></i>
       </button>
     </div>
   </div>
+  <br />
+  <div class="card-deck center">
+    <div class="card" (click)="showSection('word')">
+      <div class="card-body">
+        <p class="card-title">Vietnamese Word</p>
+        <h1 class="card-text" *ngIf="flipped.word; else clickToFlip">
+          {{ card.word }}
+        </h1>
+      </div>
+    </div>
+    <div class="card" (click)="showSection('translation')">
+      <div class="card-body">
+        <p class="card-title">Translation</p>
+        <h1 class="card-text" *ngIf="flipped.translation; else clickToFlip">
+          {{ card.translation }}
+        </h1>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="card-deck center">
+    <div class="card" (click)="showSection('word_examples')">
+      <div class="card-body">
+        <p class="card-title">Examples</p>
+        <ul class="card-text" *ngIf="flipped.word_examples; else clickToFlip">
+          <li>Example Sentence 1</li>
+          <li>Example Sentence 2</li>
+          <li>Example Sentence 3</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" (click)="showSection('translation_examples')">
+      <div class="card-body">
+        <p class="card-title">Examples</p>
+        <ul
+          class="card-text"
+          *ngIf="flipped.translation_examples; else clickToFlip"
+        >
+          <li>Example Sentence 1</li>
+          <li>Example Sentence 2</li>
+          <li>Example Sentence 3</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <p>Card ID: {{ card.id }}</p>
+  </div>
 </div>
+
+<ng-template #clickToFlip>
+  <h1 class="card-text clickable">
+    Flip&nbsp;<i class="bi bi-arrow-clockwise"></i>
+  </h1>
+</ng-template>
