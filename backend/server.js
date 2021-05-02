@@ -5,17 +5,22 @@ const http = require("http");
 const parser = require("body-parser");
 const session = require("express-session");
 
+const appName = "learn-vietnamese";
+const staticBuildFile = "./dist/" + appName;
+
 const app = express();
 app.use(cors({ credentials: true, origin: true }));
-app.use(express.static("./dist/learn-vietnamese"));
+app.use(express.static(staticBuildFile));
 
 app.use(parser.json({ limit: "50mb" }));
 app.use(cookieParser());
 
+app.use(require("./api"));
+
 app.use(
   session({
-    name: "learn-vietnamese",
-    secret: "learn-vietnamese-secret",
+    name: appName,
+    secret: appName + "-secret",
     resave: false,
     saveUninitialized: false,
   })
@@ -38,15 +43,19 @@ app.use(function (req, res, next) {
 
 ////////////////////////////////////////////////////////////////////////////////
 app.get("*", function (request, response) {
-  response.sendFile("index.html", { root: "./dist/learn-vietnamese" });
+  response.sendFile("index.html", { root: staticBuildFile });
 });
 
 ////////////////////////////////////////////////////////////////////////////////
 
 function main() {
   const server = http.createServer(app);
-  server.listen(8080);
-  console.log("Running local environment on http://localhost:8080");
+  if (process.env.GFB_HOSTING_ENV === "prod") {
+    server.listen(80);
+  } else {
+    server.listen(8080);
+    console.log("Running local environment on http://localhost:8080");
+  }
 }
 
 main();
