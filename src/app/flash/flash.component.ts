@@ -3,8 +3,8 @@ import { HttpService } from '../http/http.service';
 
 interface Card {
   id: number;
-  v_word: string;
-  e_word: string;
+  word: string;
+  translation: string;
 }
 
 @Component({
@@ -15,13 +15,13 @@ interface Card {
 })
 export class FlashComponent implements OnInit {
   idx: number = 0;
-  card: Card = { id: 0, v_word: '', e_word: '' };
+  card: Card = { id: 0, word: '', translation: '' };
   cards: Card[] = [];
 
   constructor(private httpService: HttpService) {}
 
   ngOnInit(): void {
-    this.httpService.get('/api/table/flash_cards').subscribe((data: any) => {
+    this.httpService.get('/api/table/cards').subscribe((data: any) => {
       this.cards = data;
       if (this.cards.length) this.card = this.cards[0];
     });

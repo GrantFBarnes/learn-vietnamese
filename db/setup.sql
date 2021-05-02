@@ -3,13 +3,23 @@
 DROP DATABASE IF EXISTS learn_vietnamese;
 CREATE DATABASE learn_vietnamese;
 USE learn_vietnamese;
-CREATE TABLE flash_cards (
+CREATE TABLE cards (
     id INT NOT NULL AUTO_INCREMENT,
-    v_word VARCHAR(50) NOT NULL,
-    e_word VARCHAR(50) NOT NULL,
+    word VARCHAR(20) NOT NULL,
+    translation VARCHAR(100) NOT NULL,
     PRIMARY KEY (id)
 );
-INSERT INTO flash_cards (v_word, e_word)
+INSERT INTO cards (word, translation)
 VALUES ("ai", "who");
-INSERT INTO flash_cards (v_word, e_word)
+INSERT INTO cards (word, translation)
 VALUES ("anh", "older brother; you (male peer)");
+INSERT INTO cards (word, translation)
+VALUES ("áo khoác", "jacket");
+INSERT INTO cards (word, translation)
+VALUES ("ăn", "cat");
+INSERT INTO cards (word, translation)
+VALUES ("bạn", "friend");
+INSERT INTO cards (word, translation)
+VALUES ("bao nhiêu", "how much, how many");
+INSERT INTO cards (word, translation)
+VALUES ("bằng", "by (a certain means of transport)");
