@@ -26,46 +26,73 @@
   </div>
   <br />
   <div class="card-deck center">
-    <div class="card" (click)="showSection('word')">
+    <div class="card">
       <div class="card-body">
         <p class="card-title">Vietnamese Word</p>
-        <h1 class="card-text" *ngIf="flipped.word; else clickToFlip">
+        <h1 class="card-text" *ngIf="flipped.word; else flipWord">
           {{ card.word }}
         </h1>
+        <ng-template #flipWord>
+          <app-flip
+            section="word"
+            (showSectionEvent)="showSection($event)"
+          ></app-flip>
+        </ng-template>
       </div>
     </div>
-    <div class="card" (click)="showSection('translation')">
+    <div class="card">
       <div class="card-body">
         <p class="card-title">Translation</p>
-        <h1 class="card-text" *ngIf="flipped.translation; else clickToFlip">
+        <h1 class="card-text" *ngIf="flipped.translation; else flipTranslation">
           {{ card.translation }}
         </h1>
+        <ng-template #flipTranslation>
+          <app-flip
+            section="translation"
+            (showSectionEvent)="showSection($event)"
+          ></app-flip>
+        </ng-template>
       </div>
     </div>
   </div>
   <br />
   <div class="card-deck center">
-    <div class="card" (click)="showSection('word_examples')">
-      <div class="card-body">
-        <p class="card-title">Examples</p>
-        <ul class="card-text" *ngIf="flipped.word_examples; else clickToFlip">
-          <li>Example Sentence 1</li>
-          <li>Example Sentence 2</li>
-          <li>Example Sentence 3</li>
-        </ul>
-      </div>
-    </div>
-    <div class="card" (click)="showSection('translation_examples')">
+    <div class="card">
       <div class="card-body">
         <p class="card-title">Examples</p>
         <ul
           class="card-text"
-          *ngIf="flipped.translation_examples; else clickToFlip"
+          *ngIf="flipped.word_examples; else flipWordExamples"
         >
           <li>Example Sentence 1</li>
           <li>Example Sentence 2</li>
           <li>Example Sentence 3</li>
         </ul>
+        <ng-template #flipWordExamples>
+          <app-flip
+            section="word_examples"
+            (showSectionEvent)="showSection($event)"
+          ></app-flip>
+        </ng-template>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <p class="card-title">Examples</p>
+        <ul
+          class="card-text"
+          *ngIf="flipped.translation_examples; else flipTranslationExamples"
+        >
+          <li>Example Sentence 1</li>
+          <li>Example Sentence 2</li>
+          <li>Example Sentence 3</li>
+        </ul>
+        <ng-template #flipTranslationExamples>
+          <app-flip
+            section="translation_examples"
+            (showSectionEvent)="showSection($event)"
+          ></app-flip>
+        </ng-template>
       </div>
     </div>
   </div>
@@ -74,9 +101,3 @@
     <p>Card ID: {{ card.id }}</p>
   </div>
 </div>
-
-<ng-template #clickToFlip>
-  <h1 class="card-text clickable">
-    Flip&nbsp;<i class="bi bi-arrow-clockwise"></i>
-  </h1>
-</ng-template>
