@@ -98,6 +98,21 @@
   </div>
   <br />
   <div class="row">
-    <p>Card ID: {{ card.id }}</p>
+    <div class="col-6">
+      <p>Card ID: {{ card.id }}</p>
+    </div>
+    <div class="col-6 right">
+      <div class="custom-control custom-switch">
+        <input
+          type="checkbox"
+          class="custom-control-input"
+          id="reverseToggle"
+          (click)="reverseCards()"
+        />
+        <label class="custom-control-label" for="reverseToggle"
+          >Reverse Flipped Cards</label
+        >
+      </div>
+    </div>
   </div>
 </div>

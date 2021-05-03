@@ -85,4 +85,14 @@ export class FlashComponent implements OnInit {
         break;
     }
   }
+
+  reverseCards(): void {
+    this.defaultFlipped = {
+      word: !this.defaultFlipped.word,
+      translation: !this.defaultFlipped.translation,
+      word_examples: !this.defaultFlipped.word_examples,
+      translation_examples: !this.defaultFlipped.translation_examples,
+    };
+    this.flipped = JSON.parse(JSON.stringify(this.defaultFlipped));
+  }
 }
