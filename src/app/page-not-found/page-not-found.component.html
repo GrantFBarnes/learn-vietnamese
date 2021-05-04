@@ -1,7 +1,12 @@
-<div class="jumbotron text-center">
-  <h1>404 Page Not Found</h1>
-  <p>
-    The page you are attempting to visit does not exist. Please use the
-    navigation menu to find a valid page.
-  </p>
-</div>
+<app-jumbotron
+  [title]="{
+    english: '404 Page Not Found',
+    vietnamese: '404 Không tìm thấy trang'
+  }"
+  [subTitle]="{
+    english:
+      'The page you are attempting to visit does not exist. Please use the navigation menu to find a valid page.',
+    vietnamese:
+      'Trang bạn đang cố gắng truy cập không tồn tại. Vui lòng sử dụng menu điều hướng để tìm một trang hợp lệ.'
+  }"
+></app-jumbotron>

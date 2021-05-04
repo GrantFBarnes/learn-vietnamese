@@ -1,13 +1,13 @@
-<div class="jumbotron text-center">
-  <div id="englishText" class="pulsate" hidden>
-    <h1>Welcome</h1>
-    <p>A Place to Learn and Practice Vietnamese</p>
-  </div>
-  <div id="vietnameseText" class="pulsate">
-    <h1>Chào mừng</h1>
-    <p>Một nơi để học và thực hành tiếng Việt</p>
-  </div>
-</div>
+<app-jumbotron
+  [title]="{
+    english: 'Welcome',
+    vietnamese: 'Chào mừng'
+  }"
+  [subTitle]="{
+    english: 'A Place to Learn and Practice Vietnamese',
+    vietnamese: 'Nơi học và thực hành tiếng Việt'
+  }"
+></app-jumbotron>
 
 <div class="container">
   <div class="card-deck">

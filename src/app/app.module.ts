@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { JumbotronComponent } from './shared/jumbotron/jumbotron.component';
 import { FlashComponent } from './flash/flash.component';
 import { FlipComponent } from './flash/flip/flip.component';
 import { HomeComponent } from './home/home.component';
@@ -14,19 +15,16 @@ import { QuizComponent } from './quiz/quiz.component';
 @NgModule({
   declarations: [
     AppComponent,
+    JumbotronComponent,
     FlashComponent,
     FlipComponent,
     HomeComponent,
     TypingComponent,
     PageNotFoundComponent,
-    QuizComponent
+    QuizComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, HttpClientModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
