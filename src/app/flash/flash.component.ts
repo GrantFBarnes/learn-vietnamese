@@ -7,11 +7,18 @@ interface Card {
   translation: string;
 }
 
+interface Example {
+  id: number;
+  card: string;
+  example: string;
+  translation: string;
+}
+
 interface SectionsFlipped {
   word: boolean;
-  translation: boolean;
-  word_examples: boolean;
-  translation_examples: boolean;
+  word_translation: boolean;
+  examples: boolean;
+  examples_translation: boolean;
 }
 
 @Component({
@@ -21,64 +28,71 @@ interface SectionsFlipped {
   styleUrls: ['./flash.component.css'],
 })
 export class FlashComponent implements OnInit {
+  ids: number[] = [];
   idx: number = 0;
   card: Card = { id: 0, word: '', translation: '' };
-  cards: Card[] = [];
+  examples: Example[] = [];
   defaultFlipped: SectionsFlipped = {
     word: true,
-    translation: false,
-    word_examples: true,
-    translation_examples: false,
+    word_translation: false,
+    examples: true,
+    examples_translation: false,
   };
   flipped: SectionsFlipped = JSON.parse(JSON.stringify(this.defaultFlipped));
 
   constructor(private httpService: HttpService) {}
 
   ngOnInit(): void {
-    this.httpService.get('/api/table/cards').subscribe((data: any) => {
-      this.cards = data;
-      if (this.cards.length) this.card = this.cards[0];
+    this.httpService.get('/api/cards').subscribe((data: any) => {
+      this.ids = data;
+      this.onChange();
     });
   }
 
-  previousCard(): void {
-    if (!this.cards.length) return;
+  onChange(): void {
+    const id = this.ids[this.idx];
+    this.httpService
+      .get('/api/card/' + id)
+      .subscribe((data: any) => (this.card = data));
+    this.httpService
+      .get('/api/card-examples/' + id)
+      .subscribe((data: any) => (this.examples = data));
+    this.flipped = JSON.parse(JSON.stringify(this.defaultFlipped));
+  }
 
+  previousCard(): void {
+    if (!this.ids.length) return;
     if (this.idx == 0) {
-      this.idx = this.cards.length - 1;
+      this.idx = this.ids.length - 1;
     } else {
       this.idx = this.idx - 1;
     }
-    this.card = this.cards[this.idx];
-    this.flipped = JSON.parse(JSON.stringify(this.defaultFlipped));
+    this.onChange();
   }
 
   randomCard(): void {
-    if (!this.cards.length) return;
-    this.idx = Math.floor(Math.random() * this.cards.length);
-    this.card = this.cards[this.idx];
-    this.flipped = JSON.parse(JSON.stringify(this.defaultFlipped));
+    if (!this.ids.length) return;
+    this.idx = Math.floor(Math.random() * this.ids.length);
+    this.onChange();
   }
 
   nextCard(): void {
-    if (!this.cards.length) return;
-
+    if (!this.ids.length) return;
     const next = this.idx + 1;
-    if (next == this.cards.length) {
+    if (next == this.ids.length) {
       this.idx = 0;
     } else {
       this.idx = next;
     }
-    this.card = this.cards[this.idx];
-    this.flipped = JSON.parse(JSON.stringify(this.defaultFlipped));
+    this.onChange();
   }
 
   showSection(section: string): void {
     switch (section) {
       case 'word':
-      case 'translation':
-      case 'word_examples':
-      case 'translation_examples':
+      case 'word_translation':
+      case 'examples':
+      case 'examples_translation':
         this.flipped[section] = true;
         break;
       default:
@@ -89,9 +103,9 @@ export class FlashComponent implements OnInit {
   reverseCards(): void {
     this.defaultFlipped = {
       word: !this.defaultFlipped.word,
-      translation: !this.defaultFlipped.translation,
-      word_examples: !this.defaultFlipped.word_examples,
-      translation_examples: !this.defaultFlipped.translation_examples,
+      word_translation: !this.defaultFlipped.word_translation,
+      examples: !this.defaultFlipped.examples,
+      examples_translation: !this.defaultFlipped.examples_translation,
     };
     this.flipped = JSON.parse(JSON.stringify(this.defaultFlipped));
   }

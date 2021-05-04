@@ -43,12 +43,15 @@
     <div class="card">
       <div class="card-body">
         <p class="card-title">Translation</p>
-        <h1 class="card-text" *ngIf="flipped.translation; else flipTranslation">
+        <h1
+          class="card-text"
+          *ngIf="flipped.word_translation; else flipTranslation"
+        >
           {{ card.translation }}
         </h1>
         <ng-template #flipTranslation>
           <app-flip
-            section="translation"
+            section="word_translation"
             (showSectionEvent)="showSection($event)"
           ></app-flip>
         </ng-template>
@@ -56,21 +59,16 @@
     </div>
   </div>
   <br />
-  <div class="card-deck center">
+  <div class="card-deck center" *ngIf="examples.length > 0">
     <div class="card">
       <div class="card-body">
         <p class="card-title">Examples</p>
-        <ul
-          class="card-text"
-          *ngIf="flipped.word_examples; else flipWordExamples"
-        >
-          <li>Example Sentence 1</li>
-          <li>Example Sentence 2</li>
-          <li>Example Sentence 3</li>
+        <ul class="card-text" *ngIf="flipped.examples; else flipWordExamples">
+          <li *ngFor="let example of examples">{{ example.example }}</li>
         </ul>
         <ng-template #flipWordExamples>
           <app-flip
-            section="word_examples"
+            section="examples"
             (showSectionEvent)="showSection($event)"
           ></app-flip>
         </ng-template>
@@ -81,15 +79,13 @@
         <p class="card-title">Examples</p>
         <ul
           class="card-text"
-          *ngIf="flipped.translation_examples; else flipTranslationExamples"
+          *ngIf="flipped.examples_translation; else flipTranslationExamples"
         >
-          <li>Example Sentence 1</li>
-          <li>Example Sentence 2</li>
-          <li>Example Sentence 3</li>
+          <li *ngFor="let example of examples">{{ example.translation }}</li>
         </ul>
         <ng-template #flipTranslationExamples>
           <app-flip
-            section="translation_examples"
+            section="examples_translation"
             (showSectionEvent)="showSection($event)"
           ></app-flip>
         </ng-template>

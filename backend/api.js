@@ -65,9 +65,19 @@ router.post("/api/token", (request, response) => {
   }
 });
 
-// Get all rows from a table
-router.get("/api/table/:table", (request, response) => {
-  returnPromiseResponse(response, main.getTable(request.params.table));
+// Get all flash card ids
+router.get("/api/cards", (request, response) => {
+  returnPromiseResponse(response, main.getCards());
+});
+
+// Get single flash card by id
+router.get("/api/card/:id", (request, response) => {
+  returnPromiseResponse(response, main.getCard(request.params.id));
+});
+
+// Get all card examples by card id
+router.get("/api/card-examples/:id", (request, response) => {
+  returnPromiseResponse(response, main.getCardExamples(request.params.id));
 });
 
 ////////////////////////////////////////////////////////////////////////////////

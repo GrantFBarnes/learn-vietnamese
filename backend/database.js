@@ -7,14 +7,24 @@ const connection = mysql.createConnection({
   database: "learn_vietnamese",
 });
 
-function getTable(table) {
+function runQuery(columns, table, field, value) {
   return new Promise((resolve, reject) => {
+    if (!columns) {
+      reject("columns not provided");
+      return;
+    }
+
     if (!table) {
       reject("table not provided");
       return;
     }
 
-    connection.query("SELECT * FROM " + table, (err, res) => {
+    let query = "SELECT " + columns + " FROM " + table;
+    if (field && value) {
+      query += " WHERE " + field + " = " + value;
+    }
+
+    connection.query(query, (err, res) => {
       if (err) {
         reject(err);
         return;
@@ -24,4 +34,4 @@ function getTable(table) {
   });
 }
 
-module.exports.getTable = getTable;
+module.exports.runQuery = runQuery;
