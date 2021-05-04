@@ -1,0 +1,10 @@
+<div class="card-body">
+  <p class="card-title">Vietnamese Word</p>
+  <h1 class="card-text" *ngIf="flipped; else flip">
+    {{ card.word }}
+  </h1>
+</div>
+
+<ng-template #flip>
+  <app-flash-flip (showSectionEvent)="showSection()"></app-flash-flip>
+</ng-template>

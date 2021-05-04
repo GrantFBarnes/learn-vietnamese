@@ -1,24 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http/http.service';
-
-interface Card {
-  id: number;
-  word: string;
-  translation: string;
-}
-
-interface Example {
-  id: number;
-  card: string;
-  example: string;
-  translation: string;
-}
+import { Card } from './card';
+import { Example } from './example';
 
 interface SectionsFlipped {
   word: boolean;
-  word_translation: boolean;
+  translation: boolean;
   examples: boolean;
-  examples_translation: boolean;
+  translations: boolean;
 }
 
 @Component({
@@ -34,9 +23,9 @@ export class FlashComponent implements OnInit {
   examples: Example[] = [];
   defaultFlipped: SectionsFlipped = {
     word: true,
-    word_translation: false,
+    translation: false,
     examples: true,
-    examples_translation: false,
+    translations: false,
   };
   flipped: SectionsFlipped = JSON.parse(JSON.stringify(this.defaultFlipped));
 
@@ -90,9 +79,9 @@ export class FlashComponent implements OnInit {
   showSection(section: string): void {
     switch (section) {
       case 'word':
-      case 'word_translation':
+      case 'translation':
       case 'examples':
-      case 'examples_translation':
+      case 'translations':
         this.flipped[section] = true;
         break;
       default:
@@ -103,9 +92,9 @@ export class FlashComponent implements OnInit {
   reverseCards(): void {
     this.defaultFlipped = {
       word: !this.defaultFlipped.word,
-      word_translation: !this.defaultFlipped.word_translation,
+      translation: !this.defaultFlipped.translation,
       examples: !this.defaultFlipped.examples,
-      examples_translation: !this.defaultFlipped.examples_translation,
+      translations: !this.defaultFlipped.translations,
     };
     this.flipped = JSON.parse(JSON.stringify(this.defaultFlipped));
   }
