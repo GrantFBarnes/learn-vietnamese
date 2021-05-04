@@ -8,6 +8,7 @@ import { JumbotronComponent } from './shared/jumbotron/jumbotron.component';
 
 import { HomeComponent } from './home/home.component';
 
+import { EditFlashComponent } from './edit-flash/edit-flash.component';
 import { FlashComponent } from './flash/flash.component';
 import { WordComponent } from './flash/word/word.component';
 import { TranslationComponent } from './flash/translation/translation.component';
@@ -24,6 +25,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     AppComponent,
     JumbotronComponent,
     HomeComponent,
+    EditFlashComponent,
     FlashComponent,
     WordComponent,
     TranslationComponent,
