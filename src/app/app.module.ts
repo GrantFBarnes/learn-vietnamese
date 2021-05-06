@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { JumbotronComponent } from './shared/jumbotron/jumbotron.component';
+import { TitleComponent } from './shared/title/title.component';
 
 import { HomeComponent } from './home/home.component';
 
@@ -23,7 +23,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 @NgModule({
   declarations: [
     AppComponent,
-    JumbotronComponent,
+    TitleComponent,
     HomeComponent,
     EditFlashComponent,
     FlashComponent,

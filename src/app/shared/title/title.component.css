@@ -1,3 +1,10 @@
+.mainTitle {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
+  background-color: #afafaf;
+}
+
 .pulsate {
   animation: pulsate 5s ease-out;
   animation-iteration-count: infinite;

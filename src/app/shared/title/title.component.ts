@@ -15,11 +15,11 @@ function toggleLanguageText() {
 }
 
 @Component({
-  selector: 'app-jumbotron',
-  templateUrl: './jumbotron.component.html',
-  styleUrls: ['./jumbotron.component.css'],
+  selector: 'app-title',
+  templateUrl: './title.component.html',
+  styleUrls: ['./title.component.css'],
 })
-export class JumbotronComponent implements OnInit, OnDestroy {
+export class TitleComponent implements OnInit, OnDestroy {
   @Input() title: Title = { english: '', vietnamese: '' };
   @Input() subTitle: Title = { english: '', vietnamese: '' };
 
