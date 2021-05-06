@@ -67,23 +67,23 @@
   <br />
   <div class="row">
     <div class="col-4">
-      <p>Card ID: {{ card.id }}</p>
+      <div class="form-check form-switch">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          id="reverseToggle"
+          (click)="reverseCards()"
+        />
+        <label class="form-check-label" for="reverseToggle"
+          >Reverse Flipped Cards</label
+        >
+      </div>
     </div>
     <div class="col-4 center">
       <p><a routerLink="/edit/flash">(Edit Flash Cards)</a></p>
     </div>
     <div class="col-4 right">
-      <div class="custom-control custom-switch">
-        <input
-          type="checkbox"
-          class="custom-control-input"
-          id="reverseToggle"
-          (click)="reverseCards()"
-        />
-        <label class="custom-control-label" for="reverseToggle"
-          >Reverse Flipped Cards</label
-        >
-      </div>
+      <p>Card ID: {{ card.id }}</p>
     </div>
   </div>
 </div>
