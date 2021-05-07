@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../http/http.service';
+import { HttpService } from '../shared/http/http.service';
 import { Card } from './card';
 import { Example } from './example';
 
@@ -32,7 +32,7 @@ export class FlashComponent implements OnInit {
   constructor(private httpService: HttpService) {}
 
   ngOnInit(): void {
-    this.httpService.get('/api/cards').subscribe((data: any) => {
+    this.httpService.getJSON('/api/cards').subscribe((data: any) => {
       this.ids = data;
       this.onChange();
     });
@@ -41,10 +41,10 @@ export class FlashComponent implements OnInit {
   onChange(): void {
     const id = this.ids[this.idx];
     this.httpService
-      .get('/api/card/' + id)
+      .getJSON('/api/card/' + id)
       .subscribe((data: any) => (this.card = data));
     this.httpService
-      .get('/api/card-examples/' + id)
+      .getJSON('/api/card-examples/' + id)
       .subscribe((data: any) => (this.examples = data));
     this.flipped = JSON.parse(JSON.stringify(this.defaultFlipped));
   }

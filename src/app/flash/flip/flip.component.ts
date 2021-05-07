@@ -6,7 +6,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./flip.component.css'],
 })
 export class FlipComponent {
-  @Output() showSectionEvent = new EventEmitter<string>();
+  @Output() showSectionEvent = new EventEmitter();
 
   showSection(): void {
     this.showSectionEvent.emit();

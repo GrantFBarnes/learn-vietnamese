@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +20,7 @@ import { FlipComponent } from './flash/flip/flip.component';
 import { TypingComponent } from './typing/typing.component';
 import { QuizComponent } from './quiz/quiz.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
@@ -35,8 +37,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     TypingComponent,
     QuizComponent,
     PageNotFoundComponent,
+    UnauthorizedComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule],
+  imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],
 })

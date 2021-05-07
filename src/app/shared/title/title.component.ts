@@ -26,7 +26,15 @@ export class TitleComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit(): void {
-    toggleLanguageText();
+    if (this.title.vietnamese) {
+      toggleLanguageText();
+    } else {
+      const englishText = document.getElementById('englishText');
+      if (englishText) {
+        englishText.hidden = false;
+        englishText.className = '';
+      }
+    }
   }
 
   ngOnDestroy(): void {

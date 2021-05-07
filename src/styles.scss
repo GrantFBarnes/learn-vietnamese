@@ -1,6 +1,9 @@
 /* Global Styling */
 
-@import "bootstrap";
+$body-color: white;
+$body-bg: #343a40;
+$card-height: 100%;
+
 @import "node_modules/bootstrap/scss/bootstrap.scss";
 
 .left {

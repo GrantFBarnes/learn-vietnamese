@@ -11,7 +11,7 @@ function returnSuccess(response) {
 
 function rejectUnauthorized(response) {
   authentication.removeTokenCookie(response);
-  response.status(404).send("not authorized");
+  response.status(401).send("unauthorized");
   response.end();
 }
 
