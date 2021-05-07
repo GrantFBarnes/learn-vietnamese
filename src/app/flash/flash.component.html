@@ -12,56 +12,64 @@
 <div class="container">
   <div class="row center">
     <div class="col-4">
-      <button type="button" class="btn btn-info" (click)="previousCard()">
+      <button type="button" class="btn btn-primary" (click)="previousCard()">
         <i class="bi bi-skip-backward"></i>
         Previous
       </button>
     </div>
     <div class="col-4">
-      <button type="button" class="btn btn-info" (click)="randomCard()">
+      <button type="button" class="btn btn-primary" (click)="randomCard()">
         Random
         <i class="bi bi-shuffle"></i>
       </button>
     </div>
     <div class="col-4">
-      <button type="button" class="btn btn-info" (click)="nextCard()">
+      <button type="button" class="btn btn-primary" (click)="nextCard()">
         Next
         <i class="bi bi-skip-forward"></i>
       </button>
     </div>
   </div>
   <br />
-  <div class="card-group">
-    <div class="card">
-      <app-flash-word
-        [flipped]="flipped.word"
-        [card]="card"
-        (showSectionEvent)="showSection($event)"
-      ></app-flash-word>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card bg-dark">
+        <app-flash-word
+          [flipped]="flipped.word"
+          [card]="card"
+          (showSectionEvent)="showSection($event)"
+        ></app-flash-word>
+      </div>
     </div>
-    <div class="card">
-      <app-flash-translation
-        [flipped]="flipped.translation"
-        [card]="card"
-        (showSectionEvent)="showSection($event)"
-      ></app-flash-translation>
+    <div class="col-md-6">
+      <div class="card bg-dark">
+        <app-flash-translation
+          [flipped]="flipped.translation"
+          [card]="card"
+          (showSectionEvent)="showSection($event)"
+        ></app-flash-translation>
+      </div>
     </div>
   </div>
   <br />
-  <div class="card-group" *ngIf="examples.length > 0">
-    <div class="card">
-      <app-flash-examples
-        [flipped]="flipped.examples"
-        [examples]="examples"
-        (showSectionEvent)="showSection($event)"
-      ></app-flash-examples>
+  <div class="row" *ngIf="examples.length > 0">
+    <div class="col-md-6">
+      <div class="card bg-dark">
+        <app-flash-examples
+          [flipped]="flipped.examples"
+          [examples]="examples"
+          (showSectionEvent)="showSection($event)"
+        ></app-flash-examples>
+      </div>
     </div>
-    <div class="card">
-      <app-flash-translations
-        [flipped]="flipped.translations"
-        [examples]="examples"
-        (showSectionEvent)="showSection($event)"
-      ></app-flash-translations>
+    <div class="col-md-6">
+      <div class="card bg-dark">
+        <app-flash-translations
+          [flipped]="flipped.translations"
+          [examples]="examples"
+          (showSectionEvent)="showSection($event)"
+        ></app-flash-translations>
+      </div>
     </div>
   </div>
   <br />
