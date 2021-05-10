@@ -2,7 +2,7 @@ const database = require("./database.js");
 
 ////////////////////////////////////////////////////////////////////////////////
 
-function getCards() {
+function getCardIds() {
   return new Promise((resolve) => {
     database
       .runQuery("id", "cards", null, null)
@@ -16,7 +16,7 @@ function getCards() {
         return;
       })
       .catch(() => {
-        resolve({ statusCode: 400, data: "failed to get cards" });
+        resolve({ statusCode: 400, data: "failed to get card ids" });
         return;
       });
   });
@@ -70,8 +70,34 @@ function getCardExamples(id) {
   });
 }
 
+function getDataDump(table) {
+  return new Promise((resolve) => {
+    if (!table) {
+      resolve({ statusCode: 500, data: "table not provided" });
+      return;
+    }
+
+    if (table !== "cards" && table !== "card_examples") {
+      resolve({ statusCode: 500, data: "table not valid" });
+      return;
+    }
+
+    database
+      .runQuery("*", table, null, null)
+      .then((result) => {
+        resolve({ statusCode: 200, data: result });
+        return;
+      })
+      .catch(() => {
+        resolve({ statusCode: 400, data: "failed to data" });
+        return;
+      });
+  });
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
-module.exports.getCards = getCards;
+module.exports.getCardIds = getCardIds;
 module.exports.getCard = getCard;
 module.exports.getCardExamples = getCardExamples;
+module.exports.getDataDump = getDataDump;

@@ -5,27 +5,30 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TitleComponent } from './shared/title/title.component';
 
-import { HomeComponent } from './home/home.component';
+import { TitleComponent } from './shared/components/title/title.component';
+import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
+import { UnauthorizedComponent } from './shared/components/unauthorized/unauthorized.component';
 
-import { EditFlashComponent } from './edit-flash/edit-flash.component';
-import { FlashComponent } from './flash/flash.component';
-import { WordComponent } from './flash/word/word.component';
-import { TranslationComponent } from './flash/translation/translation.component';
-import { ExamplesComponent } from './flash/examples/examples.component';
-import { TranslationsComponent } from './flash/translations/translations.component';
-import { FlipComponent } from './flash/flip/flip.component';
+import { HomeComponent } from './pages/home/home.component';
 
-import { TypingComponent } from './typing/typing.component';
-import { QuizComponent } from './quiz/quiz.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { EditFlashComponent } from './pages/edit/edit-flash/edit-flash.component';
+import { FlashComponent } from './pages/flash/flash.component';
+import { WordComponent } from './pages/flash/word/word.component';
+import { TranslationComponent } from './pages/flash/translation/translation.component';
+import { ExamplesComponent } from './pages/flash/examples/examples.component';
+import { TranslationsComponent } from './pages/flash/translations/translations.component';
+import { FlipComponent } from './pages/flash/flip/flip.component';
+
+import { TypingComponent } from './pages/typing/typing.component';
+import { QuizComponent } from './pages/quiz/quiz.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TitleComponent,
+    PageNotFoundComponent,
+    UnauthorizedComponent,
     HomeComponent,
     EditFlashComponent,
     FlashComponent,
@@ -36,8 +39,6 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     FlipComponent,
     TypingComponent,
     QuizComponent,
-    PageNotFoundComponent,
-    UnauthorizedComponent,
   ],
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   providers: [],

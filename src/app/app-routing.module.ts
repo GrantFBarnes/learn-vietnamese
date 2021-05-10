@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { HomeComponent } from './home/home.component';
-import { EditFlashComponent } from './edit-flash/edit-flash.component';
-import { FlashComponent } from './flash/flash.component';
-import { TypingComponent } from './typing/typing.component';
-import { QuizComponent } from './quiz/quiz.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { HomeComponent } from './pages/home/home.component';
+import { EditFlashComponent } from './pages/edit/edit-flash/edit-flash.component';
+import { FlashComponent } from './pages/flash/flash.component';
+import { TypingComponent } from './pages/typing/typing.component';
+import { QuizComponent } from './pages/quiz/quiz.component';
+import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },

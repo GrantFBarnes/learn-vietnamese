@@ -67,7 +67,7 @@ router.post("/api/token", (request, response) => {
 
 // Get all flash card ids
 router.get("/api/cards", (request, response) => {
-  returnPromiseResponse(response, main.getCards());
+  returnPromiseResponse(response, main.getCardIds());
 });
 
 // Get single flash card by id
@@ -78,6 +78,15 @@ router.get("/api/card/:id", (request, response) => {
 // Get all card examples by card id
 router.get("/api/card-examples/:id", (request, response) => {
   returnPromiseResponse(response, main.getCardExamples(request.params.id));
+});
+
+// Get all data from table
+router.get("/api/dump/:table", (request, response) => {
+  if (!authentication.isAuthorized(request)) {
+    rejectUnauthorized(response);
+    return;
+  }
+  returnPromiseResponse(response, main.getDataDump(request.params.table));
 });
 
 ////////////////////////////////////////////////////////////////////////////////

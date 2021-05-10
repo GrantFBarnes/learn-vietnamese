@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../shared/http/http.service';
+import { HttpService } from '../../../shared/services/http/http.service';
+import { Card } from '../../flash/card';
+import { Example } from '../../flash/example';
 
 @Component({
   selector: 'app-edit-flash',
@@ -9,11 +11,19 @@ import { HttpService } from '../shared/http/http.service';
 })
 export class EditFlashComponent implements OnInit {
   authorized: boolean = false;
+  cards: Card[] = [];
+  examples: Example[] = [];
 
   constructor(private httpService: HttpService) {}
 
   authorize(): void {
     this.authorized = true;
+    this.httpService
+      .getJSON('/api/dump/cards')
+      .subscribe((data: any) => (this.cards = data));
+    this.httpService
+      .getJSON('/api/dump/card_examples')
+      .subscribe((data: any) => (this.examples = data));
   }
 
   ngOnInit(): void {

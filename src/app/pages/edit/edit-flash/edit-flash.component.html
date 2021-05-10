@@ -1,0 +1,50 @@
+<app-unauthorized
+  *ngIf="!authorized"
+  (authorizeEvent)="authorize()"
+></app-unauthorized>
+
+<div *ngIf="authorized" class="container">
+  <app-title
+    [title]="{ english: 'Edit Flash Cards', vietnamese: '' }"
+  ></app-title>
+  <div class="row">
+    <table class="table table-dark table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Word</th>
+          <th>Translation</th>
+          <th>Audio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let card of cards">
+          <th>{{ card.id }}</th>
+          <td>{{ card.word }}</td>
+          <td>{{ card.translation }}</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <table class="table table-dark table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Card</th>
+          <th>Example</th>
+          <th>Translation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let example of examples">
+          <th>{{ example.id }}</th>
+          <td>{{ example.card }}</td>
+          <td>{{ example.example }}</td>
+          <td>{{ example.translation }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
