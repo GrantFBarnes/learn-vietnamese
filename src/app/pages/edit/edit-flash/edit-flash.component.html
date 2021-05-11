@@ -15,14 +15,35 @@
           <th>Word</th>
           <th>Translation</th>
           <th>Audio</th>
+          <th>Edit</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let card of cards">
+        <tr *ngFor="let card of cards; index as idx">
           <th>{{ card.id }}</th>
           <td>{{ card.word }}</td>
           <td>{{ card.translation }}</td>
-          <td></td>
+          <td>
+            <button class="btn btn-ghost">
+              <i class="bi bi-volume-up-fill"></i>
+            </button>
+          </td>
+          <td>
+            <button
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#cardEditModal"
+              (click)="editCard(idx)"
+            >
+              <i class="bi bi-pencil-square"></i>
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-danger" (click)="deleteCard(card.id)">
+              <i class="bi bi-trash-fill"></i>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -48,3 +69,8 @@
     </table>
   </div>
 </div>
+
+<app-edit-card-modal
+  [card]="card"
+  (saveEvent)="saveCard($event)"
+></app-edit-card-modal>

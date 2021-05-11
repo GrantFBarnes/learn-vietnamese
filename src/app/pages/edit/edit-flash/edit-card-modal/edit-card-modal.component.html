@@ -1,0 +1,44 @@
+<div class="modal fade" id="cardEditModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down">
+    <div class="modal-content bg-dark">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Flash Card (ID: {{ card.id }})</h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-3">
+          <label for="inputWord" class="col-form-label">Word</label>
+          <input
+            type="text"
+            class="form-control bg-dark"
+            id="inputWord"
+            [(ngModel)]="this.card.word"
+          />
+        </div>
+        <div class="row mb-3">
+          <label for="inputTranslation" class="col-form-label"
+            >Translation</label
+          >
+          <input
+            type="text"
+            class="form-control bg-dark"
+            id="inputTranslation"
+            [(ngModel)]="this.card.translation"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="save()">
+          Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
