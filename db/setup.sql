@@ -9,6 +9,7 @@ CREATE TABLE cards (
     id INT NOT NULL AUTO_INCREMENT,
     word VARCHAR(20) NOT NULL,
     translation VARCHAR(50) NOT NULL,
+    audio BLOB,
     PRIMARY KEY (id)
 );
 

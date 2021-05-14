@@ -11,7 +11,7 @@ import { Example } from '../../flash/example';
 })
 export class EditFlashComponent implements OnInit {
   authorized: boolean = false;
-  card: Card = { id: 0, word: '', translation: '' };
+  card: Card = { id: 0, word: '', translation: '', audio: new Blob() };
   cards: Card[] = [];
   examples: Example[] = [];
 
@@ -34,11 +34,21 @@ export class EditFlashComponent implements OnInit {
     });
   }
 
+  playAudio(): void {
+    if (!this.card.audio) return;
+    if (!this.card.audio.size) return;
+    const blobURL = URL.createObjectURL(this.card.audio);
+    const sound = new Audio(blobURL);
+    sound.addEventListener('canplaythrough', () => {
+      sound.play();
+    });
+  }
+
   saveCard(data: Card): void {
     console.log('saving', data);
   }
 
-  editCard(idx: number): void {
+  selectCard(idx: number): void {
     this.card = JSON.parse(JSON.stringify(this.cards[idx]));
   }
 

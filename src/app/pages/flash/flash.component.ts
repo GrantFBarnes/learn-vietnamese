@@ -19,7 +19,7 @@ interface SectionsFlipped {
 export class FlashComponent implements OnInit {
   ids: number[] = [];
   idx: number = 0;
-  card: Card = { id: 0, word: '', translation: '' };
+  card: Card = { id: 0, word: '', translation: '', audio: new Blob() };
   examples: Example[] = [];
   defaultFlipped: SectionsFlipped = {
     word: true,

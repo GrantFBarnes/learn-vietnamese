@@ -10,7 +10,7 @@ declare var MediaRecorder: any;
   styleUrls: ['./edit-card-modal.component.css'],
 })
 export class EditCardModalComponent implements OnInit {
-  @Input() card: Card = { id: 0, word: '', translation: '' };
+  @Input() card: Card = { id: 0, word: '', translation: '', audio: new Blob() };
   @Output() saveEvent = new EventEmitter<Card>();
   recording: boolean = false;
   recorder: any;
@@ -63,6 +63,8 @@ export class EditCardModalComponent implements OnInit {
     if (this.audio.blob.size > 200000) {
       this.audio = null;
       alert('Audio recording is too large! Please try again.');
+    } else {
+      this.card.audio = this.audio.blob;
     }
   }
 
