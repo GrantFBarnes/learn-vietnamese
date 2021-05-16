@@ -14,7 +14,7 @@ export class EditFlashComponent implements OnInit {
   card: Card = { id: 0, word: '', translation: '' };
   cards: Card[] = [];
   audio_files: number[] = [];
-  examples: Example[] = [];
+  examples: { [card_id: number]: Example[] } = {};
 
   constructor(private httpService: HttpService) {}
 
@@ -31,9 +31,14 @@ export class EditFlashComponent implements OnInit {
   }
 
   getCardExamples(): void {
-    this.httpService
-      .get('/api/dump/card_examples')
-      .subscribe((data: any) => (this.examples = data));
+    this.httpService.get('/api/dump/card_examples').subscribe((data: any) => {
+      this.examples = {};
+      for (let i in data) {
+        const card_id = data[i].card;
+        if (!this.examples[card_id]) this.examples[card_id] = [];
+        this.examples[card_id].push(data[i]);
+      }
+    });
   }
 
   authorize(): void {
