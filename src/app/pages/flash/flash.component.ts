@@ -32,7 +32,7 @@ export class FlashComponent implements OnInit {
   constructor(private httpService: HttpService) {}
 
   ngOnInit(): void {
-    this.httpService.getJSON('/api/cards').subscribe((data: any) => {
+    this.httpService.get('/api/cards').subscribe((data: any) => {
       this.ids = data;
       this.onChange();
     });
@@ -41,10 +41,10 @@ export class FlashComponent implements OnInit {
   onChange(): void {
     const id = this.ids[this.idx];
     this.httpService
-      .getJSON('/api/card/' + id)
+      .get('/api/card/' + id)
       .subscribe((data: any) => (this.card = data));
     this.httpService
-      .getJSON('/api/card-examples/' + id)
+      .get('/api/card-examples/' + id)
       .subscribe((data: any) => (this.examples = data));
     this.flipped = JSON.parse(JSON.stringify(this.defaultFlipped));
   }

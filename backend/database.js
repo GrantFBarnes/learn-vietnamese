@@ -7,7 +7,19 @@ const connection = mysql.createConnection({
   database: "learn_vietnamese",
 });
 
-function runQuery(columns, table, field, value) {
+function run(command) {
+  return new Promise((resolve, reject) => {
+    connection.query(command, (err, res) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(res);
+    });
+  });
+}
+
+function select(columns, table, field, value) {
   return new Promise((resolve, reject) => {
     if (!columns) {
       reject("columns not provided");
@@ -19,19 +31,55 @@ function runQuery(columns, table, field, value) {
       return;
     }
 
-    let query = "SELECT " + columns + " FROM " + table;
+    let command = "SELECT " + columns + " FROM " + table;
     if (field && value) {
-      query += " WHERE " + field + " = " + value;
+      command += " WHERE " + field + " = " + value;
     }
 
-    connection.query(query, (err, res) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve(res);
-    });
+    run(command)
+      .then((res) => resolve(res))
+      .catch((err) => reject(err));
   });
 }
 
-module.exports.runQuery = runQuery;
+function update(table, data) {
+  return new Promise((resolve, reject) => {
+    if (!table) {
+      reject("table not provided");
+      return;
+    }
+
+    if (!data) {
+      reject("data not provided");
+      return;
+    }
+
+    if (!data.id) {
+      reject("data not valid");
+      return;
+    }
+
+    let command = "UPDATE " + table + " SET ";
+    let otherField = false;
+    for (let f in data) {
+      if (f === "id") continue;
+      command += f + ' = "' + data[f] + '", ';
+      otherField = true;
+    }
+
+    if (!otherField) {
+      reject("no updates provided");
+      return;
+    }
+
+    command = command.slice(0, -2);
+    command += " WHERE id = " + data.id;
+
+    run(command)
+      .then((res) => resolve(res))
+      .catch((err) => reject(err));
+  });
+}
+
+module.exports.select = select;
+module.exports.update = update;

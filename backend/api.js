@@ -1,17 +1,22 @@
 const express = require("express");
-const router = express.Router();
+const fs = require("fs");
 
 const authentication = require("./authentication.js");
 const main = require("./main.js");
 
+const audioDir = __dirname + "/../db/audio_files/";
+const router = express.Router();
+
 function returnSuccess(response) {
-  response.status(200).send("success");
+  response.writeHead(200, { "Content-Type": "application/json" });
+  response.write(JSON.stringify({ status: "ok" }));
   response.end();
 }
 
 function rejectUnauthorized(response) {
   authentication.removeTokenCookie(response);
-  response.status(401).send("unauthorized");
+  response.writeHead(401, { "Content-Type": "application/json" });
+  response.write(JSON.stringify({ status: "unauthorized" }));
   response.end();
 }
 
@@ -87,6 +92,25 @@ router.get("/api/dump/:table", (request, response) => {
     return;
   }
   returnPromiseResponse(response, main.getDataDump(request.params.table));
+});
+
+// Update flash card with new values
+router.put("/api/card", (request, response) => {
+  if (!authentication.isAuthorized(request)) {
+    rejectUnauthorized(response);
+    return;
+  }
+  returnPromiseResponse(response, main.updateCard(request.body));
+});
+
+// Save audio recording blob as a file
+router.post("/api/audio/:id", (request, response) => {
+  if (!authentication.isAuthorized(request)) {
+    rejectUnauthorized(response);
+    return;
+  }
+  request.pipe(fs.createWriteStream(audioDir + request.params.id + ".mp3"));
+  returnSuccess(response);
 });
 
 ////////////////////////////////////////////////////////////////////////////////

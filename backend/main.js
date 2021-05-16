@@ -5,7 +5,7 @@ const database = require("./database.js");
 function getCardIds() {
   return new Promise((resolve) => {
     database
-      .runQuery("id", "cards", null, null)
+      .select("id", "cards", null, null)
       .then((result) => {
         let ids = [];
         for (let i in result) {
@@ -31,7 +31,7 @@ function getCard(id) {
 
     const fail = { statusCode: 400, data: "failed to get card: " + id };
     database
-      .runQuery("*", "cards", "id", id)
+      .select("*", "cards", "id", id)
       .then((result) => {
         if (result.length !== 1) {
           resolve(fail);
@@ -55,7 +55,7 @@ function getCardExamples(id) {
     }
 
     database
-      .runQuery("*", "card_examples", "card", id)
+      .select("*", "card_examples", "card", id)
       .then((result) => {
         resolve({ statusCode: 200, data: result });
         return;
@@ -83,13 +83,38 @@ function getDataDump(table) {
     }
 
     database
-      .runQuery("*", table, null, null)
+      .select("*", table, null, null)
       .then((result) => {
         resolve({ statusCode: 200, data: result });
         return;
       })
       .catch(() => {
-        resolve({ statusCode: 400, data: "failed to data" });
+        resolve({ statusCode: 400, data: "failed to get data" });
+        return;
+      });
+  });
+}
+
+function updateCard(data) {
+  return new Promise((resolve) => {
+    if (!data) {
+      resolve({ statusCode: 500, data: "data not provided" });
+      return;
+    }
+
+    if (!data.id) {
+      resolve({ statusCode: 500, data: "data not valid" });
+      return;
+    }
+
+    database
+      .update("cards", data)
+      .then((result) => {
+        resolve({ statusCode: 200, data: result });
+        return;
+      })
+      .catch(() => {
+        resolve({ statusCode: 400, data: "failed to update card" });
         return;
       });
   });
@@ -101,3 +126,4 @@ module.exports.getCardIds = getCardIds;
 module.exports.getCard = getCard;
 module.exports.getCardExamples = getCardExamples;
 module.exports.getDataDump = getDataDump;
+module.exports.updateCard = updateCard;

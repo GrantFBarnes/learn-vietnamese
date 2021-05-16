@@ -11,28 +11,20 @@ export class HttpService {
     }
   }
 
-  getText(url: string) {
-    return this.http.get(this.server_host + url, {
-      withCredentials: true,
-      responseType: 'text',
-    });
-  }
-
-  getJSON(url: string) {
+  get(url: string) {
     return this.http.get(this.server_host + url, {
       withCredentials: true,
     });
   }
 
-  postText(url: string, body: {}) {
+  post(url: string, body: {}) {
     return this.http.post(this.server_host + url, body, {
       withCredentials: true,
-      responseType: 'text',
     });
   }
 
-  postJSON(url: string, body: {}) {
-    return this.http.post(this.server_host + url, body, {
+  put(url: string, body: {}) {
+    return this.http.put(this.server_host + url, body, {
       withCredentials: true,
     });
   }

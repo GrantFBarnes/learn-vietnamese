@@ -20,6 +20,18 @@ export class EditCardModalComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  ngOnChanges() {
+    // update audio to new card audio
+    if (this.card.audio && this.card.audio.size) {
+      const blob = this.card.audio;
+      const url = URL.createObjectURL(blob);
+      const play = () => new Audio(url).play();
+      this.audio = { blob, url, play };
+    } else {
+      this.audio = null;
+    }
+  }
+
   newRecorder() {
     return new Promise((resolve) => {
       navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
