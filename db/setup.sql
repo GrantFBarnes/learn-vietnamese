@@ -7,8 +7,8 @@ USE learn_vietnamese;
 
 CREATE TABLE cards (
     id INT NOT NULL AUTO_INCREMENT,
-    word VARCHAR(20) NOT NULL,
-    translation VARCHAR(50) NOT NULL,
+    word VARCHAR(20) DEFAULT "",
+    translation VARCHAR(50) DEFAULT "",
     PRIMARY KEY (id)
 );
 
@@ -31,10 +31,10 @@ VALUES ("bằng", "by (a certain means of transport)");
 CREATE TABLE card_examples (
     id INT NOT NULL AUTO_INCREMENT,
     card INT NOT NULL,
-    example VARCHAR(60) NOT NULL,
-    translation VARCHAR(120) NOT NULL,
+    example VARCHAR(60) DEFAULT "",
+    translation VARCHAR(120) DEFAULT "",
     PRIMARY KEY (id),
-    FOREIGN KEY (card) REFERENCES cards(id)
+    FOREIGN KEY (card) REFERENCES cards(id) ON DELETE CASCADE
 );
 
 INSERT INTO card_examples (card, example, translation)

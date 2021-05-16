@@ -84,10 +84,18 @@ export class EditFlashComponent implements OnInit {
   }
 
   deleteCard(id: number): void {
-    console.log('deleting', id);
+    if (window.confirm('Are you sure you want to delete card ' + id + '?')) {
+      this.httpService.delete('/api/card/' + id).subscribe({
+        next: () => this.authorize(),
+        error: () => alert('Failed to delete card!'),
+      });
+    }
   }
 
   addCard(): void {
-    console.log('add new card');
+    this.httpService.post('/api/card/', {}).subscribe({
+      next: () => this.getCards(),
+      error: () => alert('Failed to add card!'),
+    });
   }
 }

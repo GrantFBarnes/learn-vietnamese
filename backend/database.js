@@ -81,5 +81,38 @@ function update(table, data) {
   });
 }
 
+function create(table) {
+  return new Promise((resolve, reject) => {
+    if (!table) {
+      reject("table not provided");
+      return;
+    }
+
+    run("INSERT INTO " + table + " () VALUES ()")
+      .then((res) => resolve(res))
+      .catch((err) => reject(err));
+  });
+}
+
+function deleteById(table, id) {
+  return new Promise((resolve, reject) => {
+    if (!table) {
+      reject("table not provided");
+      return;
+    }
+
+    if (!id) {
+      reject("id not provided");
+      return;
+    }
+
+    run("DELETE FROM " + table + " WHERE id = " + id)
+      .then((res) => resolve(res))
+      .catch((err) => reject(err));
+  });
+}
+
 module.exports.select = select;
 module.exports.update = update;
+module.exports.create = create;
+module.exports.deleteById = deleteById;

@@ -36,4 +36,10 @@ export class HttpService {
       withCredentials: true,
     });
   }
+
+  delete(url: string) {
+    return this.http.delete(this.server_host + url, {
+      withCredentials: true,
+    });
+  }
 }

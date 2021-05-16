@@ -1,6 +1,39 @@
 const database = require("./database.js");
+const fs = require("fs");
+const path = require("path");
+
+const audioDir = __dirname + "/../db/audio_files/";
 
 ////////////////////////////////////////////////////////////////////////////////
+// Generic
+
+function getDataDump(table) {
+  return new Promise((resolve) => {
+    if (!table) {
+      resolve({ statusCode: 500, data: "table not provided" });
+      return;
+    }
+
+    if (table !== "cards" && table !== "card_examples") {
+      resolve({ statusCode: 500, data: "table not valid" });
+      return;
+    }
+
+    database
+      .select("*", table, null, null)
+      .then((result) => {
+        resolve({ statusCode: 200, data: result });
+        return;
+      })
+      .catch(() => {
+        resolve({ statusCode: 400, data: "failed to get data" });
+        return;
+      });
+  });
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Cards
 
 function getCardIds() {
   return new Promise((resolve) => {
@@ -47,54 +80,6 @@ function getCard(id) {
   });
 }
 
-function getCardExamples(id) {
-  return new Promise((resolve) => {
-    if (!id) {
-      resolve({ statusCode: 500, data: "id not provided" });
-      return;
-    }
-
-    database
-      .select("*", "card_examples", "card", id)
-      .then((result) => {
-        resolve({ statusCode: 200, data: result });
-        return;
-      })
-      .catch(() => {
-        resolve({
-          statusCode: 400,
-          data: "failed to get examples for card: " + id,
-        });
-        return;
-      });
-  });
-}
-
-function getDataDump(table) {
-  return new Promise((resolve) => {
-    if (!table) {
-      resolve({ statusCode: 500, data: "table not provided" });
-      return;
-    }
-
-    if (table !== "cards" && table !== "card_examples") {
-      resolve({ statusCode: 500, data: "table not valid" });
-      return;
-    }
-
-    database
-      .select("*", table, null, null)
-      .then((result) => {
-        resolve({ statusCode: 200, data: result });
-        return;
-      })
-      .catch(() => {
-        resolve({ statusCode: 400, data: "failed to get data" });
-        return;
-      });
-  });
-}
-
 function updateCard(data) {
   return new Promise((resolve) => {
     if (!data) {
@@ -120,10 +105,81 @@ function updateCard(data) {
   });
 }
 
+function createCard() {
+  return new Promise((resolve) => {
+    database
+      .create("cards")
+      .then((result) => {
+        resolve({ statusCode: 200, data: result });
+        return;
+      })
+      .catch(() => {
+        resolve({ statusCode: 400, data: "failed to create card" });
+        return;
+      });
+  });
+}
+
+function deleteCard(id) {
+  return new Promise((resolve) => {
+    if (!id) {
+      resolve({ statusCode: 500, data: "id not provided" });
+      return;
+    }
+
+    // Delete any audio file associated with the card
+    const file = path.join(audioDir + id + ".mp3");
+    if (fs.existsSync(file)) {
+      fs.unlinkSync(file);
+    }
+
+    database
+      .deleteById("cards", id)
+      .then((result) => {
+        resolve({ statusCode: 200, data: result });
+        return;
+      })
+      .catch(() => {
+        resolve({ statusCode: 400, data: "failed to delete card" });
+        return;
+      });
+  });
+}
+
 ////////////////////////////////////////////////////////////////////////////////
+// Card Examples
+
+function getCardExamples(id) {
+  return new Promise((resolve) => {
+    if (!id) {
+      resolve({ statusCode: 500, data: "id not provided" });
+      return;
+    }
+
+    database
+      .select("*", "card_examples", "card", id)
+      .then((result) => {
+        resolve({ statusCode: 200, data: result });
+        return;
+      })
+      .catch(() => {
+        resolve({
+          statusCode: 400,
+          data: "failed to get examples for card: " + id,
+        });
+        return;
+      });
+  });
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+module.exports.getDataDump = getDataDump;
 
 module.exports.getCardIds = getCardIds;
 module.exports.getCard = getCard;
-module.exports.getCardExamples = getCardExamples;
-module.exports.getDataDump = getDataDump;
 module.exports.updateCard = updateCard;
+module.exports.createCard = createCard;
+module.exports.deleteCard = deleteCard;
+
+module.exports.getCardExamples = getCardExamples;

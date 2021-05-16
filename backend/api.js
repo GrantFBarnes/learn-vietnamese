@@ -47,10 +47,25 @@ function returnPromiseResponse(response, promise) {
 ////////////////////////////////////////////////////////////////////////////////
 // APIs defined here
 
+////////////////////////////////////////////////////////////////////////////////
+// Generic
+
 // Heartbeat to make sure server is running
 router.get("/api/heartbeat", (request, response) => {
   returnSuccess(response);
 });
+
+// Get all data from table
+router.get("/api/dump/:table", (request, response) => {
+  if (!authentication.isAuthorized(request)) {
+    rejectUnauthorized(response);
+    return;
+  }
+  returnPromiseResponse(response, main.getDataDump(request.params.table));
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// Authorization
 
 // Check if user is authenticated
 router.get("/api/authenticated", (request, response) => {
@@ -71,10 +86,48 @@ router.post("/api/token", (request, response) => {
   }
 });
 
+////////////////////////////////////////////////////////////////////////////////
+// Flash Cards
+
 // Get all flash card ids
 router.get("/api/cards", (request, response) => {
   returnPromiseResponse(response, main.getCardIds());
 });
+
+// Get flash card by id
+router.get("/api/card/:id", (request, response) => {
+  returnPromiseResponse(response, main.getCard(request.params.id));
+});
+
+// Update flash card with new values
+router.put("/api/card", (request, response) => {
+  if (!authentication.isAuthorized(request)) {
+    rejectUnauthorized(response);
+    return;
+  }
+  returnPromiseResponse(response, main.updateCard(request.body));
+});
+
+// Create new flash card
+router.post("/api/card", (request, response) => {
+  if (!authentication.isAuthorized(request)) {
+    rejectUnauthorized(response);
+    return;
+  }
+  returnPromiseResponse(response, main.createCard());
+});
+
+// Delete flash card by id
+router.delete("/api/card/:id", (request, response) => {
+  if (!authentication.isAuthorized(request)) {
+    rejectUnauthorized(response);
+    return;
+  }
+  returnPromiseResponse(response, main.deleteCard(request.params.id));
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// Audio Files
 
 // Get all audio file ids
 router.get("/api/audio-files", (request, response) => {
@@ -87,11 +140,6 @@ router.get("/api/audio-files", (request, response) => {
     ids.push(id);
   }
   returnResponse(response, { statusCode: 200, data: ids });
-});
-
-// Get single flash card by id
-router.get("/api/card/:id", (request, response) => {
-  returnPromiseResponse(response, main.getCard(request.params.id));
 });
 
 // Get audio recording by card id
@@ -107,29 +155,6 @@ router.get("/api/audio/:id", (request, response) => {
   }
 });
 
-// Get all card examples by card id
-router.get("/api/card-examples/:id", (request, response) => {
-  returnPromiseResponse(response, main.getCardExamples(request.params.id));
-});
-
-// Get all data from table
-router.get("/api/dump/:table", (request, response) => {
-  if (!authentication.isAuthorized(request)) {
-    rejectUnauthorized(response);
-    return;
-  }
-  returnPromiseResponse(response, main.getDataDump(request.params.table));
-});
-
-// Update flash card with new values
-router.put("/api/card", (request, response) => {
-  if (!authentication.isAuthorized(request)) {
-    rejectUnauthorized(response);
-    return;
-  }
-  returnPromiseResponse(response, main.updateCard(request.body));
-});
-
 // Save audio recording blob as a file
 router.post("/api/audio/:id", (request, response) => {
   if (!authentication.isAuthorized(request)) {
@@ -138,6 +163,14 @@ router.post("/api/audio/:id", (request, response) => {
   }
   request.pipe(fs.createWriteStream(audioDir + request.params.id + ".mp3"));
   returnSuccess(response);
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// Flash Card Examples
+
+// Get all card examples by card id
+router.get("/api/card-examples/:id", (request, response) => {
+  returnPromiseResponse(response, main.getCardExamples(request.params.id));
 });
 
 ////////////////////////////////////////////////////////////////////////////////
