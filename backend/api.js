@@ -76,6 +76,19 @@ router.get("/api/cards", (request, response) => {
   returnPromiseResponse(response, main.getCardIds());
 });
 
+// Get all audio file ids
+router.get("/api/audio-files", (request, response) => {
+  const files = fs.readdirSync(audioDir);
+  let ids = [];
+  for (let f in files) {
+    const name = files[f].replace(".mp3", "");
+    const id = parseInt(name);
+    if (isNaN(id)) continue;
+    ids.push(id);
+  }
+  returnResponse(response, { statusCode: 200, data: ids });
+});
+
 // Get single flash card by id
 router.get("/api/card/:id", (request, response) => {
   returnPromiseResponse(response, main.getCard(request.params.id));

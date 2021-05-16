@@ -25,7 +25,11 @@
           <td>{{ card.word }}</td>
           <td>{{ card.translation }}</td>
           <td>
-            <button class="btn btn-ghost" (click)="playAudio(idx)">
+            <button
+              *ngIf="audio_files.includes(card.id)"
+              class="btn btn-success"
+              (click)="playAudio(idx)"
+            >
               <i class="bi bi-volume-up-fill"></i>
             </button>
           </td>

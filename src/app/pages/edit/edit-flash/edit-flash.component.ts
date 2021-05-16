@@ -13,6 +13,7 @@ export class EditFlashComponent implements OnInit {
   authorized: boolean = false;
   card: Card = { id: 0, word: '', translation: '', audio: new Blob() };
   cards: Card[] = [];
+  audio_files: number[] = [];
   examples: Example[] = [];
 
   constructor(private httpService: HttpService) {}
@@ -22,6 +23,9 @@ export class EditFlashComponent implements OnInit {
     this.httpService
       .get('/api/dump/cards')
       .subscribe((data: any) => (this.cards = data));
+    this.httpService
+      .get('/api/audio-files')
+      .subscribe((data: any) => (this.audio_files = data));
     this.httpService
       .get('/api/dump/card_examples')
       .subscribe((data: any) => (this.examples = data));
