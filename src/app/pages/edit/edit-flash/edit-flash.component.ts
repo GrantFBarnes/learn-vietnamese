@@ -15,6 +15,8 @@ export class EditFlashComponent implements OnInit {
   cards: Card[] = [];
   audio_files: number[] = [];
   examples: { [card_id: number]: Example[] } = {};
+  examples_show: { [card_id: number]: boolean } = {};
+  examples_show_all: boolean = false;
 
   constructor(private httpService: HttpService) {}
 
@@ -35,7 +37,10 @@ export class EditFlashComponent implements OnInit {
       this.examples = {};
       for (let i in data) {
         const card_id = data[i].card;
-        if (!this.examples[card_id]) this.examples[card_id] = [];
+        if (!this.examples[card_id]) {
+          this.examples[card_id] = [];
+          this.examples_show[card_id] = false;
+        }
         this.examples[card_id].push(data[i]);
       }
     });
@@ -53,6 +58,17 @@ export class EditFlashComponent implements OnInit {
       next: () => this.authorize(),
       error: () => (this.authorized = false),
     });
+  }
+
+  toggleExampleShowAll() {
+    this.examples_show_all = !this.examples_show_all;
+    for (let id in this.examples_show) {
+      this.examples_show[id] = this.examples_show_all;
+    }
+  }
+
+  toggleExampleShow(id: number) {
+    this.examples_show[id] = !this.examples_show[id];
   }
 
   playAudio(idx: number): void {

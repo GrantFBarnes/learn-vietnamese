@@ -11,7 +11,12 @@
     <table class="table table-dark table-hover">
       <thead>
         <tr>
-          <th></th>
+          <th>
+            <div class="clickable" (click)="toggleExampleShowAll()">
+              <i *ngIf="!examples_show_all" class="bi bi-chevron-down"></i>
+              <i *ngIf="examples_show_all" class="bi bi-chevron-up"></i>
+            </div>
+          </th>
           <th>ID</th>
           <th>Word</th>
           <th>Translation</th>
@@ -24,12 +29,17 @@
         <ng-container *ngFor="let card of cards; index as idx">
           <tr>
             <th class="center align-middle">
-              <i
+              <div
                 *ngIf="examples[card.id]"
-                class="bi bi-chevron-down clickable"
-                data-bs-toggle="collapse"
-                [attr.data-bs-target]="'#examplesFor' + card.id"
-              ></i>
+                class="clickable"
+                (click)="toggleExampleShow(card.id)"
+              >
+                <i
+                  *ngIf="!examples_show[card.id]"
+                  class="bi bi-chevron-down"
+                ></i>
+                <i *ngIf="examples_show[card.id]" class="bi bi-chevron-up"></i>
+              </div>
             </th>
             <th>{{ card.id }}</th>
             <td>{{ card.word }}</td>
@@ -59,11 +69,7 @@
               </button>
             </td>
           </tr>
-          <tr
-            *ngIf="examples[card.id]"
-            class="collapse"
-            [attr.id]="'examplesFor' + card.id"
-          >
+          <tr *ngIf="examples_show[card.id]">
             <td></td>
             <td colspan="6">
               <table class="table table-dark">
