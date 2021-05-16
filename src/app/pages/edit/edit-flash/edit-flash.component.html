@@ -27,7 +27,7 @@
           <td>
             <button
               *ngIf="audio_files.includes(card.id)"
-              class="btn btn-success"
+              class="btn btn-info"
               (click)="playAudio(idx)"
             >
               <i class="bi bi-volume-up-fill"></i>
@@ -36,7 +36,7 @@
           <td>
             <button
               (click)="editCard(idx)"
-              class="btn btn-primary"
+              class="btn btn-warning"
               data-bs-toggle="modal"
               data-bs-target="#cardEditModal"
             >
@@ -76,5 +76,6 @@
 
 <app-edit-card-modal
   [card]="card"
-  (saveEvent)="saveCard($event)"
+  (saveCardEvent)="saveCard($event)"
+  (saveAudioEvent)="saveAudio($event)"
 ></app-edit-card-modal>

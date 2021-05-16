@@ -11,8 +11,9 @@ declare var MediaRecorder: any;
   styleUrls: ['./edit-card-modal.component.css'],
 })
 export class EditCardModalComponent implements OnInit {
-  @Input() card: Card = { id: 0, word: '', translation: '', audio: new Blob() };
-  @Output() saveEvent = new EventEmitter<Card>();
+  @Input() card: Card = { id: 0, word: '', translation: '' };
+  @Output() saveCardEvent = new EventEmitter<Card>();
+  @Output() saveAudioEvent = new EventEmitter<Blob>();
   recording: boolean = false;
   recorder: any;
   audio: any;
@@ -29,7 +30,6 @@ export class EditCardModalComponent implements OnInit {
     this.audio = null;
     this.httpService.getAudio('/api/audio/' + this.card.id).subscribe({
       next: (blob: Blob) => {
-        this.card.audio = blob;
         this.audio = this.newAudio(blob);
         this.cleanAudioURL();
       },
@@ -88,12 +88,13 @@ export class EditCardModalComponent implements OnInit {
     if (this.audio.blob.size > 200000) {
       this.audio = null;
       alert('Audio recording is too large! Please try again.');
-    } else {
-      this.card.audio = this.audio.blob;
     }
   }
 
   save(): void {
-    this.saveEvent.emit(this.card);
+    this.saveCardEvent.emit(this.card);
+    if (this.audio && this.audio.blob && this.audio.blob.size) {
+      this.saveAudioEvent.emit(this.audio.blob);
+    }
   }
 }

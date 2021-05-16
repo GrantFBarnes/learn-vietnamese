@@ -8,7 +8,7 @@ import { Card } from '../card';
 })
 export class TranslationComponent implements OnInit {
   @Input() flipped: boolean = true;
-  @Input() card: Card = { id: 0, word: '', translation: '', audio: new Blob() };
+  @Input() card: Card = { id: 0, word: '', translation: '' };
   @Output() showSectionEvent = new EventEmitter<string>();
 
   constructor() {}

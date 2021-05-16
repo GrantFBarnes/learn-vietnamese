@@ -11,24 +11,36 @@ import { Example } from '../../flash/example';
 })
 export class EditFlashComponent implements OnInit {
   authorized: boolean = false;
-  card: Card = { id: 0, word: '', translation: '', audio: new Blob() };
+  card: Card = { id: 0, word: '', translation: '' };
   cards: Card[] = [];
   audio_files: number[] = [];
   examples: Example[] = [];
 
   constructor(private httpService: HttpService) {}
 
-  authorize(): void {
-    this.authorized = true;
+  getCards(): void {
     this.httpService
       .get('/api/dump/cards')
       .subscribe((data: any) => (this.cards = data));
+  }
+
+  getAudioFiles(): void {
     this.httpService
       .get('/api/audio-files')
       .subscribe((data: any) => (this.audio_files = data));
+  }
+
+  getCardExamples(): void {
     this.httpService
       .get('/api/dump/card_examples')
       .subscribe((data: any) => (this.examples = data));
+  }
+
+  authorize(): void {
+    this.authorized = true;
+    this.getCards();
+    this.getAudioFiles();
+    this.getCardExamples();
   }
 
   ngOnInit(): void {
@@ -51,18 +63,19 @@ export class EditFlashComponent implements OnInit {
     });
   }
 
-  saveCard(data: Card): void {
-    this.httpService.put('/api/card', data).subscribe({
-      next: () => {
-        this.authorize();
-        if (data.audio.size) {
-          this.httpService.post('/api/audio/' + data.id, data.audio).subscribe({
-            next: () => this.authorize(),
-            error: () => alert('Failed to save audio!'),
-          });
-        }
-      },
+  saveCard(card: Card): void {
+    this.httpService.put('/api/card', card).subscribe({
+      next: () => this.getCards(),
       error: () => alert('Failed to save changes!'),
+    });
+  }
+
+  saveAudio(audio: Blob): void {
+    if (!audio) return;
+    if (!audio.size) return;
+    this.httpService.post('/api/audio/' + this.card.id, audio).subscribe({
+      next: () => this.getAudioFiles(),
+      error: () => alert('Failed to save audio!'),
     });
   }
 
