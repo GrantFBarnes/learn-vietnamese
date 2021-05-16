@@ -3,6 +3,11 @@
   <h1 class="card-text" *ngIf="flipped; else flip">
     {{ card.word }}
   </h1>
+  <div *ngIf="audio" class="card-footer center">
+    <button class="btn btn-success" (click)="playAudio()">
+      <i class="bi bi-volume-up-fill"></i>
+    </button>
+  </div>
 </div>
 
 <ng-template #flip>
