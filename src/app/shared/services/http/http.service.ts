@@ -11,6 +11,14 @@ export class HttpService {
     }
   }
 
+  getAudio(url: string) {
+    return this.http.get(this.server_host + url, {
+      withCredentials: true,
+      responseType: 'blob',
+      headers: { Accept: 'audio/mp3' },
+    });
+  }
+
   get(url: string) {
     return this.http.get(this.server_host + url, {
       withCredentials: true,

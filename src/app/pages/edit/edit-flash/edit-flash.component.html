@@ -20,21 +20,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let card of cards; index as idx" (click)="selectCard(idx)">
+        <tr *ngFor="let card of cards; index as idx">
           <th>{{ card.id }}</th>
           <td>{{ card.word }}</td>
           <td>{{ card.translation }}</td>
           <td>
-            <button
-              *ngIf="card.audio && card.audio.size"
-              class="btn btn-ghost"
-              (click)="playAudio()"
-            >
+            <button class="btn btn-ghost" (click)="playAudio(idx)">
               <i class="bi bi-volume-up-fill"></i>
             </button>
           </td>
           <td>
             <button
+              (click)="editCard(idx)"
               class="btn btn-primary"
               data-bs-toggle="modal"
               data-bs-target="#cardEditModal"

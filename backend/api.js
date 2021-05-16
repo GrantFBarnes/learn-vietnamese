@@ -1,5 +1,6 @@
 const express = require("express");
 const fs = require("fs");
+const path = require("path");
 
 const authentication = require("./authentication.js");
 const main = require("./main.js");
@@ -78,6 +79,19 @@ router.get("/api/cards", (request, response) => {
 // Get single flash card by id
 router.get("/api/card/:id", (request, response) => {
   returnPromiseResponse(response, main.getCard(request.params.id));
+});
+
+// Get audio recording by card id
+router.get("/api/audio/:id", (request, response) => {
+  const file = path.join(audioDir + request.params.id + ".mp3");
+  if (fs.existsSync(file)) {
+    response.sendFile(file);
+  } else {
+    returnResponse(response, {
+      statusCode: 404,
+      data: { status: "not found" },
+    });
+  }
 });
 
 // Get all card examples by card id

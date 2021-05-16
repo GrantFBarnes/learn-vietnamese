@@ -34,13 +34,16 @@ export class EditFlashComponent implements OnInit {
     });
   }
 
-  playAudio(): void {
-    if (!this.card.audio) return;
-    if (!this.card.audio.size) return;
-    const blobURL = URL.createObjectURL(this.card.audio);
-    const sound = new Audio(blobURL);
-    sound.addEventListener('canplaythrough', () => {
-      sound.play();
+  playAudio(idx: number): void {
+    const id = this.cards[idx].id;
+    this.httpService.getAudio('/api/audio/' + id).subscribe({
+      next: (blob: Blob) => {
+        const sound = new Audio(URL.createObjectURL(blob));
+        sound.addEventListener('canplaythrough', () => {
+          sound.play();
+        });
+      },
+      error: () => alert('No audio found for card ' + id),
     });
   }
 
@@ -59,7 +62,7 @@ export class EditFlashComponent implements OnInit {
     });
   }
 
-  selectCard(idx: number): void {
+  editCard(idx: number): void {
     this.card = JSON.parse(JSON.stringify(this.cards[idx]));
   }
 

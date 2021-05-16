@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { HttpService } from '../../../../shared/services/http/http.service';
 import { Card } from '../../../flash/card';
 
 declare var MediaRecorder: any;
@@ -16,20 +17,34 @@ export class EditCardModalComponent implements OnInit {
   recorder: any;
   audio: any;
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(
+    private httpService: HttpService,
+    private sanitizer: DomSanitizer
+  ) {}
 
   ngOnInit(): void {}
 
   ngOnChanges() {
-    // update audio to new card audio
-    if (this.card.audio && this.card.audio.size) {
-      const blob = this.card.audio;
-      const url = URL.createObjectURL(blob);
-      const play = () => new Audio(url).play();
-      this.audio = { blob, url, play };
-    } else {
-      this.audio = null;
-    }
+    // update card to have accurate audio
+    this.audio = null;
+    this.httpService.getAudio('/api/audio/' + this.card.id).subscribe({
+      next: (blob: Blob) => {
+        this.card.audio = blob;
+        this.audio = this.newAudio(blob);
+        this.cleanAudioURL();
+      },
+      error: () => {},
+    });
+  }
+
+  cleanAudioURL(): void {
+    this.audio.url = this.sanitizer.bypassSecurityTrustUrl(this.audio.url);
+  }
+
+  newAudio(blob: Blob): {} {
+    const url = URL.createObjectURL(blob);
+    const play = () => new Audio(url).play();
+    return { blob, url, play };
   }
 
   newRecorder() {
@@ -48,9 +63,7 @@ export class EditCardModalComponent implements OnInit {
           new Promise((res) => {
             mediaRecorder.addEventListener('stop', () => {
               const blob = new Blob(audioChunks);
-              const url = URL.createObjectURL(blob);
-              const play = () => new Audio(url).play();
-              res({ blob, url, play });
+              res(this.newAudio(blob));
             });
             mediaRecorder.stop();
           });
@@ -70,7 +83,7 @@ export class EditCardModalComponent implements OnInit {
   async stopRecording() {
     this.recording = false;
     this.audio = await this.recorder.stop();
-    this.audio.url = this.sanitizer.bypassSecurityTrustUrl(this.audio.url);
+    this.cleanAudioURL();
     this.recorder = null;
     if (this.audio.blob.size > 200000) {
       this.audio = null;
