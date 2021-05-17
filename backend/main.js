@@ -105,10 +105,15 @@ function updateCard(data) {
   });
 }
 
-function createCard() {
+function createCard(data) {
   return new Promise((resolve) => {
+    if (!data) {
+      resolve({ statusCode: 500, data: "data not provided" });
+      return;
+    }
+
     database
-      .create("cards", {})
+      .create("cards", data)
       .then((result) => {
         resolve({ statusCode: 200, data: result });
         return;

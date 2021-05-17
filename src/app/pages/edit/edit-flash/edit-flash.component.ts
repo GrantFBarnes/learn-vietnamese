@@ -102,7 +102,7 @@ export class EditFlashComponent implements OnInit {
     });
   }
 
-  editCard(idx: number): void {
+  selectCard(idx: number): void {
     this.card = JSON.parse(JSON.stringify(this.cards[idx]));
   }
 
@@ -115,8 +115,8 @@ export class EditFlashComponent implements OnInit {
     }
   }
 
-  addCard(): void {
-    this.httpService.post('/api/card/', {}).subscribe({
+  addCard(card: Card): void {
+    this.httpService.post('/api/card', card).subscribe({
       next: () => this.getCards(),
       error: () => alert('Failed to add card!'),
     });
@@ -129,8 +129,11 @@ export class EditFlashComponent implements OnInit {
     });
   }
 
-  editExample(card: number, idx: number): void {
-    this.example = JSON.parse(JSON.stringify(this.examples[card][idx]));
+  selectExample(card_idx: number, card_id: number, example_idx: number): void {
+    this.selectCard(card_idx);
+    this.example = JSON.parse(
+      JSON.stringify(this.examples[card_id][example_idx])
+    );
   }
 
   deleteExample(id: number): void {
@@ -142,8 +145,8 @@ export class EditFlashComponent implements OnInit {
     }
   }
 
-  addExample(card: number): void {
-    this.httpService.post('/api/example/', { card: card }).subscribe({
+  addExample(example: Example): void {
+    this.httpService.post('/api/example', example).subscribe({
       next: () => this.getExamples(),
       error: () => alert('Failed to add example!'),
     });

@@ -114,7 +114,7 @@ router.post("/api/card", (request, response) => {
     rejectUnauthorized(response);
     return;
   }
-  returnPromiseResponse(response, main.createCard());
+  returnPromiseResponse(response, main.createCard(request.body));
 });
 
 // Delete flash card by id

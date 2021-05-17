@@ -1,10 +1,8 @@
-<div class="modal fade" id="editExampleModal" tabindex="-1">
+<div class="modal fade" id="addCardModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down">
     <div class="modal-content bg-dark">
       <div class="modal-header">
-        <h5 class="modal-title">
-          Edit Example (ID: {{ example.id }}, Card: {{ example.card }})
-        </h5>
+        <h5 class="modal-title">Add Flash Card</h5>
         <button
           type="button"
           class="btn-close btn-close-white"
@@ -13,17 +11,12 @@
       </div>
       <div class="modal-body">
         <div class="row mb-3">
-          <h6 class="center">Vietnamese Word: {{ card.word }}</h6>
-        </div>
-        <div class="row mb-3">
-          <label for="inputExample" class="col-form-label"
-            >Vietnamese Example</label
-          >
+          <label for="inputWord" class="col-form-label">Vietnamese Word</label>
           <input
             type="text"
             class="form-control bg-dark"
-            id="inputExample"
-            [(ngModel)]="this.example.example"
+            id="inputWord"
+            [(ngModel)]="this.card.word"
           />
         </div>
         <div class="row mb-3">
@@ -34,7 +27,7 @@
             type="text"
             class="form-control bg-dark"
             id="inputTranslation"
-            [(ngModel)]="this.example.translation"
+            [(ngModel)]="this.card.translation"
           />
         </div>
       </div>
@@ -43,12 +36,13 @@
           Close
         </button>
         <button
+          *ngIf="this.card.word && this.card.translation"
           type="button"
-          class="btn btn-primary"
+          class="btn btn-success"
           data-bs-dismiss="modal"
-          (click)="save()"
+          (click)="addCard()"
         >
-          Save Changes
+          Add Card
         </button>
       </div>
     </div>

@@ -1,10 +1,8 @@
-<div class="modal fade" id="editExampleModal" tabindex="-1">
+<div class="modal fade" id="addExampleModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down">
     <div class="modal-content bg-dark">
       <div class="modal-header">
-        <h5 class="modal-title">
-          Edit Example (ID: {{ example.id }}, Card: {{ example.card }})
-        </h5>
+        <h5 class="modal-title">Add Example (Card {{ example.card }})</h5>
         <button
           type="button"
           class="btn-close btn-close-white"
@@ -43,12 +41,13 @@
           Close
         </button>
         <button
+          *ngIf="this.example.example && this.example.translation"
           type="button"
-          class="btn btn-primary"
+          class="btn btn-success"
           data-bs-dismiss="modal"
-          (click)="save()"
+          (click)="addExample()"
         >
-          Save Changes
+          Add Example
         </button>
       </div>
     </div>

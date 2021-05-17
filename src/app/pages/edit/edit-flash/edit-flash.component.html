@@ -5,13 +5,16 @@
 
 <div *ngIf="authorized" class="container">
   <app-title
-    [title]="{ english: 'Edit Flash Cards', vietnamese: '' }"
+    [title]="{
+      english: 'Edit Flash Cards',
+      vietnamese: 'Chỉnh sửa thẻ học từ'
+    }"
   ></app-title>
   <div class="row">
     <table class="table table-dark table-hover">
       <thead>
         <tr>
-          <th>
+          <th class="center">
             <div class="clickable" (click)="toggleExampleShowAll()">
               <i *ngIf="!examples_show_all" class="bi bi-chevron-down"></i>
               <i *ngIf="examples_show_all" class="bi bi-chevron-up"></i>
@@ -20,15 +23,15 @@
           <th>ID</th>
           <th>Word</th>
           <th>English Translation</th>
-          <th>Audio</th>
-          <th>Edit</th>
-          <th>Delete</th>
+          <th class="center">Audio</th>
+          <th class="center">Edit</th>
+          <th class="center">Delete</th>
         </tr>
       </thead>
       <tbody>
         <ng-container *ngFor="let card of cards; index as idx">
-          <tr>
-            <th class="center align-middle">
+          <tr class="align-middle">
+            <td class="center">
               <div class="clickable" (click)="toggleExampleShow(card.id)">
                 <i
                   *ngIf="!examples_show[card.id]"
@@ -36,11 +39,11 @@
                 ></i>
                 <i *ngIf="examples_show[card.id]" class="bi bi-chevron-up"></i>
               </div>
-            </th>
-            <th>{{ card.id }}</th>
+            </td>
+            <td>{{ card.id }}</td>
             <td>{{ card.word }}</td>
             <td>{{ card.translation }}</td>
-            <td>
+            <td class="center">
               <button
                 *ngIf="audio_files.includes(card.id)"
                 class="btn btn-info"
@@ -48,18 +51,22 @@
               >
                 <i class="bi bi-volume-up-fill"></i>
               </button>
+              <i
+                *ngIf="!audio_files.includes(card.id)"
+                class="bi bi-volume-mute text-danger"
+              ></i>
             </td>
-            <td>
+            <td class="center">
               <button
-                (click)="editCard(idx)"
-                class="btn btn-warning"
+                (click)="selectCard(idx)"
+                class="btn btn-primary"
                 data-bs-toggle="modal"
-                data-bs-target="#cardEditModal"
+                data-bs-target="#editCardModal"
               >
                 <i class="bi bi-pencil-square"></i>
               </button>
             </td>
-            <td>
+            <td class="center">
               <button class="btn btn-danger" (click)="deleteCard(card.id)">
                 <i class="bi bi-trash-fill"></i>
               </button>
@@ -74,26 +81,29 @@
                     <th>ID</th>
                     <th>Example</th>
                     <th>English Translation</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th class="center">Edit</th>
+                    <th class="center">Delete</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let example of examples[card.id]; index as dex">
+                  <tr
+                    *ngFor="let example of examples[card.id]; index as dex"
+                    class="align-middle"
+                  >
                     <td>{{ example.id }}</td>
                     <td>{{ example.example }}</td>
                     <td>{{ example.translation }}</td>
-                    <td>
+                    <td class="center">
                       <button
-                        (click)="editExample(example.card, dex)"
-                        class="btn btn-sm btn-warning"
+                        (click)="selectExample(idx, example.card, dex)"
+                        class="btn btn-sm btn-primary"
                         data-bs-toggle="modal"
-                        data-bs-target="#exampleEditModal"
+                        data-bs-target="#editExampleModal"
                       >
                         <i class="bi bi-pencil-square"></i>
                       </button>
                     </td>
-                    <td>
+                    <td class="center">
                       <button
                         class="btn btn-sm btn-danger"
                         (click)="deleteExample(example.id)"
@@ -104,10 +114,12 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="center">
+              <div class="right">
                 <button
+                  (click)="selectCard(idx)"
                   class="btn btn-sm btn-success"
-                  (click)="addExample(card.id)"
+                  data-bs-toggle="modal"
+                  data-bs-target="#addExampleModal"
                 >
                   <i class="bi bi-plus"></i>
                   Add Example for Card {{ card.id }}
@@ -121,7 +133,11 @@
     </table>
   </div>
   <div class="right">
-    <button class="btn btn-success" (click)="addCard()">
+    <button
+      class="btn btn-success"
+      data-bs-toggle="modal"
+      data-bs-target="#addCardModal"
+    >
       <i class="bi bi-plus"></i>
       Add Card
     </button>
@@ -136,7 +152,15 @@
   (saveAudioEvent)="saveAudio($event)"
 ></app-edit-card-modal>
 
+<app-add-card-modal (addCardEvent)="addCard($event)"></app-add-card-modal>
+
 <app-edit-example-modal
+  [card]="card"
   [example]="example"
   (saveExampleEvent)="saveExample($event)"
 ></app-edit-example-modal>
+
+<app-add-example-modal
+  [card]="card"
+  (addExampleEvent)="addExample($event)"
+></app-add-example-modal>

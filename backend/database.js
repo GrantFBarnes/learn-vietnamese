@@ -93,16 +93,19 @@ function create(table, data) {
       return;
     }
 
-    let command =
-      "INSERT INTO " +
-      table +
-      " (" +
-      Object.keys(data) +
-      ") VALUES (" +
-      Object.values(data) +
-      ")";
+    let fields = [];
+    let values = [];
+    for (let f in data) {
+      if (f === "id") continue;
+      fields.push(f);
+      if (typeof data[f] === "string") {
+        values.push(JSON.stringify(data[f]));
+      } else {
+        values.push(data[f]);
+      }
+    }
 
-    run(command)
+    run("INSERT INTO " + table + " (" + fields + ") VALUES (" + values + ")")
       .then((res) => resolve(res))
       .catch((err) => reject(err));
   });

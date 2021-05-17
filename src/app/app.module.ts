@@ -15,6 +15,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { EditFlashComponent } from './pages/edit/edit-flash/edit-flash.component';
 import { EditCardModalComponent } from './pages/edit/edit-flash/edit-card-modal/edit-card-modal.component';
 import { EditExampleModalComponent } from './pages/edit/edit-flash/edit-example-modal/edit-example-modal.component';
+import { AddCardModalComponent } from './pages/edit/edit-flash/add-card-modal/add-card-modal.component';
+import { AddExampleModalComponent } from './pages/edit/edit-flash/add-example-modal/add-example-modal.component';
 import { FlashComponent } from './pages/flash/flash.component';
 import { WordComponent } from './pages/flash/word/word.component';
 import { TranslationComponent } from './pages/flash/translation/translation.component';
@@ -35,6 +37,8 @@ import { QuizComponent } from './pages/quiz/quiz.component';
     EditFlashComponent,
     EditCardModalComponent,
     EditExampleModalComponent,
+    AddCardModalComponent,
+    AddExampleModalComponent,
     FlashComponent,
     WordComponent,
     TranslationComponent,
