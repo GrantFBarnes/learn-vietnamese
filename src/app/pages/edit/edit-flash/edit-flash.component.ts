@@ -14,6 +14,7 @@ export class EditFlashComponent implements OnInit {
   card: Card = { id: 0, word: '', translation: '' };
   cards: Card[] = [];
   audio_files: number[] = [];
+  example: Example = { id: 0, card: 0, example: '', translation: '' };
   examples: { [card_id: number]: Example[] } = {};
   examples_show: { [card_id: number]: boolean } = {};
   examples_show_all: boolean = false;
@@ -21,9 +22,13 @@ export class EditFlashComponent implements OnInit {
   constructor(private httpService: HttpService) {}
 
   getCards(): void {
-    this.httpService
-      .get('/api/dump/cards')
-      .subscribe((data: any) => (this.cards = data));
+    this.httpService.get('/api/dump/cards').subscribe((data: any) => {
+      this.cards = data;
+      for (let i in data) {
+        const id = data[i].id;
+        if (!this.examples_show[id]) this.examples_show[id] = false;
+      }
+    });
   }
 
   getAudioFiles(): void {
@@ -32,15 +37,12 @@ export class EditFlashComponent implements OnInit {
       .subscribe((data: any) => (this.audio_files = data));
   }
 
-  getCardExamples(): void {
-    this.httpService.get('/api/dump/card_examples').subscribe((data: any) => {
+  getExamples(): void {
+    this.httpService.get('/api/dump/examples').subscribe((data: any) => {
       this.examples = {};
       for (let i in data) {
         const card_id = data[i].card;
-        if (!this.examples[card_id]) {
-          this.examples[card_id] = [];
-          this.examples_show[card_id] = false;
-        }
+        if (!this.examples[card_id]) this.examples[card_id] = [];
         this.examples[card_id].push(data[i]);
       }
     });
@@ -50,7 +52,7 @@ export class EditFlashComponent implements OnInit {
     this.authorized = true;
     this.getCards();
     this.getAudioFiles();
-    this.getCardExamples();
+    this.getExamples();
   }
 
   ngOnInit(): void {
@@ -117,6 +119,33 @@ export class EditFlashComponent implements OnInit {
     this.httpService.post('/api/card/', {}).subscribe({
       next: () => this.getCards(),
       error: () => alert('Failed to add card!'),
+    });
+  }
+
+  saveExample(example: Example): void {
+    this.httpService.put('/api/example', example).subscribe({
+      next: () => this.getExamples(),
+      error: () => alert('Failed to save example!'),
+    });
+  }
+
+  editExample(card: number, idx: number): void {
+    this.example = JSON.parse(JSON.stringify(this.examples[card][idx]));
+  }
+
+  deleteExample(id: number): void {
+    if (window.confirm('Are you sure you want to delete example ' + id + '?')) {
+      this.httpService.delete('/api/example/' + id).subscribe({
+        next: () => this.getExamples(),
+        error: () => alert('Failed to delete example!'),
+      });
+    }
+  }
+
+  addExample(card: number): void {
+    this.httpService.post('/api/example/', { card: card }).subscribe({
+      next: () => this.getExamples(),
+      error: () => alert('Failed to add example!'),
     });
   }
 }

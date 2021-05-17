@@ -1,8 +1,8 @@
-<div class="modal fade" id="cardEditModal" tabindex="-1">
+<div class="modal fade" id="exampleEditModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down">
     <div class="modal-content bg-dark">
       <div class="modal-header">
-        <h5 class="modal-title">Edit Flash Card (ID: {{ card.id }})</h5>
+        <h5 class="modal-title">Edit Example (ID: {{ example.id }})</h5>
         <button
           type="button"
           class="btn-close btn-close-white"
@@ -11,12 +11,14 @@
       </div>
       <div class="modal-body">
         <div class="row mb-3">
-          <label for="inputWord" class="col-form-label">Vietnamese Word</label>
+          <label for="inputExample" class="col-form-label"
+            >Vietnamese Example</label
+          >
           <input
             type="text"
             class="form-control bg-dark"
-            id="inputWord"
-            [(ngModel)]="this.card.word"
+            id="inputExample"
+            [(ngModel)]="this.example.example"
           />
         </div>
         <div class="row mb-3">
@@ -27,34 +29,8 @@
             type="text"
             class="form-control bg-dark"
             id="inputTranslation"
-            [(ngModel)]="this.card.translation"
+            [(ngModel)]="this.example.translation"
           />
-        </div>
-        <div class="row mb-3">
-          <h6>Audio</h6>
-          <div class="col-md-3">
-            <button
-              *ngIf="!recording"
-              class="btn btn-success w-auto mx-auto"
-              (click)="startRecording()"
-            >
-              <i class="bi bi-mic"></i>
-              Record
-            </button>
-            <button
-              *ngIf="recording"
-              class="btn btn-danger w-auto mx-auto"
-              (click)="stopRecording()"
-            >
-              <i class="bi bi-mic-mute"></i>
-              Stop
-            </button>
-          </div>
-          <div class="col-md-9">
-            <audio controls *ngIf="audio != null">
-              <source [attr.src]="audio.url" />
-            </audio>
-          </div>
         </div>
       </div>
       <div class="modal-footer">

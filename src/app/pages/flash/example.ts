@@ -1,6 +1,6 @@
 export interface Example {
   id: number;
-  card: string;
+  card: number;
   example: string;
   translation: string;
 }

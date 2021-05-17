@@ -168,9 +168,36 @@ router.post("/api/audio/:id", (request, response) => {
 ////////////////////////////////////////////////////////////////////////////////
 // Flash Card Examples
 
-// Get all card examples by card id
-router.get("/api/card-examples/:id", (request, response) => {
+// Get all examples by card id
+router.get("/api/examples/:id", (request, response) => {
   returnPromiseResponse(response, main.getCardExamples(request.params.id));
+});
+
+// Update example with new values
+router.put("/api/example", (request, response) => {
+  if (!authentication.isAuthorized(request)) {
+    rejectUnauthorized(response);
+    return;
+  }
+  returnPromiseResponse(response, main.updateExample(request.body));
+});
+
+// Create new example
+router.post("/api/example", (request, response) => {
+  if (!authentication.isAuthorized(request)) {
+    rejectUnauthorized(response);
+    return;
+  }
+  returnPromiseResponse(response, main.createExample(request.body));
+});
+
+// Delete example by id
+router.delete("/api/example/:id", (request, response) => {
+  if (!authentication.isAuthorized(request)) {
+    rejectUnauthorized(response);
+    return;
+  }
+  returnPromiseResponse(response, main.deleteExample(request.params.id));
 });
 
 ////////////////////////////////////////////////////////////////////////////////

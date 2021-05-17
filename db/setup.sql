@@ -28,7 +28,7 @@ INSERT INTO cards (word, translation)
 VALUES ("bằng", "by (a certain means of transport)");
 
 
-CREATE TABLE card_examples (
+CREATE TABLE examples (
     id INT NOT NULL AUTO_INCREMENT,
     card INT NOT NULL,
     example VARCHAR(60) DEFAULT "",
@@ -37,24 +37,24 @@ CREATE TABLE card_examples (
     FOREIGN KEY (card) REFERENCES cards(id) ON DELETE CASCADE
 );
 
-INSERT INTO card_examples (card, example, translation)
+INSERT INTO examples (card, example, translation)
 VALUES (1, "Ai muốn uống trà?", "Who wants to drink tea?");
-INSERT INTO card_examples (card, example, translation)
+INSERT INTO examples (card, example, translation)
 VALUES (1, "Ai đó?", "Who's that?");
-INSERT INTO card_examples (card, example, translation)
+INSERT INTO examples (card, example, translation)
 VALUES (1, "Ai đến?", "Who's coming?");
-INSERT INTO card_examples (card, example, translation)
+INSERT INTO examples (card, example, translation)
 VALUES (1, "Janet chờ ai?", "Who are you waiting for, Janet?");
-INSERT INTO card_examples (card, example, translation)
+INSERT INTO examples (card, example, translation)
 VALUES (1, "Ai cũng vui!", "Everyone's happy!");
 
-INSERT INTO card_examples (card, example, translation)
+INSERT INTO examples (card, example, translation)
 VALUES (2, "Anh là ai?", "Who are you?");
-INSERT INTO card_examples (card, example, translation)
+INSERT INTO examples (card, example, translation)
 VALUES (2, "anh em", "siblings");
-INSERT INTO card_examples (card, example, translation)
+INSERT INTO examples (card, example, translation)
 VALUES (2, "anh ruột", "older brother");
-INSERT INTO card_examples (card, example, translation)
+INSERT INTO examples (card, example, translation)
 VALUES (2, "anh họ", "male cousin (of higher ranking than you (born to older sibling of parents))");
-INSERT INTO card_examples (card, example, translation)
+INSERT INTO examples (card, example, translation)
 VALUES (2, "anh ấy", "he/him (when referring to your older brother or male peer)");

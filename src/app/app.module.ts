@@ -14,6 +14,7 @@ import { HomeComponent } from './pages/home/home.component';
 
 import { EditFlashComponent } from './pages/edit/edit-flash/edit-flash.component';
 import { EditCardModalComponent } from './pages/edit/edit-flash/edit-card-modal/edit-card-modal.component';
+import { EditExampleModalComponent } from './pages/edit/edit-flash/edit-example-modal/edit-example-modal.component';
 import { FlashComponent } from './pages/flash/flash.component';
 import { WordComponent } from './pages/flash/word/word.component';
 import { TranslationComponent } from './pages/flash/translation/translation.component';
@@ -33,6 +34,7 @@ import { QuizComponent } from './pages/quiz/quiz.component';
     HomeComponent,
     EditFlashComponent,
     EditCardModalComponent,
+    EditExampleModalComponent,
     FlashComponent,
     WordComponent,
     TranslationComponent,

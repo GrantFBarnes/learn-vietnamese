@@ -44,7 +44,7 @@ export class FlashComponent implements OnInit {
       .get('/api/card/' + id)
       .subscribe((data: any) => (this.card = data));
     this.httpService
-      .get('/api/card-examples/' + id)
+      .get('/api/examples/' + id)
       .subscribe((data: any) => (this.examples = data));
     this.flipped = JSON.parse(JSON.stringify(this.defaultFlipped));
   }

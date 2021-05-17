@@ -81,14 +81,28 @@ function update(table, data) {
   });
 }
 
-function create(table) {
+function create(table, data) {
   return new Promise((resolve, reject) => {
     if (!table) {
       reject("table not provided");
       return;
     }
 
-    run("INSERT INTO " + table + " () VALUES ()")
+    if (!data) {
+      reject("data not provided");
+      return;
+    }
+
+    let command =
+      "INSERT INTO " +
+      table +
+      " (" +
+      Object.keys(data) +
+      ") VALUES (" +
+      Object.values(data) +
+      ")";
+
+    run(command)
       .then((res) => resolve(res))
       .catch((err) => reject(err));
   });
