@@ -42,6 +42,16 @@ function select(columns, table, field, value) {
   });
 }
 
+function getValue(value) {
+  if (typeof value === "string") {
+    while (value.includes("'")) value = value.replace("'", "");
+    while (value.includes('"')) value = value.replace('"', "");
+    value = value.trim();
+    value = JSON.stringify(value);
+  }
+  return value;
+}
+
 function update(table, data) {
   return new Promise((resolve, reject) => {
     if (!table) {
@@ -63,7 +73,7 @@ function update(table, data) {
     let otherField = false;
     for (let f in data) {
       if (f === "id") continue;
-      command += f + ' = "' + data[f] + '", ';
+      command += f + " = " + getValue(data[f]) + ", ";
       otherField = true;
     }
 
@@ -98,11 +108,7 @@ function create(table, data) {
     for (let f in data) {
       if (f === "id") continue;
       fields.push(f);
-      if (typeof data[f] === "string") {
-        values.push(JSON.stringify(data[f]));
-      } else {
-        values.push(data[f]);
-      }
+      values.push(getValue(data[f]));
     }
 
     run("INSERT INTO " + table + " (" + fields + ") VALUES (" + values + ")")

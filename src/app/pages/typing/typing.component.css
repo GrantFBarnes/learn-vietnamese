@@ -5,3 +5,7 @@ code {
 table {
   max-width: 25em;
 }
+
+ul {
+  padding-left: 60px;
+}

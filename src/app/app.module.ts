@@ -25,7 +25,6 @@ import { TranslationsComponent } from './pages/flash/translations/translations.c
 import { FlipComponent } from './pages/flash/flip/flip.component';
 
 import { TypingComponent } from './pages/typing/typing.component';
-import { QuizComponent } from './pages/quiz/quiz.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +45,6 @@ import { QuizComponent } from './pages/quiz/quiz.component';
     TranslationsComponent,
     FlipComponent,
     TypingComponent,
-    QuizComponent,
   ],
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   providers: [],

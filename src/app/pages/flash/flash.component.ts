@@ -36,6 +36,41 @@ export class FlashComponent implements OnInit {
       this.ids = data;
       this.onChange();
     });
+
+    window.document.onkeydown = (e) => {
+      switch (e.key) {
+        case 'ArrowUp':
+          this.showUpperSections();
+          break;
+        case 'ArrowDown':
+          this.showLowerSections();
+          break;
+        case 'ArrowRight':
+        case 'N':
+        case 'n':
+          this.nextCard();
+          break;
+        case 'ArrowLeft':
+        case 'P':
+        case 'p':
+          this.previousCard();
+          break;
+        case 'R':
+        case 'r':
+          this.randomCard();
+          break;
+        case 'S':
+        case 's':
+          this.switchCards();
+          const toggle = document.getElementById(
+            'switchToggle'
+          ) as HTMLInputElement;
+          if (toggle) toggle.checked = !toggle.checked;
+          break;
+        default:
+          break;
+      }
+    };
   }
 
   onChange(): void {
@@ -76,6 +111,16 @@ export class FlashComponent implements OnInit {
     this.onChange();
   }
 
+  showUpperSections(): void {
+    this.flipped['word'] = true;
+    this.flipped['translation'] = true;
+  }
+
+  showLowerSections(): void {
+    this.flipped['examples'] = true;
+    this.flipped['translations'] = true;
+  }
+
   showSection(section: string): void {
     switch (section) {
       case 'word':
@@ -89,7 +134,7 @@ export class FlashComponent implements OnInit {
     }
   }
 
-  reverseCards(): void {
+  switchCards(): void {
     this.defaultFlipped = {
       word: !this.defaultFlipped.word,
       translation: !this.defaultFlipped.translation,

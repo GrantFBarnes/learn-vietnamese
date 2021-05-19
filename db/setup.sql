@@ -16,7 +16,7 @@ CREATE TABLE cards (
 CREATE TABLE examples (
     id INT NOT NULL AUTO_INCREMENT,
     card INT NOT NULL,
-    example VARCHAR(64) NOT NULL,
+    example VARCHAR(128) NOT NULL,
     translation VARCHAR(256) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (card) REFERENCES cards(id) ON DELETE CASCADE
