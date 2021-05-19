@@ -10,6 +10,9 @@
 # all mp3 files
 *.mp3
 
+# db backup
+backup.sql
+
 # dependencies
 /node_modules
 
