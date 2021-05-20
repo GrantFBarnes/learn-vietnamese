@@ -2,6 +2,8 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const express = require("express");
 const http = require("http");
+const https = require("https");
+const ossc = require("openssl-self-signed-certificate");
 const parser = require("body-parser");
 const session = require("express-session");
 
@@ -52,6 +54,12 @@ function main() {
   const server = http.createServer(app);
   if (process.env.GFB_HOSTING_ENV === "prod") {
     server.listen(80);
+    https
+      .createServer(
+        { key: ossc.key, cert: ossc.cert, rejectUnauthorized: false },
+        app
+      )
+      .listen(443);
   } else {
     server.listen(8080);
     console.log("Running local environment on http://localhost:8080");

@@ -14,6 +14,7 @@ export class EditCardModalComponent implements OnInit {
   @Input() card: Card = { id: 0, word: '', translation: '' };
   @Output() saveCardEvent = new EventEmitter<Card>();
   @Output() saveAudioEvent = new EventEmitter<Blob>();
+  is_iphone: boolean = false;
   recording: boolean = false;
   recorder: any;
   audio: any;
@@ -23,11 +24,14 @@ export class EditCardModalComponent implements OnInit {
     private sanitizer: DomSanitizer
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.is_iphone = window.navigator.userAgent.includes('iPhone');
+  }
 
   ngOnChanges() {
     // update card to have accurate audio
     this.audio = null;
+    if (this.is_iphone) return;
     this.httpService.getAudio('/api/audio/' + this.card.id).subscribe({
       next: (blob: Blob) => {
         this.audio = this.newAudio(blob);

@@ -32,7 +32,7 @@
             [(ngModel)]="this.card.translation"
           />
         </div>
-        <div class="row mb-3">
+        <div class="row mb-3" *ngIf="!is_iphone">
           <h6>Audio</h6>
           <div class="col-md-3">
             <button

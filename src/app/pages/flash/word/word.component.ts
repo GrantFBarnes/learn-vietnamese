@@ -11,11 +11,14 @@ export class WordComponent implements OnInit {
   @Input() flipped: boolean = true;
   @Input() card: Card = { id: 0, word: '', translation: '' };
   @Output() showSectionEvent = new EventEmitter<string>();
+  is_iphone: boolean = false;
   audio: any;
 
   constructor(private httpService: HttpService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.is_iphone = window.navigator.userAgent.includes('iPhone');
+  }
 
   ngOnChanges(): void {
     this.audio = null;

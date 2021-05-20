@@ -23,7 +23,7 @@
           <th>ID</th>
           <th>Word</th>
           <th>English Translation</th>
-          <th class="center">Audio</th>
+          <th class="center" *ngIf="!is_iphone">Audio</th>
           <th class="center">Edit</th>
           <th class="center">Delete</th>
         </tr>
@@ -43,7 +43,7 @@
             <td>{{ card.id }}</td>
             <td>{{ card.word }}</td>
             <td>{{ card.translation }}</td>
-            <td class="center">
+            <td class="center" *ngIf="!is_iphone">
               <button
                 *ngIf="audio_files.includes(card.id)"
                 class="btn btn-info"

@@ -10,6 +10,7 @@ import { Example } from '../../flash/example';
   styleUrls: ['./edit-flash.component.css'],
 })
 export class EditFlashComponent implements OnInit {
+  is_iphone: boolean = false;
   authorized: boolean = false;
   card: Card = { id: 0, word: '', translation: '' };
   cards: Card[] = [];
@@ -32,6 +33,7 @@ export class EditFlashComponent implements OnInit {
   }
 
   getAudioFiles(): void {
+    if (this.is_iphone) return;
     this.httpService
       .get('/api/audio-files')
       .subscribe((data: any) => (this.audio_files = data));
@@ -56,6 +58,7 @@ export class EditFlashComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.is_iphone = window.navigator.userAgent.includes('iPhone');
     this.httpService.get('/api/authenticated').subscribe({
       next: () => this.authorize(),
       error: () => (this.authorized = false),
