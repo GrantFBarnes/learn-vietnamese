@@ -1,11 +1,9 @@
 const express = require("express");
-const fs = require("fs");
-const path = require("path");
 
+const audio = require("./audio.js");
 const authentication = require("./authentication.js");
 const main = require("./main.js");
 
-const audioDir = __dirname + "/../db/audio_files/";
 const router = express.Router();
 
 function returnSuccess(response) {
@@ -127,41 +125,30 @@ router.delete("/api/card/:id", (request, response) => {
 });
 
 ////////////////////////////////////////////////////////////////////////////////
-// Audio Files
+// Card Audio Files
 
-// Get all audio file ids
-router.get("/api/audio-files", (request, response) => {
-  const files = fs.readdirSync(audioDir);
-  let ids = [];
-  for (let f in files) {
-    const name = files[f].replace(".mp3", "");
-    const id = parseInt(name);
-    if (isNaN(id)) continue;
-    ids.push(id);
-  }
-  returnResponse(response, { statusCode: 200, data: ids });
+// Get all card audio file ids
+router.get("/api/cards/audio", (request, response) => {
+  returnResponse(response, { statusCode: 200, data: audio.getCardIds() });
 });
 
 // Get audio recording by card id
-router.get("/api/audio/:id", (request, response) => {
-  const file = path.join(audioDir + request.params.id + ".mp3");
-  if (fs.existsSync(file)) {
+router.get("/api/card/:id/audio", (request, response) => {
+  const file = audio.getCard(request.params.id);
+  if (file) {
     response.sendFile(file);
-  } else {
-    returnResponse(response, {
-      statusCode: 404,
-      data: { status: "not found" },
-    });
+    return;
   }
+  returnResponse(response, { statusCode: 404, data: { status: "not found" } });
 });
 
-// Save audio recording blob as a file
-router.post("/api/audio/:id", (request, response) => {
+// Save card audio recording blob as a file
+router.post("/api/card/:id/audio", (request, response) => {
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
   }
-  request.pipe(fs.createWriteStream(audioDir + request.params.id + ".mp3"));
+  audio.saveCard(request, request.params.id);
   returnSuccess(response);
 });
 

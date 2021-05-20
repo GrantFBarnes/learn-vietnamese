@@ -1,8 +1,5 @@
+const audio = require("./audio.js");
 const database = require("./database.js");
-const fs = require("fs");
-const path = require("path");
-
-const audioDir = __dirname + "/../db/audio_files/";
 
 ////////////////////////////////////////////////////////////////////////////////
 // Generic
@@ -133,10 +130,7 @@ function deleteCard(id) {
     }
 
     // Delete any audio file associated with the card
-    const file = path.join(audioDir + id + ".mp3");
-    if (fs.existsSync(file)) {
-      fs.unlinkSync(file);
-    }
+    audio.deleteCard(id);
 
     database
       .deleteById("cards", id)

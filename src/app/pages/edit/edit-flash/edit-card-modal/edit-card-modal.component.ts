@@ -32,13 +32,15 @@ export class EditCardModalComponent implements OnInit {
     // update card to have accurate audio
     this.audio = null;
     if (this.is_iphone) return;
-    this.httpService.getAudio('/api/audio/' + this.card.id).subscribe({
-      next: (blob: Blob) => {
-        this.audio = this.newAudio(blob);
-        this.cleanAudioURL();
-      },
-      error: () => {},
-    });
+    this.httpService
+      .getAudio('/api/card/' + this.card.id + '/audio')
+      .subscribe({
+        next: (blob: Blob) => {
+          this.audio = this.newAudio(blob);
+          this.cleanAudioURL();
+        },
+        error: () => {},
+      });
   }
 
   cleanAudioURL(): void {
