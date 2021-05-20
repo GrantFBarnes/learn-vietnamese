@@ -58,6 +58,15 @@ export class EditFlashComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // redirect to https if not localhost
+    if (!window.origin.includes('local')) {
+      if (location.protocol !== 'https:') {
+        location.replace(
+          'https:' + location.href.substring(location.protocol.length)
+        );
+      }
+    }
+
     this.is_iphone = window.navigator.userAgent.includes('iPhone');
     this.httpService.get('/api/authenticated').subscribe({
       next: () => this.authorize(),
