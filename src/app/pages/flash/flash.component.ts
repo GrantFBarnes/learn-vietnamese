@@ -23,11 +23,12 @@ export class FlashComponent implements OnInit {
   examples: Example[] = [];
   defaultFlipped: SectionsFlipped = {
     word: true,
-    translation: false,
+    translation: true,
     examples: true,
-    translations: false,
+    translations: true,
   };
   flipped: SectionsFlipped = JSON.parse(JSON.stringify(this.defaultFlipped));
+  flippedType: string = 'all';
 
   constructor(private httpService: HttpService) {}
 
@@ -58,14 +59,6 @@ export class FlashComponent implements OnInit {
         case 'R':
         case 'r':
           this.randomCard();
-          break;
-        case 'S':
-        case 's':
-          this.switchCards();
-          const toggle = document.getElementById(
-            'switchToggle'
-          ) as HTMLInputElement;
-          if (toggle) toggle.checked = !toggle.checked;
           break;
         default:
           break;
@@ -134,13 +127,36 @@ export class FlashComponent implements OnInit {
     }
   }
 
-  switchCards(): void {
+  showAll(): void {
     this.defaultFlipped = {
-      word: !this.defaultFlipped.word,
-      translation: !this.defaultFlipped.translation,
-      examples: !this.defaultFlipped.examples,
-      translations: !this.defaultFlipped.translations,
+      word: true,
+      translation: true,
+      examples: true,
+      translations: true,
     };
     this.flipped = JSON.parse(JSON.stringify(this.defaultFlipped));
+    this.flippedType = 'all';
+  }
+
+  showVietnamese(): void {
+    this.defaultFlipped = {
+      word: true,
+      translation: false,
+      examples: true,
+      translations: false,
+    };
+    this.flipped = JSON.parse(JSON.stringify(this.defaultFlipped));
+    this.flippedType = 'vietnamese';
+  }
+
+  showEnglish(): void {
+    this.defaultFlipped = {
+      word: false,
+      translation: true,
+      examples: false,
+      translations: true,
+    };
+    this.flipped = JSON.parse(JSON.stringify(this.defaultFlipped));
+    this.flippedType = 'english';
   }
 }

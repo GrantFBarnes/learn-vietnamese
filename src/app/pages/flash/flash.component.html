@@ -14,18 +14,15 @@
     <div class="col-4">
       <button type="button" class="btn btn-primary" (click)="previousCard()">
         <i class="bi bi-skip-backward"></i>
-        Previous
       </button>
     </div>
     <div class="col-4">
       <button type="button" class="btn btn-primary" (click)="randomCard()">
-        Random
         <i class="bi bi-shuffle"></i>
       </button>
     </div>
     <div class="col-4">
       <button type="button" class="btn btn-primary" (click)="nextCard()">
-        Next
         <i class="bi bi-skip-forward"></i>
       </button>
     </div>
@@ -75,23 +72,58 @@
   <br />
   <div class="row">
     <div class="col-4">
-      <div class="form-check form-switch">
-        <input
-          type="checkbox"
-          class="form-check-input clickable"
-          id="switchToggle"
-          (click)="switchCards()"
-        />
-        <label class="form-check-label clickable" for="switchToggle"
-          >Switch Flipped Cards</label
-        >
-      </div>
+      <p>Card ID: {{ card.id }}</p>
     </div>
     <div class="col-4 center">
       <p><a routerLink="/edit/flash">(Edit Flash Cards)</a></p>
     </div>
     <div class="col-4 right">
-      <p>Card ID: {{ card.id }}</p>
+      <div class="dropdown">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+        >
+          Flipped Type
+        </button>
+        <ul class="dropdown-menu dropdown-menu-dark">
+          <li>
+            <a
+              [ngClass]="
+                flippedType == 'all' ? 'dropdown-item active' : 'dropdown-item'
+              "
+              (click)="showAll()"
+            >
+              Show All
+            </a>
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <a
+              [ngClass]="
+                flippedType == 'vietnamese'
+                  ? 'dropdown-item active'
+                  : 'dropdown-item'
+              "
+              (click)="showVietnamese()"
+            >
+              Show Vietnamese Only
+            </a>
+          </li>
+          <li>
+            <a
+              [ngClass]="
+                flippedType == 'english'
+                  ? 'dropdown-item active'
+                  : 'dropdown-item'
+              "
+              (click)="showEnglish()"
+            >
+              Show English Only
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
