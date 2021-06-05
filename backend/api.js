@@ -128,13 +128,16 @@ router.delete("/api/card/:id", (request, response) => {
 // Card Audio Files
 
 // Get all card audio file ids
-router.get("/api/cards/audio", (request, response) => {
-  returnResponse(response, { statusCode: 200, data: audio.getCardIds() });
+router.get("/api/audio/cards", (request, response) => {
+  returnResponse(response, {
+    statusCode: 200,
+    data: audio.getAudioIds("cards"),
+  });
 });
 
 // Get audio recording by card id
-router.get("/api/card/:id/audio", (request, response) => {
-  const file = audio.getCard(request.params.id);
+router.get("/api/audio/card/:id", (request, response) => {
+  const file = audio.getAudio("cards", request.params.id);
   if (file) {
     response.sendFile(file);
     return;
@@ -143,12 +146,12 @@ router.get("/api/card/:id/audio", (request, response) => {
 });
 
 // Save card audio recording blob as a file
-router.post("/api/card/:id/audio", (request, response) => {
+router.post("/api/audio/card/:id", (request, response) => {
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
   }
-  audio.saveCard(request, request.params.id);
+  audio.saveAudio(request, "cards", request.params.id);
   returnSuccess(response);
 });
 
@@ -185,6 +188,37 @@ router.delete("/api/example/:id", (request, response) => {
     return;
   }
   returnPromiseResponse(response, main.deleteExample(request.params.id));
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// Example Audio Files
+
+// Get all example audio file ids
+router.get("/api/audio/examples", (request, response) => {
+  returnResponse(response, {
+    statusCode: 200,
+    data: audio.getAudioIds("examples"),
+  });
+});
+
+// Get audio recording by example id
+router.get("/api/audio/example/:id", (request, response) => {
+  const file = audio.getAudio("examples", request.params.id);
+  if (file) {
+    response.sendFile(file);
+    return;
+  }
+  returnResponse(response, { statusCode: 404, data: { status: "not found" } });
+});
+
+// Save example audio recording blob as a file
+router.post("/api/audio/example/:id", (request, response) => {
+  if (!authentication.isAuthorized(request)) {
+    rejectUnauthorized(response);
+    return;
+  }
+  audio.saveAudio(request, "examples", request.params.id);
+  returnSuccess(response);
 });
 
 ////////////////////////////////////////////////////////////////////////////////

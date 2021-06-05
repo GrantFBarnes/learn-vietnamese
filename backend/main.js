@@ -130,7 +130,7 @@ function deleteCard(id) {
     }
 
     // Delete any audio file associated with the card
-    audio.deleteCard(id);
+    audio.deleteAudio("cards", id);
 
     database
       .deleteById("cards", id)
@@ -227,6 +227,9 @@ function deleteExample(id) {
       resolve({ statusCode: 500, data: "id not provided" });
       return;
     }
+
+    // Delete any audio file associated with the example
+    audio.deleteAudio("examples", id);
 
     database
       .deleteById("examples", id)

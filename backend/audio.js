@@ -4,10 +4,9 @@ const path = require("path");
 const audioDir = __dirname + "/../db/audio_files/";
 
 ////////////////////////////////////////////////////////////////////////////////
-// Card Audio
 
-function getCardIds() {
-  const files = fs.readdirSync(audioDir + "cards/");
+function getAudioIds(folder) {
+  const files = fs.readdirSync(audioDir + folder + "/");
   let ids = [];
   for (let f in files) {
     const name = files[f].replace(".mp3", "");
@@ -18,18 +17,18 @@ function getCardIds() {
   return ids;
 }
 
-function getCard(id) {
-  const file = path.join(audioDir + "cards/" + id + ".mp3");
+function getAudio(folder, id) {
+  const file = path.join(audioDir + folder + "/" + id + ".mp3");
   if (fs.existsSync(file)) return file;
   return null;
 }
 
-function saveCard(request, id) {
-  request.pipe(fs.createWriteStream(audioDir + "cards/" + id + ".mp3"));
+function saveAudio(request, folder, id) {
+  request.pipe(fs.createWriteStream(audioDir + folder + "/" + id + ".mp3"));
 }
 
-function deleteCard(id) {
-  const file = path.join(audioDir + "cards/" + id + ".mp3");
+function deleteAudio(folder, id) {
+  const file = path.join(audioDir + folder + "/" + id + ".mp3");
   if (fs.existsSync(file)) {
     fs.unlinkSync(file);
   }
@@ -37,7 +36,7 @@ function deleteCard(id) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-module.exports.getCardIds = getCardIds;
-module.exports.getCard = getCard;
-module.exports.saveCard = saveCard;
-module.exports.deleteCard = deleteCard;
+module.exports.getAudioIds = getAudioIds;
+module.exports.getAudio = getAudio;
+module.exports.saveAudio = saveAudio;
+module.exports.deleteAudio = deleteAudio;

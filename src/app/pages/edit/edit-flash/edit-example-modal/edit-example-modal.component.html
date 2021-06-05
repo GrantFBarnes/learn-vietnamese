@@ -39,6 +39,32 @@
             [(ngModel)]="this.example.translation"
           />
         </div>
+        <div class="row mb-3" *ngIf="!is_iphone">
+          <h6>Audio</h6>
+          <div class="col-md-3">
+            <button
+              *ngIf="!recording"
+              class="btn btn-success w-auto mx-auto"
+              (click)="startRecording()"
+            >
+              <i class="bi bi-mic"></i>
+              Record
+            </button>
+            <button
+              *ngIf="recording"
+              class="btn btn-danger w-auto mx-auto"
+              (click)="stopRecording()"
+            >
+              <i class="bi bi-mic-mute"></i>
+              Stop
+            </button>
+          </div>
+          <div class="col-md-9">
+            <audio controls *ngIf="audio != null">
+              <source [attr.src]="audio.url" />
+            </audio>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

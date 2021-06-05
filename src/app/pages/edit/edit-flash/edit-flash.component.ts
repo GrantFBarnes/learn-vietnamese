@@ -14,9 +14,10 @@ export class EditFlashComponent implements OnInit {
   authorized: boolean = false;
   card: Card = { id: 0, word: '', translation: '' };
   cards: Card[] = [];
-  audio_files: number[] = [];
+  card_audio_files: number[] = [];
   example: Example = { id: 0, card: 0, example: '', translation: '' };
   examples: { [card_id: number]: Example[] } = {};
+  example_audio_files: number[] = [];
   examples_show: { [card_id: number]: boolean } = {};
   examples_show_all: boolean = false;
 
@@ -35,8 +36,8 @@ export class EditFlashComponent implements OnInit {
   getCardAudioIds(): void {
     if (this.is_iphone) return;
     this.httpService
-      .get('/api/cards/audio')
-      .subscribe((data: any) => (this.audio_files = data));
+      .get('/api/audio/cards')
+      .subscribe((data: any) => (this.card_audio_files = data));
   }
 
   getExamples(): void {
@@ -50,11 +51,23 @@ export class EditFlashComponent implements OnInit {
     });
   }
 
+  getExampleAudioIds(): void {
+    if (this.is_iphone) return;
+    this.httpService
+      .get('/api/audio/examples')
+      .subscribe((data: any) => (this.example_audio_files = data));
+  }
+
+  getAudioIds(): void {
+    this.getCardAudioIds();
+    this.getExampleAudioIds();
+  }
+
   authorize(): void {
     this.authorized = true;
     this.getCards();
-    this.getCardAudioIds();
     this.getExamples();
+    this.getAudioIds();
   }
 
   ngOnInit(): void {
@@ -74,6 +87,28 @@ export class EditFlashComponent implements OnInit {
     });
   }
 
+  playAudio(folder: string, id: number): void {
+    this.httpService.getAudio('/api/audio/' + folder + '/' + id).subscribe({
+      next: (blob: Blob) => {
+        const sound = new Audio(URL.createObjectURL(blob));
+        sound.addEventListener('canplaythrough', () => {
+          sound.play();
+        });
+      },
+      error: () => alert('No audio found'),
+    });
+  }
+
+  saveAudio(folder: string, id: number, audio: Blob): void {
+    if (!audio) return;
+    if (!audio.size) return;
+
+    this.httpService.post('/api/audio/' + folder + '/' + id, audio).subscribe({
+      next: () => this.getAudioIds(),
+      error: () => alert('Failed to save audio!'),
+    });
+  }
+
   toggleExampleShowAll() {
     this.examples_show_all = !this.examples_show_all;
     for (let id in this.examples_show) {
@@ -85,17 +120,8 @@ export class EditFlashComponent implements OnInit {
     this.examples_show[id] = !this.examples_show[id];
   }
 
-  playAudio(idx: number): void {
-    const id = this.cards[idx].id;
-    this.httpService.getAudio('/api/card/' + id + '/audio').subscribe({
-      next: (blob: Blob) => {
-        const sound = new Audio(URL.createObjectURL(blob));
-        sound.addEventListener('canplaythrough', () => {
-          sound.play();
-        });
-      },
-      error: () => alert('No audio found for card ' + id),
-    });
+  playCardAudio(id: number): void {
+    this.playAudio('card', id);
   }
 
   saveCard(card: Card): void {
@@ -105,16 +131,8 @@ export class EditFlashComponent implements OnInit {
     });
   }
 
-  saveAudio(audio: Blob): void {
-    if (!audio) return;
-    if (!audio.size) return;
-
-    this.httpService
-      .post('/api/card/' + this.card.id + '/audio', audio)
-      .subscribe({
-        next: () => this.getCardAudioIds(),
-        error: () => alert('Failed to save audio!'),
-      });
+  saveCardAudio(audio: Blob): void {
+    this.saveAudio('card', this.card.id, audio);
   }
 
   selectCard(idx: number): void {
@@ -137,11 +155,19 @@ export class EditFlashComponent implements OnInit {
     });
   }
 
+  playExampleAudio(id: number): void {
+    this.playAudio('example', id);
+  }
+
   saveExample(example: Example): void {
     this.httpService.put('/api/example', example).subscribe({
       next: () => this.getExamples(),
       error: () => alert('Failed to save example!'),
     });
+  }
+
+  saveExampleAudio(audio: Blob): void {
+    this.saveAudio('example', this.example.id, audio);
   }
 
   selectExample(card_idx: number, card_id: number, example_idx: number): void {

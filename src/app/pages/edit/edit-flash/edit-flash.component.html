@@ -45,14 +45,14 @@
             <td>{{ card.translation }}</td>
             <td class="center" *ngIf="!is_iphone">
               <button
-                *ngIf="audio_files.includes(card.id)"
+                *ngIf="card_audio_files.includes(card.id)"
                 class="btn btn-info"
-                (click)="playAudio(idx)"
+                (click)="playCardAudio(card.id)"
               >
                 <i class="bi bi-volume-up-fill"></i>
               </button>
               <i
-                *ngIf="!audio_files.includes(card.id)"
+                *ngIf="!card_audio_files.includes(card.id)"
                 class="bi bi-volume-mute text-danger"
               ></i>
             </td>
@@ -81,6 +81,7 @@
                     <th>ID</th>
                     <th>Example</th>
                     <th>English Translation</th>
+                    <th class="center" *ngIf="!is_iphone">Audio</th>
                     <th class="center">Edit</th>
                     <th class="center">Delete</th>
                   </tr>
@@ -93,6 +94,19 @@
                     <td>{{ example.id }}</td>
                     <td>{{ example.example }}</td>
                     <td>{{ example.translation }}</td>
+                    <td class="center" *ngIf="!is_iphone">
+                      <button
+                        *ngIf="example_audio_files.includes(example.id)"
+                        class="btn btn-info"
+                        (click)="playExampleAudio(example.id)"
+                      >
+                        <i class="bi bi-volume-up-fill"></i>
+                      </button>
+                      <i
+                        *ngIf="!example_audio_files.includes(example.id)"
+                        class="bi bi-volume-mute text-danger"
+                      ></i>
+                    </td>
                     <td class="center">
                       <button
                         (click)="selectExample(idx, example.card, dex)"
@@ -149,7 +163,7 @@
 <app-edit-card-modal
   [card]="card"
   (saveCardEvent)="saveCard($event)"
-  (saveAudioEvent)="saveAudio($event)"
+  (saveAudioEvent)="saveCardAudio($event)"
 ></app-edit-card-modal>
 
 <app-add-card-modal (addCardEvent)="addCard($event)"></app-add-card-modal>
@@ -158,6 +172,7 @@
   [card]="card"
   [example]="example"
   (saveExampleEvent)="saveExample($event)"
+  (saveAudioEvent)="saveExampleAudio($event)"
 ></app-edit-example-modal>
 
 <app-add-example-modal

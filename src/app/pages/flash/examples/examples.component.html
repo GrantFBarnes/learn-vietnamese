@@ -1,7 +1,16 @@
 <div class="card-body">
   <p class="card-title">Vietnamese Examples</p>
   <ul class="card-text" *ngIf="flipped; else flip">
-    <li *ngFor="let example of examples">{{ example.example }}</li>
+    <li *ngFor="let example of examples">
+      {{ example.example }}
+      <ng-container
+        *ngIf="!is_iphone && example_audio_files.includes(example.id)"
+      >
+        <button class="btn btn-sm btn-ghost" (click)="playAudio(example.id)">
+          <i class="bi bi-volume-up-fill"></i>
+        </button>
+      </ng-container>
+    </li>
   </ul>
 </div>
 
