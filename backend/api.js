@@ -97,6 +97,11 @@ router.get("/api/card/:id", (request, response) => {
   returnPromiseResponse(response, main.getCard(request.params.id));
 });
 
+// Get flash cards in bulk
+router.post("/api/cards/bulk", (request, response) => {
+  returnPromiseResponse(response, main.getCards(request.body));
+});
+
 // Update flash card with new values
 router.put("/api/card", (request, response) => {
   if (!authentication.isAuthorized(request)) {

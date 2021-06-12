@@ -19,7 +19,7 @@ function run(command) {
   });
 }
 
-function select(columns, table, field, value) {
+function select(columns, table, field, values) {
   return new Promise((resolve, reject) => {
     if (!columns) {
       reject("columns not provided");
@@ -32,8 +32,8 @@ function select(columns, table, field, value) {
     }
 
     let command = "SELECT " + columns + " FROM " + table;
-    if (field && value) {
-      command += " WHERE " + field + " = " + value;
+    if (field && values && values.length) {
+      command += " WHERE " + field + " IN (" + values + ")";
     }
 
     run(command)

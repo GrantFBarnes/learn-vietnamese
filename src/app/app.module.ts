@@ -12,6 +12,8 @@ import { UnauthorizedComponent } from './shared/components/unauthorized/unauthor
 
 import { HomeComponent } from './pages/home/home.component';
 
+import { TypingComponent } from './pages/typing/typing.component';
+
 import { EditFlashComponent } from './pages/edit/edit-flash/edit-flash.component';
 import { EditCardModalComponent } from './pages/edit/edit-flash/edit-card-modal/edit-card-modal.component';
 import { EditExampleModalComponent } from './pages/edit/edit-flash/edit-example-modal/edit-example-modal.component';
@@ -24,7 +26,8 @@ import { ExamplesComponent } from './pages/flash/examples/examples.component';
 import { TranslationsComponent } from './pages/flash/translations/translations.component';
 import { FlipComponent } from './pages/flash/flip/flip.component';
 
-import { TypingComponent } from './pages/typing/typing.component';
+import { QuizComponent } from './pages/quiz/quiz.component';
+import { AnswerComponent } from './pages/quiz/answer/answer.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,7 @@ import { TypingComponent } from './pages/typing/typing.component';
     PageNotFoundComponent,
     UnauthorizedComponent,
     HomeComponent,
+    TypingComponent,
     EditFlashComponent,
     EditCardModalComponent,
     EditExampleModalComponent,
@@ -44,7 +48,8 @@ import { TypingComponent } from './pages/typing/typing.component';
     ExamplesComponent,
     TranslationsComponent,
     FlipComponent,
-    TypingComponent,
+    QuizComponent,
+    AnswerComponent,
   ],
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   providers: [],

@@ -1,0 +1,68 @@
+<app-title
+  [title]="{
+    english: 'Quiz',
+    vietnamese: 'Đố nhanh'
+  }"
+  [subTitle]="{
+    english: 'Test your knowledge with a simple quiz',
+    vietnamese: 'Kiểm tra kiến thức của bạn bằng một câu đố đơn giản'
+  }"
+></app-title>
+
+<div class="container">
+  <div class="row center">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="nextQuestion()">
+        Next Question
+      </button>
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card bg-dark">
+        <div class="card-body">
+          <p class="card-title">Question</p>
+          <p class="center">What does the following translate to?</p>
+          <h1 class="card-text center">
+            {{ cards[correct_idx].word }}
+          </h1>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card bg-dark">
+        <div class="card-body">
+          <p class="card-title">Answers</p>
+          <app-quiz-answer
+            [card]="cards[0]"
+            [correct]="correct_idx === 0"
+          ></app-quiz-answer>
+          <app-quiz-answer
+            [card]="cards[1]"
+            [correct]="correct_idx === 1"
+          ></app-quiz-answer>
+          <app-quiz-answer
+            [card]="cards[2]"
+            [correct]="correct_idx === 2"
+          ></app-quiz-answer>
+          <app-quiz-answer
+            [card]="cards[3]"
+            [correct]="correct_idx === 3"
+          ></app-quiz-answer>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="row center">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="nextQuestion()">
+        Next Question
+      </button>
+    </div>
+  </div>
+  <br />
+  <br />
+  <br />
+</div>

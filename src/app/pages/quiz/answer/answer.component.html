@@ -1,0 +1,30 @@
+<div class="center">
+  <button
+    *ngIf="!opened"
+    type="button"
+    class="btn btn-lg btn-ghost"
+    (click)="open()"
+  >
+    {{ card.translation }}
+  </button>
+  <div *ngIf="opened">
+    <div *ngIf="correct">
+      <button type="button" class="btn btn-lg btn-success disabled">
+        {{ card.translation }}
+      </button>
+      <div class="alert alert-success" role="alert">
+        <strong>That is correct!</strong>
+      </div>
+    </div>
+    <div *ngIf="!correct">
+      <button type="button" class="btn btn-lg btn-danger disabled">
+        {{ card.translation }}
+      </button>
+      <div class="alert alert-danger" role="alert">
+        <strong>That is incorrect!</strong>
+        <br />
+        This translates to: <code>{{ card.word }}</code>
+      </div>
+    </div>
+  </div>
+</div>

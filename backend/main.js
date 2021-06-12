@@ -61,13 +61,34 @@ function getCard(id) {
 
     const fail = { statusCode: 400, data: "failed to get card: " + id };
     database
-      .select("*", "cards", "id", id)
+      .select("*", "cards", "id", [id])
       .then((result) => {
         if (result.length !== 1) {
           resolve(fail);
           return;
         }
         resolve({ statusCode: 200, data: result[0] });
+        return;
+      })
+      .catch(() => {
+        resolve(fail);
+        return;
+      });
+  });
+}
+
+function getCards(ids) {
+  return new Promise((resolve) => {
+    if (!ids) {
+      resolve({ statusCode: 500, data: "ids not provided" });
+      return;
+    }
+
+    const fail = { statusCode: 400, data: "failed to get cards" };
+    database
+      .select("*", "cards", "id", ids)
+      .then((result) => {
+        resolve({ statusCode: 200, data: result });
         return;
       })
       .catch(() => {
@@ -156,7 +177,7 @@ function getCardExamples(id) {
     }
 
     database
-      .select("*", "examples", "card", id)
+      .select("*", "examples", "card", [id])
       .then((result) => {
         resolve({ statusCode: 200, data: result });
         return;
@@ -250,6 +271,7 @@ module.exports.getDataDump = getDataDump;
 
 module.exports.getCardIds = getCardIds;
 module.exports.getCard = getCard;
+module.exports.getCards = getCards;
 module.exports.updateCard = updateCard;
 module.exports.createCard = createCard;
 module.exports.deleteCard = deleteCard;
