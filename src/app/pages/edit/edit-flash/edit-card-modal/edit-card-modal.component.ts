@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpService } from '../../../../shared/services/http/http.service';
-import { Card } from '../../../flash/card';
+import { Card } from '../../../../shared/interfaces/card';
 
 declare var MediaRecorder: any;
 

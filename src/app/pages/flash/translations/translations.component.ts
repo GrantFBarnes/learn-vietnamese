@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Example } from '../example';
+import { Example } from '../../../shared/interfaces/example';
 
 @Component({
   selector: 'app-flash-translations',

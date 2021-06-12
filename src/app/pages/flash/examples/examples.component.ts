@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpService } from '../../../shared/services/http/http.service';
-import { Example } from '../example';
+import { Example } from '../../../shared/interfaces/example';
 
 @Component({
   selector: 'app-flash-examples',

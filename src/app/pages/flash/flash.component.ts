@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../shared/services/http/http.service';
-import { Card } from './card';
-import { Example } from './example';
+import { Card } from '../../shared/interfaces/card';
+import { Example } from '../../shared/interfaces/example';
 
 interface SectionsFlipped {
   word: boolean;

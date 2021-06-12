@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Card } from '../../../flash/card';
+import { Card } from '../../../../shared/interfaces/card';
 
 @Component({
   selector: 'app-add-card-modal',

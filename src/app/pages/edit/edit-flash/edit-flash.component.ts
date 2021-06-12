@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../../shared/services/http/http.service';
-import { Card } from '../../flash/card';
-import { Example } from '../../flash/example';
+import { Card } from '../../../shared/interfaces/card';
+import { Example } from '../../../shared/interfaces/example';
 
 @Component({
   selector: 'app-edit-flash',

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpService } from '../../../shared/services/http/http.service';
-import { Card } from '../card';
+import { Card } from '../../../shared/interfaces/card';
 
 @Component({
   selector: 'app-flash-word',

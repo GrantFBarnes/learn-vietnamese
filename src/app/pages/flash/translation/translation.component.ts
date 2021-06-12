@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Card } from '../card';
+import { Card } from '../../../shared/interfaces/card';
 
 @Component({
   selector: 'app-flash-translation',

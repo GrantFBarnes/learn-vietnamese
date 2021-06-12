@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Card } from '../../../flash/card';
-import { Example } from '../../../flash/example';
+import { Card } from '../../../../shared/interfaces/card';
+import { Example } from '../../../../shared/interfaces/example';
 
 @Component({
   selector: 'app-add-example-modal',
