@@ -22,8 +22,7 @@
     <div class="col-md-6">
       <div class="card bg-dark">
         <div class="card-body">
-          <p class="card-title">Question</p>
-          <p class="center">What does the following translate to?</p>
+          <p class="card-title">What does the following translate to?</p>
           <h1 class="card-text center">
             {{ cards[correct_idx].word }}
           </h1>
@@ -33,23 +32,13 @@
     <div class="col-md-6">
       <div class="card bg-dark">
         <div class="card-body">
-          <p class="card-title">Answers</p>
-          <app-quiz-answer
-            [card]="cards[0]"
-            [correct]="correct_idx === 0"
-          ></app-quiz-answer>
-          <app-quiz-answer
-            [card]="cards[1]"
-            [correct]="correct_idx === 1"
-          ></app-quiz-answer>
-          <app-quiz-answer
-            [card]="cards[2]"
-            [correct]="correct_idx === 2"
-          ></app-quiz-answer>
-          <app-quiz-answer
-            [card]="cards[3]"
-            [correct]="correct_idx === 3"
-          ></app-quiz-answer>
+          <p class="card-title">Select an Answer</p>
+          <ng-container *ngFor="let card of cards; let i = index">
+            <app-quiz-answer
+              [card]="card"
+              [correct]="correct_idx === i"
+            ></app-quiz-answer>
+          </ng-container>
         </div>
       </div>
     </div>
@@ -57,9 +46,31 @@
   <br />
   <div class="row center">
     <div class="col-12">
-      <button type="button" class="btn btn-primary" (click)="nextQuestion()">
-        Next Question
-      </button>
+      <div class="dropdown">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+        >
+          Answer Options ({{ answer_count }})
+        </button>
+        <ul class="dropdown-menu dropdown-menu-dark">
+          <ng-container *ngFor="let option of answer_options">
+            <li>
+              <a
+                [ngClass]="
+                  answer_count == option
+                    ? 'dropdown-item active'
+                    : 'dropdown-item'
+                "
+                (click)="setAnswerCount(option)"
+              >
+                {{ option }} Options
+              </a>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
     </div>
   </div>
   <br />
