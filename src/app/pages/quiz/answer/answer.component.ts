@@ -9,6 +9,7 @@ import { Card } from '../../../shared/interfaces/card';
 export class AnswerComponent implements OnInit {
   @Input() card: Card = { id: 0, word: '', translation: '' };
   @Input() correct: boolean = false;
+  @Input() question_type: string = 'Vietnamese';
   opened: boolean = false;
 
   constructor() {}

@@ -5,12 +5,12 @@
     class="btn btn-lg btn-ghost"
     (click)="open()"
   >
-    {{ card.translation }}
+    {{ question_type === "Vietnamese" ? card.translation : card.word }}
   </button>
   <div *ngIf="opened">
     <div *ngIf="correct">
       <button type="button" class="btn btn-lg btn-success disabled">
-        {{ card.translation }}
+        {{ question_type === "Vietnamese" ? card.translation : card.word }}
       </button>
       <div class="alert alert-success" role="alert">
         <strong>That is correct!</strong>
@@ -18,12 +18,15 @@
     </div>
     <div *ngIf="!correct">
       <button type="button" class="btn btn-lg btn-danger disabled">
-        {{ card.translation }}
+        {{ question_type === "Vietnamese" ? card.translation : card.word }}
       </button>
       <div class="alert alert-danger" role="alert">
         <strong>That is incorrect!</strong>
         <br />
-        This translates to: <code>{{ card.word }}</code>
+        This translates to:
+        <code>{{
+          question_type === "Vietnamese" ? card.word : card.translation
+        }}</code>
       </div>
     </div>
   </div>

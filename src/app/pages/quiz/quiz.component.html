@@ -24,7 +24,11 @@
         <div class="card-body">
           <p class="card-title">What does the following translate to?</p>
           <h1 class="card-text center">
-            {{ cards[correct_idx].word }}
+            {{
+              question_type === "Vietnamese"
+                ? cards[correct_idx].word
+                : cards[correct_idx].translation
+            }}
           </h1>
         </div>
       </div>
@@ -37,6 +41,7 @@
             <app-quiz-answer
               [card]="card"
               [correct]="correct_idx === i"
+              [question_type]="question_type"
             ></app-quiz-answer>
           </ng-container>
         </div>
@@ -45,17 +50,44 @@
   </div>
   <br />
   <div class="row center">
-    <div class="col-12">
+    <div class="col-md-6">
       <div class="dropdown">
         <button
           class="btn btn-secondary dropdown-toggle"
           type="button"
           data-bs-toggle="dropdown"
         >
-          Answer Options ({{ answer_count }})
+          {{ question_type_selected }}
         </button>
         <ul class="dropdown-menu dropdown-menu-dark">
-          <ng-container *ngFor="let option of answer_options">
+          <ng-container *ngFor="let option of question_type_options">
+            <li>
+              <a
+                [ngClass]="
+                  question_type_selected == option
+                    ? 'dropdown-item active'
+                    : 'dropdown-item'
+                "
+                (click)="setQuestionType(option)"
+              >
+                {{ option }}
+              </a>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="dropdown">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+        >
+          Options ({{ answer_count }})
+        </button>
+        <ul class="dropdown-menu dropdown-menu-dark">
+          <ng-container *ngFor="let option of answer_count_options">
             <li>
               <a
                 [ngClass]="
