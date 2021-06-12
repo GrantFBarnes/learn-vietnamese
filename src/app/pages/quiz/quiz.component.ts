@@ -22,6 +22,19 @@ export class QuizComponent implements OnInit {
       this.all_card_ids = data;
       this.nextQuestion();
     });
+
+    window.document.onkeydown = (e) => {
+      switch (e.key) {
+        case 'Enter':
+        case 'ArrowRight':
+        case 'N':
+        case 'n':
+          this.nextQuestion();
+          break;
+        default:
+          break;
+      }
+    };
   }
 
   nextQuestion(): void {
