@@ -6,6 +6,14 @@ $card-height: 100%;
 
 @import "node_modules/bootstrap/scss/bootstrap.scss";
 
+.total-center {
+  @extend .d-flex;
+  @extend .align-items-center;
+  @extend .justify-content-center;
+  height: 90%;
+  width: 100%;
+}
+
 .left {
   text-align: left;
 }

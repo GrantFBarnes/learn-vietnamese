@@ -10,7 +10,7 @@
 ></app-title>
 
 <div class="container">
-  <div class="row center">
+  <div class="row center mb-2">
     <div class="col-4">
       <button type="button" class="btn btn-primary" (click)="previousCard()">
         <i class="bi bi-skip-backward"></i>
@@ -27,9 +27,8 @@
       </button>
     </div>
   </div>
-  <br />
-  <div class="row">
-    <div class="col-md-6">
+  <div class="row mb-2">
+    <div class="col-md-6 mb-2">
       <div class="card bg-dark">
         <app-flash-word
           [flipped]="flipped.word"
@@ -38,7 +37,7 @@
         ></app-flash-word>
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 mb-2">
       <div class="card bg-dark">
         <app-flash-translation
           [flipped]="flipped.translation"
@@ -48,9 +47,8 @@
       </div>
     </div>
   </div>
-  <br />
-  <div class="row" *ngIf="examples.length > 0">
-    <div class="col-md-6">
+  <div class="row mb-2" *ngIf="examples.length > 0">
+    <div class="col-md-6 mb-2">
       <div class="card bg-dark">
         <app-flash-examples
           [flipped]="flipped.examples"
@@ -59,7 +57,7 @@
         ></app-flash-examples>
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 mb-2">
       <div class="card bg-dark">
         <app-flash-translations
           [flipped]="flipped.translations"
@@ -69,15 +67,14 @@
       </div>
     </div>
   </div>
-  <br />
   <div class="row">
-    <div class="col-4">
+    <div class="col-md-4 center">
       <p>Card ID: {{ card.id }}</p>
     </div>
-    <div class="col-4 center">
+    <div class="col-md-4 center">
       <p><a routerLink="/edit/flash">(Edit Flash Cards)</a></p>
     </div>
-    <div class="col-4 right">
+    <div class="col-md-4 center">
       <div class="dropdown">
         <button
           class="btn btn-secondary dropdown-toggle"
@@ -126,7 +123,4 @@
       </div>
     </div>
   </div>
-  <br />
-  <br />
-  <br />
 </div>

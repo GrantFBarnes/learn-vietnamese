@@ -1,34 +1,49 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand">Learn Vietnamese</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navButtons"
-      aria-controls="navButtons"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navButtons">
-      <div class="navbar-nav">
-        <a class="nav-link" routerLink="/home" routerLinkActive="active"
-          >Home</a
-        >
-        <a class="nav-link" routerLink="/typing" routerLinkActive="active"
-          >Typing</a
-        >
-        <a class="nav-link" routerLink="/flash" routerLinkActive="active"
-          >Flash Cards</a
-        >
-        <a class="nav-link" routerLink="/quiz" routerLinkActive="active"
-          >Quiz</a
-        >
+<div class="content">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand">Learn Vietnamese</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navButtons"
+        aria-controls="navButtons"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navButtons">
+        <div class="navbar-nav">
+          <a class="nav-link" routerLink="/home" routerLinkActive="active"
+            >Home</a
+          >
+          <a class="nav-link" routerLink="/typing" routerLinkActive="active"
+            >Typing</a
+          >
+          <a class="nav-link" routerLink="/flash" routerLinkActive="active"
+            >Flash Cards</a
+          >
+          <a class="nav-link" routerLink="/quiz" routerLinkActive="active"
+            >Quiz</a
+          >
+        </div>
       </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
+
+  <br />
+  <br />
+  <br />
+  <footer class="footer">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <span class="text-muted">Learn Vietnamese</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
