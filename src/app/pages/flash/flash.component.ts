@@ -17,6 +17,7 @@ interface SectionsFlipped {
   styleUrls: ['./flash.component.css'],
 })
 export class FlashComponent implements OnInit {
+  loading: boolean = true;
   ids: number[] = [];
   idx: number = 0;
   card: Card = { id: 0, word: '', translation: '' };
@@ -67,13 +68,15 @@ export class FlashComponent implements OnInit {
   }
 
   onChange(): void {
+    this.loading = true;
     const id = this.ids[this.idx];
-    this.httpService
-      .get('/api/card/' + id)
-      .subscribe((data: any) => (this.card = data));
-    this.httpService
-      .get('/api/examples/' + id)
-      .subscribe((data: any) => (this.examples = data));
+    this.httpService.get('/api/card/' + id).subscribe((card: any) => {
+      this.card = card;
+      this.httpService.get('/api/examples/' + id).subscribe((examples: any) => {
+        this.examples = examples;
+        this.loading = false;
+      });
+    });
     this.flipped = JSON.parse(JSON.stringify(this.defaultFlipped));
   }
 

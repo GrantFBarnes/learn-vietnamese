@@ -9,6 +9,7 @@ import { Card } from '../../shared/interfaces/card';
   styleUrls: ['./quiz.component.css'],
 })
 export class QuizComponent implements OnInit {
+  loading: boolean = true;
   all_card_ids: number[] = [];
   correct_idx: number = 0;
   cards: Card[] = [];
@@ -43,6 +44,7 @@ export class QuizComponent implements OnInit {
   nextQuestion(): void {
     if (!this.all_card_ids.length) return;
     if (this.all_card_ids.length < this.answer_count) return;
+    this.loading = true;
     let indexes = new Set();
     let card_ids = [];
     while (indexes.size !== this.answer_count) {
@@ -54,15 +56,18 @@ export class QuizComponent implements OnInit {
     }
     this.correct_idx = Math.floor(Math.random() * this.answer_count);
 
-    this.httpService
-      .post('/api/cards/bulk', card_ids)
-      .subscribe((data: any) => (this.cards = data));
-
     if (this.question_type_selected === 'Mix') {
       this.question_type = Math.random() > 0.5 ? 'Vietnamese' : 'English';
     } else {
       this.question_type = this.question_type_selected;
     }
+
+    this.httpService
+      .post('/api/cards/bulk', card_ids)
+      .subscribe((data: any) => {
+        this.cards = data;
+        this.loading = false;
+      });
   }
 
   setQuestionType(type: string): void {
