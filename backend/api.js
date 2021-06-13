@@ -43,6 +43,7 @@ function returnPromiseResponse(response, promise) {
 }
 
 function logConnection(request) {
+  if (process.env.GFB_HOSTING_ENV !== "prod") return;
   database
     .create("connections", {
       ip: request.socket.remoteAddress,
@@ -68,6 +69,7 @@ router.get("/api/heartbeat", (request, response) => {
 
 // Get all data from table
 router.get("/api/dump/:table", (request, response) => {
+  logConnection(request);
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -80,6 +82,7 @@ router.get("/api/dump/:table", (request, response) => {
 
 // Check if user is authenticated
 router.get("/api/authenticated", (request, response) => {
+  logConnection(request);
   if (authentication.isAuthorized(request)) {
     returnSuccess(response);
   } else {
@@ -89,6 +92,7 @@ router.get("/api/authenticated", (request, response) => {
 
 // Get edit token if body is correct
 router.post("/api/token", (request, response) => {
+  logConnection(request);
   if (authentication.requestToken(request.body)) {
     authentication.setTokenCookie(response);
     returnSuccess(response);
@@ -102,21 +106,25 @@ router.post("/api/token", (request, response) => {
 
 // Get all flash card ids
 router.get("/api/cards", (request, response) => {
+  logConnection(request);
   returnPromiseResponse(response, main.getCardIds());
 });
 
 // Get flash card by id
 router.get("/api/card/:id", (request, response) => {
+  logConnection(request);
   returnPromiseResponse(response, main.getCard(request.params.id));
 });
 
 // Get flash cards in bulk
 router.post("/api/cards/bulk", (request, response) => {
+  logConnection(request);
   returnPromiseResponse(response, main.getCards(request.body));
 });
 
 // Update flash card with new values
 router.put("/api/card", (request, response) => {
+  logConnection(request);
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -126,6 +134,7 @@ router.put("/api/card", (request, response) => {
 
 // Create new flash card
 router.post("/api/card", (request, response) => {
+  logConnection(request);
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -135,6 +144,7 @@ router.post("/api/card", (request, response) => {
 
 // Delete flash card by id
 router.delete("/api/card/:id", (request, response) => {
+  logConnection(request);
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -147,6 +157,7 @@ router.delete("/api/card/:id", (request, response) => {
 
 // Get all card audio file ids
 router.get("/api/audio/cards", (request, response) => {
+  logConnection(request);
   returnResponse(response, {
     statusCode: 200,
     data: audio.getAudioIds("cards"),
@@ -155,6 +166,7 @@ router.get("/api/audio/cards", (request, response) => {
 
 // Get audio recording by card id
 router.get("/api/audio/card/:id", (request, response) => {
+  logConnection(request);
   const file = audio.getAudio("cards", request.params.id);
   if (file) {
     response.sendFile(file);
@@ -165,6 +177,7 @@ router.get("/api/audio/card/:id", (request, response) => {
 
 // Save card audio recording blob as a file
 router.post("/api/audio/card/:id", (request, response) => {
+  logConnection(request);
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -178,11 +191,13 @@ router.post("/api/audio/card/:id", (request, response) => {
 
 // Get all examples by card id
 router.get("/api/examples/:id", (request, response) => {
+  logConnection(request);
   returnPromiseResponse(response, main.getCardExamples(request.params.id));
 });
 
 // Update example with new values
 router.put("/api/example", (request, response) => {
+  logConnection(request);
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -192,6 +207,7 @@ router.put("/api/example", (request, response) => {
 
 // Create new example
 router.post("/api/example", (request, response) => {
+  logConnection(request);
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -201,6 +217,7 @@ router.post("/api/example", (request, response) => {
 
 // Delete example by id
 router.delete("/api/example/:id", (request, response) => {
+  logConnection(request);
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -213,6 +230,7 @@ router.delete("/api/example/:id", (request, response) => {
 
 // Get all example audio file ids
 router.get("/api/audio/examples", (request, response) => {
+  logConnection(request);
   returnResponse(response, {
     statusCode: 200,
     data: audio.getAudioIds("examples"),
@@ -221,6 +239,7 @@ router.get("/api/audio/examples", (request, response) => {
 
 // Get audio recording by example id
 router.get("/api/audio/example/:id", (request, response) => {
+  logConnection(request);
   const file = audio.getAudio("examples", request.params.id);
   if (file) {
     response.sendFile(file);
@@ -231,6 +250,7 @@ router.get("/api/audio/example/:id", (request, response) => {
 
 // Save example audio recording blob as a file
 router.post("/api/audio/example/:id", (request, response) => {
+  logConnection(request);
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
