@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { TitleComponent } from './shared/components/title/title.component';
+import { LoadingComponent } from './shared/components/loading/loading.component';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 import { UnauthorizedComponent } from './shared/components/unauthorized/unauthorized.component';
 
@@ -33,6 +34,7 @@ import { AnswerComponent } from './pages/quiz/answer/answer.component';
   declarations: [
     AppComponent,
     TitleComponent,
+    LoadingComponent,
     PageNotFoundComponent,
     UnauthorizedComponent,
     HomeComponent,
