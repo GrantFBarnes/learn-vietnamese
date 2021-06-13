@@ -22,14 +22,19 @@ export class FlashComponent implements OnInit {
   idx: number = 0;
   card: Card = { id: 0, word: '', translation: '' };
   examples: Example[] = [];
-  defaultFlipped: SectionsFlipped = {
+  flip_reset: SectionsFlipped = {
     word: true,
     translation: true,
     examples: true,
     translations: true,
   };
-  flipped: SectionsFlipped = JSON.parse(JSON.stringify(this.defaultFlipped));
-  flippedType: string = 'all';
+  flipped: SectionsFlipped = JSON.parse(JSON.stringify(this.flip_reset));
+  flip_type: string = 'Show All';
+  flip_type_options: string[] = [
+    'Show All',
+    'Show Vietnamese Only',
+    'Show English Only',
+  ];
 
   constructor(private httpService: HttpService) {}
 
@@ -77,7 +82,7 @@ export class FlashComponent implements OnInit {
         this.loading = false;
       });
     });
-    this.flipped = JSON.parse(JSON.stringify(this.defaultFlipped));
+    this.flipped = JSON.parse(JSON.stringify(this.flip_reset));
   }
 
   previousCard(): void {
@@ -130,36 +135,16 @@ export class FlashComponent implements OnInit {
     }
   }
 
-  showAll(): void {
-    this.defaultFlipped = {
-      word: true,
-      translation: true,
-      examples: true,
-      translations: true,
+  setFlipType(type: string): void {
+    const viet = type.includes('All') || type.includes('Vietnamese');
+    const eng = type.includes('All') || type.includes('English');
+    this.flip_reset = {
+      word: viet,
+      translation: eng,
+      examples: viet,
+      translations: eng,
     };
-    this.flipped = JSON.parse(JSON.stringify(this.defaultFlipped));
-    this.flippedType = 'all';
-  }
-
-  showVietnamese(): void {
-    this.defaultFlipped = {
-      word: true,
-      translation: false,
-      examples: true,
-      translations: false,
-    };
-    this.flipped = JSON.parse(JSON.stringify(this.defaultFlipped));
-    this.flippedType = 'vietnamese';
-  }
-
-  showEnglish(): void {
-    this.defaultFlipped = {
-      word: false,
-      translation: true,
-      examples: false,
-      translations: true,
-    };
-    this.flipped = JSON.parse(JSON.stringify(this.defaultFlipped));
-    this.flippedType = 'english';
+    this.flipped = JSON.parse(JSON.stringify(this.flip_reset));
+    this.flip_type = type;
   }
 }

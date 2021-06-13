@@ -76,44 +76,21 @@
           type="button"
           data-bs-toggle="dropdown"
         >
-          Flipped Type
+          {{ flip_type }}
         </button>
         <ul class="dropdown-menu dropdown-menu-dark">
-          <li>
-            <a
-              [ngClass]="
-                flippedType == 'all' ? 'dropdown-item active' : 'dropdown-item'
-              "
-              (click)="showAll()"
-            >
-              Show All
-            </a>
-          </li>
-          <li><hr class="dropdown-divider" /></li>
-          <li>
-            <a
-              [ngClass]="
-                flippedType == 'vietnamese'
-                  ? 'dropdown-item active'
-                  : 'dropdown-item'
-              "
-              (click)="showVietnamese()"
-            >
-              Show Vietnamese Only
-            </a>
-          </li>
-          <li>
-            <a
-              [ngClass]="
-                flippedType == 'english'
-                  ? 'dropdown-item active'
-                  : 'dropdown-item'
-              "
-              (click)="showEnglish()"
-            >
-              Show English Only
-            </a>
-          </li>
+          <ng-container *ngFor="let option of flip_type_options">
+            <li>
+              <a
+                [ngClass]="
+                  flip_type == option ? 'dropdown-item active' : 'dropdown-item'
+                "
+                (click)="setFlipType(option)"
+              >
+                {{ option }}
+              </a>
+            </li>
+          </ng-container>
         </ul>
       </div>
     </div>

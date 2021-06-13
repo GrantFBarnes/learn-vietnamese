@@ -15,7 +15,7 @@ export class QuizComponent implements OnInit {
   cards: Card[] = [];
   question_type: string = 'Vietnamese';
   question_type_selected: string = 'Vietnamese';
-  question_type_options: string[] = ['Vietnamese', 'English', 'Mix'];
+  question_type_options: string[] = ['Vietnamese', 'English', 'Random'];
   answer_count: number = 3;
   answer_count_options: number[] = [2, 3, 4, 5, 6];
 
@@ -56,7 +56,7 @@ export class QuizComponent implements OnInit {
     }
     this.correct_idx = Math.floor(Math.random() * this.answer_count);
 
-    if (this.question_type_selected === 'Mix') {
+    if (this.question_type_selected === 'Random') {
       this.question_type = Math.random() > 0.5 ? 'Vietnamese' : 'English';
     } else {
       this.question_type = this.question_type_selected;
