@@ -11,7 +11,8 @@ function getDataDump(table) {
       return;
     }
 
-    if (table !== "cards" && table !== "examples") {
+    const tables = new Set(["cards", "examples", "connections"]);
+    if (!tables.has(table)) {
       resolve({ statusCode: 500, data: "table not valid" });
       return;
     }
