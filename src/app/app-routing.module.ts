@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './pages/home/home.component';
+import { LearnComponent } from './pages/learn/learn.component';
 import { TypingComponent } from './pages/typing/typing.component';
 import { FlashComponent } from './pages/flash/flash.component';
 import { QuizComponent } from './pages/quiz/quiz.component';
@@ -12,6 +13,7 @@ import { PageNotFoundComponent } from './shared/components/page-not-found/page-n
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'learn', component: LearnComponent },
   { path: 'typing', component: TypingComponent },
   { path: 'flash', component: FlashComponent },
   { path: 'quiz', component: QuizComponent },

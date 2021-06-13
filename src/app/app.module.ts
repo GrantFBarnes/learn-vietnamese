@@ -13,6 +13,7 @@ import { UnauthorizedComponent } from './shared/components/unauthorized/unauthor
 
 import { HomeComponent } from './pages/home/home.component';
 
+import { LearnComponent } from './pages/learn/learn.component';
 import { TypingComponent } from './pages/typing/typing.component';
 
 import { FlashComponent } from './pages/flash/flash.component';
@@ -44,6 +45,7 @@ import { AddExampleModalComponent } from './pages/manage/edit-flash/add-example-
 
     HomeComponent,
 
+    LearnComponent,
     TypingComponent,
 
     FlashComponent,

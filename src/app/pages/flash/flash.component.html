@@ -1,16 +1,7 @@
-<app-title
-  [title]="{
-    english: 'Flash Cards',
-    vietnamese: 'Thẻ học từ'
-  }"
-  [subTitle]="{
-    english: 'Learn common Vietnamese words and practice',
-    vietnamese: 'Học và luyện tâp từ vựng tiếng Việt thông dụng'
-  }"
-></app-title>
-
 <app-loading *ngIf="loading"></app-loading>
 <div [ngClass]="loading ? 'container blur' : 'container'">
+  <app-title [title]="{ english: 'Flash Cards', vietnamese: '' }"></app-title>
+
   <div class="row center mb-2">
     <div class="col-4">
       <button type="button" class="btn btn-primary" (click)="previousCard()">

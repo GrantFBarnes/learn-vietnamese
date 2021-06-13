@@ -1,23 +1,18 @@
-<app-title
-  [title]="{ english: 'Not Authorized', vietnamese: '' }"
-  [subTitle]="{
-    english: 'Please enter the secret below to gain access to edit',
-    vietnamese: ''
-  }"
-></app-title>
-
 <div class="container">
+  <app-title
+    [title]="{ english: 'Not Authorized', vietnamese: '' }"
+  ></app-title>
+
   <div class="row center mb-3">
     <div class="col-12">
       <input
         type="text"
         class="form-control bg-dark text-center"
-        placeholder="Edit Secret"
         [(ngModel)]="edit_secret"
       />
     </div>
   </div>
-  <div class="row center">
+  <div class="row center mb-3">
     <div class="col-12">
       <button type="submit" class="btn btn-danger" (click)="submit()">
         Submit

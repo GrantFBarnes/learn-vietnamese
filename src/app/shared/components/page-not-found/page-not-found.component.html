@@ -1,12 +1,14 @@
-<app-title
-  [title]="{
-    english: '404 Page Not Found',
-    vietnamese: '404 Không tìm thấy trang'
-  }"
-  [subTitle]="{
-    english:
-      'The page you are attempting to visit does not exist. Please use the navigation menu to find a valid page.',
-    vietnamese:
-      'Trang bạn đang cố gắng truy cập không tồn tại. Vui lòng sử dụng menu điều hướng để tìm một trang hợp lệ.'
-  }"
-></app-title>
+<div class="container">
+  <app-title
+    [title]="{ english: '404 Page Not Found', vietnamese: '' }"
+  ></app-title>
+
+  <div class="row center mb-3">
+    <div class="col-12">
+      <p>
+        The page you are attempting to visit does not exist. Please use the
+        navigation menu to find a valid page.
+      </p>
+    </div>
+  </div>
+</div>
