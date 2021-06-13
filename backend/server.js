@@ -7,6 +7,8 @@ const ossc = require("openssl-self-signed-certificate");
 const parser = require("body-parser");
 const session = require("express-session");
 
+const database = require("./database");
+
 const appName = "learn-vietnamese";
 const staticBuildFile = "./dist/" + appName;
 
@@ -45,6 +47,16 @@ app.use(function (req, res, next) {
 
 ////////////////////////////////////////////////////////////////////////////////
 app.get("*", function (request, response) {
+  if (process.env.GFB_HOSTING_ENV === "prod") {
+    database
+      .create("connections", {
+        ip: request.socket.remoteAddress,
+        url: request.url,
+        time: new Date().toISOString().replace("T", " ").slice(0, 19),
+      })
+      .then(() => {})
+      .catch(() => {});
+  }
   response.sendFile("index.html", { root: staticBuildFile });
 });
 
