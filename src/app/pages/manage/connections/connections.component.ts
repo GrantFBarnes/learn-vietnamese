@@ -9,6 +9,8 @@ import { Connection } from '../../../shared/interfaces/connection';
   styleUrls: ['./connections.component.css'],
 })
 export class ConnectionsComponent implements OnInit {
+  authorized: boolean = false;
+
   connections: Connection[] = [];
 
   ip_connections: { [ip: string]: number } = {};
@@ -19,7 +21,7 @@ export class ConnectionsComponent implements OnInit {
 
   constructor(private httpService: HttpService) {}
 
-  ngOnInit(): void {
+  getConnections(): void {
     this.httpService.get('/api/dump/connections').subscribe((data: any) => {
       this.connections = data;
 
@@ -36,6 +38,27 @@ export class ConnectionsComponent implements OnInit {
       }
       this.total_ips = Object.keys(this.ip_connections).length;
       this.total_days = Object.keys(this.day_connections).length;
+    });
+  }
+
+  authorize(): void {
+    this.authorized = true;
+    this.getConnections();
+  }
+
+  ngOnInit(): void {
+    // redirect to https if not localhost
+    if (!window.origin.includes('local')) {
+      if (location.protocol !== 'https:') {
+        location.replace(
+          'https:' + location.href.substring(location.protocol.length)
+        );
+      }
+    }
+
+    this.httpService.get('/api/authenticated').subscribe({
+      next: () => this.authorize(),
+      error: () => (this.authorized = false),
     });
   }
 }
