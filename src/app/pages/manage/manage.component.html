@@ -1,0 +1,30 @@
+<app-unauthorized
+  *ngIf="!authorized"
+  (authorizeEvent)="authorize()"
+></app-unauthorized>
+
+<div *ngIf="authorized" class="container">
+  <app-title [title]="{ english: 'Manage', vietnamese: '' }"></app-title>
+  <div class="row">
+    <div class="col-md-4 mb-2">
+      <div class="card bg-dark">
+        <div class="card-body">
+          <h3 class="card-title">Edit Flash Cards</h3>
+          <p class="card-text">
+            Here you can add/remove/edit flash cards, their examples, and the
+            audio files associated with each.
+          </p>
+          <div class="center">
+            <button
+              type="button"
+              class="btn btn-primary"
+              routerLink="/edit/flash"
+            >
+              Go
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
