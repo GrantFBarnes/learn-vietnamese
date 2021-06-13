@@ -21,3 +21,12 @@ CREATE TABLE examples (
     PRIMARY KEY (id),
     FOREIGN KEY (card) REFERENCES cards(id) ON DELETE CASCADE
 );
+
+
+CREATE TABLE connections (
+    id INT NOT NULL AUTO_INCREMENT,
+    ip VARCHAR(40) NOT NULL,
+    url VARCHAR(128) NOT NULL,
+    time DATETIME NOT NULL,
+    PRIMARY KEY (id)
+);

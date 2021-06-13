@@ -2,6 +2,7 @@ const express = require("express");
 
 const audio = require("./audio.js");
 const authentication = require("./authentication.js");
+const database = require("./database.js");
 const main = require("./main.js");
 
 const router = express.Router();
@@ -41,6 +42,17 @@ function returnPromiseResponse(response, promise) {
     });
 }
 
+function logConnection(request) {
+  database
+    .create("connections", {
+      ip: request.socket.remoteAddress,
+      url: request.url,
+      time: new Date().toISOString().replace("T", " ").slice(0, 19),
+    })
+    .then(() => {})
+    .catch(() => {});
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 // APIs defined here
@@ -50,6 +62,7 @@ function returnPromiseResponse(response, promise) {
 
 // Heartbeat to make sure server is running
 router.get("/api/heartbeat", (request, response) => {
+  logConnection(request);
   returnSuccess(response);
 });
 
