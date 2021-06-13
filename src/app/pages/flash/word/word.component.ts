@@ -22,6 +22,7 @@ export class WordComponent implements OnInit {
 
   ngOnChanges(): void {
     this.audio = null;
+    if (this.is_iphone) return;
     this.httpService.getAudio('/api/audio/card/' + this.card.id).subscribe({
       next: (blob: Blob) => {
         this.audio = {

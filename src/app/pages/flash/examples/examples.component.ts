@@ -26,6 +26,7 @@ export class ExamplesComponent implements OnInit {
   }
 
   playAudio(id: number): void {
+    if (this.is_iphone) return;
     this.httpService.getAudio('/api/audio/example/' + id).subscribe({
       next: (blob: Blob) => {
         const sound = new Audio(URL.createObjectURL(blob));
