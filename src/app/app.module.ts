@@ -26,11 +26,11 @@ import { QuizComponent } from './pages/quiz/quiz.component';
 import { AnswerComponent } from './pages/quiz/answer/answer.component';
 
 import { ManageComponent } from './pages/manage/manage.component';
-import { EditFlashComponent } from './pages/edit/edit-flash/edit-flash.component';
-import { EditCardModalComponent } from './pages/edit/edit-flash/edit-card-modal/edit-card-modal.component';
-import { EditExampleModalComponent } from './pages/edit/edit-flash/edit-example-modal/edit-example-modal.component';
-import { AddCardModalComponent } from './pages/edit/edit-flash/add-card-modal/add-card-modal.component';
-import { AddExampleModalComponent } from './pages/edit/edit-flash/add-example-modal/add-example-modal.component';
+import { EditFlashComponent } from './pages/manage/edit-flash/edit-flash.component';
+import { EditCardModalComponent } from './pages/manage/edit-flash/edit-card-modal/edit-card-modal.component';
+import { EditExampleModalComponent } from './pages/manage/edit-flash/edit-example-modal/edit-example-modal.component';
+import { AddCardModalComponent } from './pages/manage/edit-flash/add-card-modal/add-card-modal.component';
+import { AddExampleModalComponent } from './pages/manage/edit-flash/add-example-modal/add-example-modal.component';
 
 @NgModule({
   declarations: [
