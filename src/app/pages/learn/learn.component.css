@@ -1,0 +1,19 @@
+#markListTable {
+  max-width: 160px;
+}
+
+#markExamplesTable {
+  max-width: 280px;
+}
+
+#allVowelsTable {
+  max-width: 500px;
+}
+
+code {
+  font-size: large;
+}
+
+ul {
+  padding-left: 60px;
+}

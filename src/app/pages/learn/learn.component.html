@@ -3,7 +3,7 @@
     [title]="{ english: 'Learn the Basics', vietnamese: '' }"
   ></app-title>
 
-  <div class="row py-2">
+  <div class="row mb-2">
     <h3>Vietnamese Alphabet</h3>
     <p>
       <code>
@@ -21,57 +21,142 @@
     </p>
   </div>
 
-  <div class="row py-2">
+  <div class="row mb-2">
     <h3>The Five Accent Marks/Diacritics</h3>
+
     <p>
       The following marks are able to be applied to any vowels (including the
       ones above that already have marks).
     </p>
-    <table class="table table-dark center align-middle mx-auto">
+    <table
+      id="markListTable"
+      class="table table-dark center align-middle mx-auto"
+    >
       <thead>
         <tr>
           <th>Name</th>
           <th>Mark</th>
-          <th>Example</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <th>acute</th>
+          <td>acute</td>
           <td>´</td>
-          <th>á</th>
         </tr>
         <tr>
-          <th>grave</th>
+          <td>grave</td>
           <td>`</td>
-          <th>à</th>
         </tr>
         <tr>
-          <th>hook</th>
+          <td>hook</td>
           <td>̉</td>
-          <th>ả</th>
         </tr>
         <tr>
-          <th>tilde</th>
+          <td>tilde</td>
           <td>~</td>
-          <th>ã</th>
         </tr>
         <tr>
-          <th>dot</th>
+          <td>dot</td>
           <td>.</td>
-          <th>ạ</th>
         </tr>
       </tbody>
     </table>
+
+    <p>
+      Here is an example of each mark used on "la" and the corresponding
+      translation to show how these marks can make all the difference.
+    </p>
+    <table
+      id="markExamplesTable"
+      class="table table-dark center align-middle mx-auto"
+    >
+      <thead>
+        <tr>
+          <th>Example</th>
+          <th>Translation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>la</td>
+          <td>to yell; scold</td>
+        </tr>
+        <tr>
+          <td>lá</td>
+          <td>leaf (on a tree)</td>
+        </tr>
+        <tr>
+          <td>là</td>
+          <td>to be</td>
+        </tr>
+        <tr>
+          <td>lả</td>
+          <td>to faint</td>
+        </tr>
+        <tr>
+          <td>lã</td>
+          <td>plain (plain water)</td>
+        </tr>
+        <tr>
+          <td>lạ</td>
+          <td>strange</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Here is how to pronounce each of these examples.</p>
+    <ul>
+      <li>
+        <p>
+          No Accent (<code>la</code>) - The level tone is produced at a
+          relatively high pitch. Think of the pitch like when you stick out your
+          tongue and say "ah" at the doctor's office.
+        </p>
+      </li>
+      <li>
+        <p>
+          Acute (<code>lá</code>) - This has a rising tone, so it has a very
+          high and rising pitch when pronounced.
+        </p>
+      </li>
+      <li>
+        <p>
+          Grave (<code>là</code>) - This has a falling tone, so it has a rather
+          low and falling pitch when pronounced.
+        </p>
+      </li>
+      <li>
+        <p>
+          Hook (<code>lả</code>) - This has a low-rising tone, so it starts at a
+          low pitch and then rises when pronounced.
+        </p>
+      </li>
+      <li>
+        <p>
+          Tilde (<code>lã</code>) - This has a broken low-rising tone when
+          pronounced. Meaning the voice starts low and rises abruptly, resulting
+          in airflow being temporarily blocked causing a "break".
+        </p>
+      </li>
+      <li>
+        <p>
+          Dot (<code>lạ</code>) - This has a low tone, so it is pronounced using
+          the lowest tone possible.
+        </p>
+      </li>
+    </ul>
   </div>
 
-  <div class="row py-2">
+  <div class="row mb-2">
     <h3>All Vowels</h3>
     <p>
       The following lays out all possible vowels in the Vietnamese language
       using the marks above. That comes out to a total of 66 vowels.
     </p>
-    <table class="table table-dark center align-middle mx-auto">
+    <table
+      id="allVowelsTable"
+      class="table table-dark center align-middle mx-auto"
+    >
       <thead>
         <tr>
           <th></th>
