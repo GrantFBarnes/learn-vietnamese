@@ -47,7 +47,9 @@ function logConnection(request) {
   database
     .create("connections", {
       ip: request.socket.remoteAddress,
+      method: request.method,
       url: request.url,
+      is_api: true,
       time: new Date().toISOString().replace("T", " ").slice(0, 19),
     })
     .then(() => {})

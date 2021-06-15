@@ -71,14 +71,18 @@
               <thead>
                 <tr>
                   <th>IP Address</th>
+                  <th>Method</th>
                   <th>URL</th>
+                  <th>API</th>
                   <th>Time</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let connection of connections">
                   <td>{{ connection.ip }}</td>
+                  <td>{{ connection.method }}</td>
                   <td>{{ connection.url }}</td>
+                  <td>{{ connection.is_api ? "True" : "False" }}</td>
                   <td>{{ connection.time }}</td>
                 </tr>
               </tbody>

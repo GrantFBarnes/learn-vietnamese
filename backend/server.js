@@ -51,7 +51,9 @@ app.get("*", function (request, response) {
     database
       .create("connections", {
         ip: request.socket.remoteAddress,
+        method: request.method,
         url: request.url,
+        is_api: false,
         time: new Date().toISOString().replace("T", " ").slice(0, 19),
       })
       .then(() => {})
