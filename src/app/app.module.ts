@@ -27,7 +27,13 @@ import { QuizComponent } from './pages/quiz/quiz.component';
 import { AnswerComponent } from './pages/quiz/answer/answer.component';
 
 import { ManageComponent } from './pages/manage/manage.component';
+
 import { ConnectionsComponent } from './pages/manage/connections/connections.component';
+
+import { EditCategoriesComponent } from './pages/manage/edit-categories/edit-categories.component';
+import { EditCategoryModalComponent } from './pages/manage/edit-categories/edit-category-modal/edit-category-modal.component';
+import { AddCategoryModalComponent } from './pages/manage/edit-categories/add-category-modal/add-category-modal.component';
+
 import { EditFlashComponent } from './pages/manage/edit-flash/edit-flash.component';
 import { EditCardModalComponent } from './pages/manage/edit-flash/edit-card-modal/edit-card-modal.component';
 import { EditExampleModalComponent } from './pages/manage/edit-flash/edit-example-modal/edit-example-modal.component';
@@ -59,7 +65,13 @@ import { AddExampleModalComponent } from './pages/manage/edit-flash/add-example-
     AnswerComponent,
 
     ManageComponent,
+
     ConnectionsComponent,
+
+    EditCategoriesComponent,
+    EditCategoryModalComponent,
+    AddCategoryModalComponent,
+
     EditFlashComponent,
     EditCardModalComponent,
     EditExampleModalComponent,

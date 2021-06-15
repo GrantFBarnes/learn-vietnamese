@@ -22,6 +22,20 @@ CREATE TABLE examples (
     FOREIGN KEY (card) REFERENCES cards(id) ON DELETE CASCADE
 );
 
+CREATE TABLE categories (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(64) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE cards_categories (
+    id INT NOT NULL AUTO_INCREMENT,
+    card INT NOT NULL,
+    category INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (card) REFERENCES cards(id) ON DELETE CASCADE,
+    FOREIGN KEY (category) REFERENCES categories(id) ON DELETE CASCADE
+);
 
 CREATE TABLE connections (
     id INT NOT NULL AUTO_INCREMENT,

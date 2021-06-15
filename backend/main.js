@@ -11,7 +11,7 @@ function getDataDump(table) {
       return;
     }
 
-    const tables = new Set(["cards", "examples", "connections"]);
+    const tables = new Set(["cards", "examples", "categories", "connections"]);
     if (!tables.has(table)) {
       resolve({ statusCode: 500, data: "table not valid" });
       return;
@@ -267,6 +267,119 @@ function deleteExample(id) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Categories
+
+function getCategoryIds() {
+  return new Promise((resolve) => {
+    database
+      .select("id", "categories", null, null)
+      .then((result) => {
+        let ids = [];
+        for (let i in result) {
+          if (!result[i].id) continue;
+          ids.push(result[i].id);
+        }
+        resolve({ statusCode: 200, data: ids });
+        return;
+      })
+      .catch(() => {
+        resolve({ statusCode: 400, data: "failed to get category ids" });
+        return;
+      });
+  });
+}
+
+function getCategory(id) {
+  return new Promise((resolve) => {
+    if (!id) {
+      resolve({ statusCode: 500, data: "id not provided" });
+      return;
+    }
+
+    const fail = { statusCode: 400, data: "failed to get category: " + id };
+    database
+      .select("*", "categories", "id", [id])
+      .then((result) => {
+        if (result.length !== 1) {
+          resolve(fail);
+          return;
+        }
+        resolve({ statusCode: 200, data: result[0] });
+        return;
+      })
+      .catch(() => {
+        resolve(fail);
+        return;
+      });
+  });
+}
+
+function updateCategory(data) {
+  return new Promise((resolve) => {
+    if (!data) {
+      resolve({ statusCode: 500, data: "data not provided" });
+      return;
+    }
+
+    if (!data.id) {
+      resolve({ statusCode: 500, data: "data not valid" });
+      return;
+    }
+
+    database
+      .update("categories", data)
+      .then((result) => {
+        resolve({ statusCode: 200, data: result });
+        return;
+      })
+      .catch(() => {
+        resolve({ statusCode: 400, data: "failed to update category" });
+        return;
+      });
+  });
+}
+
+function createCategory(data) {
+  return new Promise((resolve) => {
+    if (!data) {
+      resolve({ statusCode: 500, data: "data not provided" });
+      return;
+    }
+
+    database
+      .create("categories", data)
+      .then((result) => {
+        resolve({ statusCode: 200, data: result });
+        return;
+      })
+      .catch(() => {
+        resolve({ statusCode: 400, data: "failed to create category" });
+        return;
+      });
+  });
+}
+
+function deleteCategory(id) {
+  return new Promise((resolve) => {
+    if (!id) {
+      resolve({ statusCode: 500, data: "id not provided" });
+      return;
+    }
+
+    database
+      .deleteById("categories", id)
+      .then((result) => {
+        resolve({ statusCode: 200, data: result });
+        return;
+      })
+      .catch(() => {
+        resolve({ statusCode: 400, data: "failed to delete category" });
+        return;
+      });
+  });
+}
+
+////////////////////////////////////////////////////////////////////////////////
 
 module.exports.getDataDump = getDataDump;
 
@@ -281,3 +394,9 @@ module.exports.getCardExamples = getCardExamples;
 module.exports.updateExample = updateExample;
 module.exports.createExample = createExample;
 module.exports.deleteExample = deleteExample;
+
+module.exports.getCategoryIds = getCategoryIds;
+module.exports.getCategory = getCategory;
+module.exports.updateCategory = updateCategory;
+module.exports.createCategory = createCategory;
+module.exports.deleteCategory = deleteCategory;

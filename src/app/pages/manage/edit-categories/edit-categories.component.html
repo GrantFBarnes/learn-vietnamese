@@ -1,0 +1,68 @@
+<app-unauthorized
+  *ngIf="!authorized"
+  (authorizeEvent)="authorize()"
+></app-unauthorized>
+
+<div *ngIf="authorized" class="container">
+  <app-title
+    [title]="{ english: 'Edit Categories', vietnamese: '' }"
+  ></app-title>
+
+  <div class="row">
+    <table class="table table-dark table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th class="center">Edit</th>
+          <th class="center">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let category of categories; index as idx">
+          <tr class="align-middle">
+            <td>{{ category.id }}</td>
+            <td>{{ category.name }}</td>
+            <td class="center">
+              <button
+                (click)="selectCategory(idx)"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#editCategoryModal"
+              >
+                <i class="bi bi-pencil-square"></i>
+              </button>
+            </td>
+            <td class="center">
+              <button
+                class="btn btn-danger"
+                (click)="deleteCategory(category.id)"
+              >
+                <i class="bi bi-trash-fill"></i>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <div class="right">
+    <button
+      class="btn btn-success"
+      data-bs-toggle="modal"
+      data-bs-target="#addCategoryModal"
+    >
+      <i class="bi bi-plus"></i>
+      Add Category
+    </button>
+  </div>
+</div>
+
+<app-edit-category-modal
+  [category]="category"
+  (saveCategoryEvent)="saveCategory($event)"
+></app-edit-category-modal>
+
+<app-add-category-modal
+  (addCategoryEvent)="addCategory($event)"
+></app-add-category-modal>

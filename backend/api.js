@@ -260,6 +260,51 @@ router.post("/api/audio/example/:id", (request, response) => {
 });
 
 ////////////////////////////////////////////////////////////////////////////////
+// Categories
+
+// Get all category ids
+router.get("/api/categories", (request, response) => {
+  logConnection(request);
+  returnPromiseResponse(response, main.getCategoryIds());
+});
+
+// Get category by id
+router.get("/api/category/:id", (request, response) => {
+  logConnection(request);
+  returnPromiseResponse(response, main.getCategory(request.params.id));
+});
+
+// Update category with new values
+router.put("/api/category", (request, response) => {
+  logConnection(request);
+  if (!authentication.isAuthorized(request)) {
+    rejectUnauthorized(response);
+    return;
+  }
+  returnPromiseResponse(response, main.updateCategory(request.body));
+});
+
+// Create new category
+router.post("/api/category", (request, response) => {
+  logConnection(request);
+  if (!authentication.isAuthorized(request)) {
+    rejectUnauthorized(response);
+    return;
+  }
+  returnPromiseResponse(response, main.createCategory(request.body));
+});
+
+// Delete category by id
+router.delete("/api/category/:id", (request, response) => {
+  logConnection(request);
+  if (!authentication.isAuthorized(request)) {
+    rejectUnauthorized(response);
+    return;
+  }
+  returnPromiseResponse(response, main.deleteCategory(request.params.id));
+});
+
+////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 module.exports = router;
