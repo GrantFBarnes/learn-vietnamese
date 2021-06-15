@@ -8,88 +8,69 @@
 
   <div class="row mb-2">
     <div class="col-md-6 mb-2">
-      <div class="card bg-dark">
-        <div class="card-body">
-          <h3 class="card-title">IP Addresses</h3>
-          <div class="card-text">
-            Total IP Addresses: <code>{{ total_ips }}</code>
-            <br />
-            <table class="table table-dark">
-              <thead>
-                <tr>
-                  <th>IP Address</th>
-                  <th>Connections</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of ip_connections | keyvalue">
-                  <td>{{ item.key }}</td>
-                  <td>{{ item.value }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <h3>
+        Total Connections: <code>{{ total_connections }}</code>
+      </h3>
     </div>
     <div class="col-md-6 mb-2">
-      <div class="card bg-dark">
-        <div class="card-body">
-          <h3 class="card-title">Days</h3>
-          <div class="card-text">
-            Total Days: <code>{{ total_days }}</code>
-            - Average Per Day:
-            <code>{{ connections.length / total_days }}</code>
-            <br />
-            <table class="table table-dark">
-              <thead>
-                <tr>
-                  <th>Day</th>
-                  <th>Connections</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of day_connections | keyvalue">
-                  <td>{{ item.key }}</td>
-                  <td>{{ item.value }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <h3>
+        Total IP Addresses: <code>{{ total_ips }}</code>
+      </h3>
     </div>
   </div>
   <div class="row mb-2">
     <div class="col-12 mb-2">
-      <div class="card bg-dark">
-        <div class="card-body">
-          <h3 class="card-title">All Connections</h3>
-          <div class="card-text">
-            Total Connections: <code>{{ connections.length }}</code> <br />
-            <table class="table table-dark">
-              <thead>
-                <tr>
-                  <th>IP Address</th>
-                  <th>Method</th>
-                  <th>URL</th>
-                  <th>API</th>
-                  <th>Time</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let connection of connections">
-                  <td>{{ connection.ip }}</td>
-                  <td>{{ connection.method }}</td>
-                  <td>{{ connection.url }}</td>
-                  <td>{{ connection.is_api ? "True" : "False" }}</td>
-                  <td>{{ connection.time }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th class="center">
+              <div class="clickable" (click)="toggleIPShowAll()">
+                <i *ngIf="!ip_show_all" class="bi bi-chevron-down"></i>
+                <i *ngIf="ip_show_all" class="bi bi-chevron-up"></i>
+              </div>
+            </th>
+            <th>IP Address</th>
+            <th>Connections</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let item of ip_connections | keyvalue">
+            <tr>
+              <td class="center">
+                <div class="clickable" (click)="toggleIPShow(item.key)">
+                  <i *ngIf="!ip_show[item.key]" class="bi bi-chevron-down"></i>
+                  <i *ngIf="ip_show[item.key]" class="bi bi-chevron-up"></i>
+                </div>
+              </td>
+              <td>{{ item.key }}</td>
+              <td>{{ item.value.length }}</td>
+            </tr>
+            <tr *ngIf="ip_show[item.key]">
+              <td></td>
+              <td colspan="2">
+                <table class="table table-dark">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>URL</th>
+                      <th>API</th>
+                      <th>Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let connection of item.value">
+                      <td>{{ connection.method }}</td>
+                      <td>{{ connection.url }}</td>
+                      <td>{{ connection.is_api ? "True" : "False" }}</td>
+                      <td>{{ connection.time }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
