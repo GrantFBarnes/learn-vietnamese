@@ -1,0 +1,13 @@
+button,
+label {
+  width: 100%;
+  text-align: left;
+}
+
+hr {
+  margin: 0px;
+}
+
+#cardList {
+  max-height: 60vh;
+}

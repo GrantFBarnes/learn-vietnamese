@@ -1,0 +1,52 @@
+<div class="container">
+  <app-title
+    [title]="{ english: 'Flash Card Categories', vietnamese: '' }"
+  ></app-title>
+
+  <div class="row mb-2">
+    <div class="col-md-6 mb-2">
+      <div class="card bg-dark">
+        <div class="card-body">
+          <h3 class="card-title">Flash Cards</h3>
+          <div id="cardList" class="card-text overflow-auto">
+            <ng-container *ngFor="let card of cards; index as idx">
+              <button
+                type="button"
+                [ngClass]="
+                  card_index === idx ? 'btn btn-primary' : 'btn btn-ghost'
+                "
+                (click)="selectCard(idx)"
+              >
+                {{ card.translation }}
+              </button>
+              <hr />
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-2">
+      <div class="card bg-dark">
+        <div class="card-body">
+          <h3 class="card-title">Categories</h3>
+          <div id="categoryList" class="card-text overflow-auto">
+            <ng-container *ngFor="let category of categories; index as idx">
+              <input type="checkbox" class="btn-check" autocomplete="off" />
+              <label
+                [ngClass]="
+                  category_indexes.has(idx)
+                    ? 'btn btn-primary'
+                    : 'btn btn-ghost'
+                "
+                (click)="toggleCategory(idx)"
+              >
+                {{ category.name }}
+              </label>
+              <hr />
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

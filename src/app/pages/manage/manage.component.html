@@ -6,7 +6,66 @@
 <div *ngIf="authorized" class="container">
   <app-title [title]="{ english: 'Manage', vietnamese: '' }"></app-title>
 
-  <div class="row">
+  <div class="row mb-2">
+    <div class="col-md-4 mb-2">
+      <div class="card bg-dark">
+        <div class="card-body">
+          <h3 class="card-title">Categories</h3>
+          <p class="card-text">Here you can add/remove/edit categories.</p>
+          <div class="center">
+            <button
+              type="button"
+              class="btn btn-primary"
+              routerLink="/manage/categories"
+            >
+              Go
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-2">
+      <div class="card bg-dark">
+        <div class="card-body">
+          <h3 class="card-title">Flash Cards</h3>
+          <p class="card-text">
+            Here you can add/remove/edit flash cards, their examples, and the
+            audio files associated with each.
+          </p>
+          <div class="center">
+            <button
+              type="button"
+              class="btn btn-primary"
+              routerLink="/manage/flash"
+            >
+              Go
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-2">
+      <div class="card bg-dark">
+        <div class="card-body">
+          <h3 class="card-title">Flash Card Categories</h3>
+          <p class="card-text">
+            Here you can assign flash cards to different categories.
+          </p>
+          <div class="center">
+            <button
+              type="button"
+              class="btn btn-primary"
+              routerLink="/manage/flash-categories"
+            >
+              Go
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-2">
     <div class="col-md-4 mb-2">
       <div class="card bg-dark">
         <div class="card-body">
@@ -26,42 +85,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4 mb-2">
-      <div class="card bg-dark">
-        <div class="card-body">
-          <h3 class="card-title">Edit Categories</h3>
-          <p class="card-text">Here you can add/remove/edit categories.</p>
-          <div class="center">
-            <button
-              type="button"
-              class="btn btn-primary"
-              routerLink="/manage/categories"
-            >
-              Go
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 mb-2">
-      <div class="card bg-dark">
-        <div class="card-body">
-          <h3 class="card-title">Edit Flash Cards</h3>
-          <p class="card-text">
-            Here you can add/remove/edit flash cards, their examples, and the
-            audio files associated with each.
-          </p>
-          <div class="center">
-            <button
-              type="button"
-              class="btn btn-primary"
-              routerLink="/manage/flash"
-            >
-              Go
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="col-md-4 mb-2"></div>
+    <div class="col-md-4 mb-2"></div>
   </div>
 </div>

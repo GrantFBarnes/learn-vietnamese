@@ -40,6 +40,8 @@ import { EditExampleModalComponent } from './pages/manage/edit-flash/edit-exampl
 import { AddCardModalComponent } from './pages/manage/edit-flash/add-card-modal/add-card-modal.component';
 import { AddExampleModalComponent } from './pages/manage/edit-flash/add-example-modal/add-example-modal.component';
 
+import { EditFlashCategoriesComponent } from './pages/manage/edit-flash-categories/edit-flash-categories.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,6 +79,8 @@ import { AddExampleModalComponent } from './pages/manage/edit-flash/add-example-
     EditExampleModalComponent,
     AddCardModalComponent,
     AddExampleModalComponent,
+
+    EditFlashCategoriesComponent,
   ],
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   providers: [],

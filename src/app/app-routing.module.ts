@@ -10,6 +10,7 @@ import { ManageComponent } from './pages/manage/manage.component';
 import { ConnectionsComponent } from './pages/manage/connections/connections.component';
 import { EditCategoriesComponent } from './pages/manage/edit-categories/edit-categories.component';
 import { EditFlashComponent } from './pages/manage/edit-flash/edit-flash.component';
+import { EditFlashCategoriesComponent } from './pages/manage/edit-flash-categories/edit-flash-categories.component';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'manage/connections', component: ConnectionsComponent },
   { path: 'manage/categories', component: EditCategoriesComponent },
   { path: 'manage/flash', component: EditFlashComponent },
+  { path: 'manage/flash-categories', component: EditFlashCategoriesComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];
