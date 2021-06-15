@@ -11,7 +11,13 @@ function getDataDump(table) {
       return;
     }
 
-    const tables = new Set(["cards", "examples", "categories", "connections"]);
+    const tables = new Set([
+      "cards",
+      "examples",
+      "categories",
+      "cards_categories",
+      "connections",
+    ]);
     if (!tables.has(table)) {
       resolve({ statusCode: 500, data: "table not valid" });
       return;
@@ -380,6 +386,49 @@ function deleteCategory(id) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Flash Card Categories
+
+function createCardCategory(data) {
+  return new Promise((resolve) => {
+    if (!data) {
+      resolve({ statusCode: 500, data: "data not provided" });
+      return;
+    }
+
+    database
+      .create("cards_categories", data)
+      .then((result) => {
+        resolve({ statusCode: 200, data: result });
+        return;
+      })
+      .catch(() => {
+        resolve({ statusCode: 400, data: "failed to create card category" });
+        return;
+      });
+  });
+}
+
+function deleteCardCategory(id) {
+  return new Promise((resolve) => {
+    if (!id) {
+      resolve({ statusCode: 500, data: "id not provided" });
+      return;
+    }
+
+    database
+      .deleteById("cards_categories", id)
+      .then((result) => {
+        resolve({ statusCode: 200, data: result });
+        return;
+      })
+      .catch(() => {
+        resolve({ statusCode: 400, data: "failed to delete card category" });
+        return;
+      });
+  });
+}
+
+////////////////////////////////////////////////////////////////////////////////
 
 module.exports.getDataDump = getDataDump;
 
@@ -400,3 +449,6 @@ module.exports.getCategory = getCategory;
 module.exports.updateCategory = updateCategory;
 module.exports.createCategory = createCategory;
 module.exports.deleteCategory = deleteCategory;
+
+module.exports.createCardCategory = createCardCategory;
+module.exports.deleteCardCategory = deleteCardCategory;

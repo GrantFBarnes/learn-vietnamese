@@ -12,30 +12,52 @@ import { Category } from '../../../shared/interfaces/category';
 export class EditFlashCategoriesComponent implements OnInit {
   authorized: boolean = false;
 
-  cards: Card[] = [];
-  categories: Category[] = [];
-
-  card_index: number = 0;
-  category_indexes: any = new Set();
+  card_id: string = '0';
+  cards: { [id: string]: Card } = {};
+  categories: { [id: string]: Category } = {};
+  cards_categories: { [id: string]: { [id: string]: number } } = {};
 
   constructor(private httpService: HttpService) {}
 
   getCards(): void {
     this.httpService.get('/api/dump/cards').subscribe((data: any) => {
-      this.cards = data;
+      for (let i in data) {
+        const row = data[i];
+        this.cards[row.id.toString()] = row;
+      }
     });
   }
 
   getCategories(): void {
     this.httpService.get('/api/dump/categories').subscribe((data: any) => {
-      this.categories = data;
+      for (let i in data) {
+        const row = data[i];
+        this.categories[row.id.toString()] = row;
+      }
     });
+  }
+
+  getCardCategories(): void {
+    this.httpService
+      .get('/api/dump/cards_categories')
+      .subscribe((data: any) => {
+        for (let i in data) {
+          const row = data[i];
+          const card_id = row.card.toString();
+          const category_id = row.category.toString();
+          if (!this.cards_categories[card_id]) {
+            this.cards_categories[card_id] = {};
+          }
+          this.cards_categories[card_id][category_id] = row.id;
+        }
+      });
   }
 
   authorize(): void {
     this.authorized = true;
     this.getCards();
     this.getCategories();
+    this.getCardCategories();
   }
 
   ngOnInit(): void {
@@ -54,16 +76,43 @@ export class EditFlashCategoriesComponent implements OnInit {
     });
   }
 
-  selectCard(idx: number): void {
-    this.card_index = idx;
-    this.category_indexes = new Set();
+  selectCard(id: string): void {
+    this.card_id = id;
   }
 
-  toggleCategory(idx: number): void {
-    if (this.category_indexes.has(idx)) {
-      this.category_indexes.delete(idx);
+  deleteCategory(id: string): void {
+    this.httpService
+      .delete('/api/card-category/' + this.cards_categories[this.card_id][id])
+      .subscribe({
+        next: () => delete this.cards_categories[this.card_id][id],
+        error: () => alert('Failed to delete category!'),
+      });
+  }
+
+  addCategory(id: string): void {
+    const card_category = {
+      card: parseInt(this.card_id),
+      category: parseInt(id),
+    };
+    this.httpService.post('/api/card-category', card_category).subscribe({
+      next: (res: any) => {
+        if (!this.cards_categories[this.card_id]) {
+          this.cards_categories[this.card_id] = {};
+        }
+        this.cards_categories[this.card_id][id] = res.insertId;
+      },
+      error: () => alert('Failed to add category!'),
+    });
+  }
+
+  toggleCategory(id: string): void {
+    if (
+      this.cards_categories[this.card_id] &&
+      this.cards_categories[this.card_id][id]
+    ) {
+      this.deleteCategory(id);
     } else {
-      this.category_indexes.add(idx);
+      this.addCategory(id);
     }
   }
 }

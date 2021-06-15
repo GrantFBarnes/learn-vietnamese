@@ -9,15 +9,15 @@
         <div class="card-body">
           <h3 class="card-title">Flash Cards</h3>
           <div id="cardList" class="card-text overflow-auto">
-            <ng-container *ngFor="let card of cards; index as idx">
+            <ng-container *ngFor="let item of cards | keyvalue">
               <button
                 type="button"
                 [ngClass]="
-                  card_index === idx ? 'btn btn-primary' : 'btn btn-ghost'
+                  card_id === item.key ? 'btn btn-primary' : 'btn btn-ghost'
                 "
-                (click)="selectCard(idx)"
+                (click)="selectCard(item.key)"
               >
-                {{ card.translation }}
+                {{ item.value.translation }}
               </button>
               <hr />
             </ng-container>
@@ -30,17 +30,18 @@
         <div class="card-body">
           <h3 class="card-title">Categories</h3>
           <div id="categoryList" class="card-text overflow-auto">
-            <ng-container *ngFor="let category of categories; index as idx">
+            <ng-container *ngFor="let item of categories | keyvalue">
               <input type="checkbox" class="btn-check" autocomplete="off" />
               <label
                 [ngClass]="
-                  category_indexes.has(idx)
+                  cards_categories[card_id] &&
+                  cards_categories[card_id][item.key]
                     ? 'btn btn-primary'
                     : 'btn btn-ghost'
                 "
-                (click)="toggleCategory(idx)"
+                (click)="toggleCategory(item.key)"
               >
-                {{ category.name }}
+                {{ item.value.name }}
               </label>
               <hr />
             </ng-container>

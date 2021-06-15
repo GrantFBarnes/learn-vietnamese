@@ -307,6 +307,29 @@ router.delete("/api/category/:id", (request, response) => {
 });
 
 ////////////////////////////////////////////////////////////////////////////////
+// Flash Card Categories
+
+// Create new flash card category relationship
+router.post("/api/card-category", (request, response) => {
+  logConnection(request);
+  if (!authentication.isAuthorized(request)) {
+    rejectUnauthorized(response);
+    return;
+  }
+  returnPromiseResponse(response, main.createCardCategory(request.body));
+});
+
+// Delete flash card category by id
+router.delete("/api/card-category/:id", (request, response) => {
+  logConnection(request);
+  if (!authentication.isAuthorized(request)) {
+    rejectUnauthorized(response);
+    return;
+  }
+  returnPromiseResponse(response, main.deleteCardCategory(request.params.id));
+});
+
+////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 module.exports = router;
