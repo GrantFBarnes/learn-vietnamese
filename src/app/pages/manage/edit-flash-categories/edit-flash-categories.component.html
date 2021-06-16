@@ -26,7 +26,7 @@
                     {{ card.translation }}
                   </div>
                   <div class="col-2 right">
-                    {{ card_category_count[card.id] }}
+                    {{ card_count[card.id] }}
                   </div>
                 </div>
               </button>
@@ -40,6 +40,10 @@
       <div class="card bg-dark">
         <div class="card-body">
           <h3 class="card-title">Categories</h3>
+          <div class="row">
+            <div class="col-10 left">Category</div>
+            <div class="col-2 right">Cards</div>
+          </div>
           <div id="categoryList" class="card-text overflow-auto">
             <ng-container *ngFor="let category of categories">
               <input type="checkbox" class="btn-check" autocomplete="off" />
@@ -52,7 +56,14 @@
                 "
                 (click)="toggleCategory(category.id)"
               >
-                {{ category.name }}
+                <div class="row">
+                  <div class="col-10 left">
+                    {{ category.name }}
+                  </div>
+                  <div class="col-2 right">
+                    {{ category_count[category.id] }}
+                  </div>
+                </div>
               </label>
               <hr />
             </ng-container>
