@@ -13,20 +13,20 @@
             <div class="col-2 right">Categories</div>
           </div>
           <div id="cardList" class="card-text overflow-auto">
-            <ng-container *ngFor="let item of cards | keyvalue">
+            <ng-container *ngFor="let card of cards">
               <button
                 type="button"
                 [ngClass]="
-                  card_id === item.key ? 'btn btn-primary' : 'btn btn-ghost'
+                  card_id === card.id ? 'btn btn-primary' : 'btn btn-ghost'
                 "
-                (click)="selectCard(item.key)"
+                (click)="selectCard(card.id)"
               >
                 <div class="row">
                   <div class="col-10 left">
-                    {{ item.value.translation }}
+                    {{ card.translation }}
                   </div>
                   <div class="col-2 right">
-                    {{ card_category_count[item.key] }}
+                    {{ card_category_count[card.id] }}
                   </div>
                 </div>
               </button>
@@ -41,18 +41,18 @@
         <div class="card-body">
           <h3 class="card-title">Categories</h3>
           <div id="categoryList" class="card-text overflow-auto">
-            <ng-container *ngFor="let item of categories | keyvalue">
+            <ng-container *ngFor="let category of categories">
               <input type="checkbox" class="btn-check" autocomplete="off" />
               <label
                 [ngClass]="
                   cards_categories[card_id] &&
-                  cards_categories[card_id][item.key]
+                  cards_categories[card_id][category.id]
                     ? 'btn btn-primary'
                     : 'btn btn-ghost'
                 "
-                (click)="toggleCategory(item.key)"
+                (click)="toggleCategory(category.id)"
               >
-                {{ item.value.name }}
+                {{ category.name }}
               </label>
               <hr />
             </ng-container>
