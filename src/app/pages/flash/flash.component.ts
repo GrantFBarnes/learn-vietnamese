@@ -18,10 +18,12 @@ interface SectionsFlipped {
 })
 export class FlashComponent implements OnInit {
   loading: boolean = true;
-  ids: number[] = [];
-  idx: number = 0;
+
+  card_ids: number[] = [];
+  card_idx: number = 0;
   card: Card = { id: 0, word: '', translation: '' };
   examples: Example[] = [];
+
   flip_reset: SectionsFlipped = {
     word: true,
     translation: true,
@@ -40,7 +42,7 @@ export class FlashComponent implements OnInit {
 
   ngOnInit(): void {
     this.httpService.get('/api/cards').subscribe((data: any) => {
-      this.ids = data;
+      this.card_ids = data;
       this.onChange();
     });
 
@@ -74,7 +76,7 @@ export class FlashComponent implements OnInit {
 
   onChange(): void {
     this.loading = true;
-    const id = this.ids[this.idx];
+    const id = this.card_ids[this.card_idx];
     this.httpService.get('/api/card/' + id).subscribe((card: any) => {
       this.card = card;
       this.httpService.get('/api/examples/' + id).subscribe((examples: any) => {
@@ -86,28 +88,28 @@ export class FlashComponent implements OnInit {
   }
 
   previousCard(): void {
-    if (!this.ids.length) return;
-    if (this.idx == 0) {
-      this.idx = this.ids.length - 1;
+    if (!this.card_ids.length) return;
+    if (this.card_idx == 0) {
+      this.card_idx = this.card_ids.length - 1;
     } else {
-      this.idx = this.idx - 1;
+      this.card_idx = this.card_idx - 1;
     }
     this.onChange();
   }
 
   randomCard(): void {
-    if (!this.ids.length) return;
-    this.idx = Math.floor(Math.random() * this.ids.length);
+    if (!this.card_ids.length) return;
+    this.card_idx = Math.floor(Math.random() * this.card_ids.length);
     this.onChange();
   }
 
   nextCard(): void {
-    if (!this.ids.length) return;
-    const next = this.idx + 1;
-    if (next == this.ids.length) {
-      this.idx = 0;
+    if (!this.card_ids.length) return;
+    const next = this.card_idx + 1;
+    if (next == this.card_ids.length) {
+      this.card_idx = 0;
     } else {
-      this.idx = next;
+      this.card_idx = next;
     }
     this.onChange();
   }
