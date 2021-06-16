@@ -14,7 +14,7 @@
     </div>
     <div class="col-md-6 mb-2">
       <h3>
-        Total IP Addresses: <code>{{ total_ips }}</code>
+        Total IP Addresses: <code>{{ ip_connections_list.length }}</code>
       </h3>
     </div>
   </div>
@@ -34,18 +34,18 @@
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngFor="let item of ip_connections | keyvalue">
+          <ng-container *ngFor="let ip of ip_connections_list">
             <tr>
               <td class="center">
-                <div class="clickable" (click)="toggleIPShow(item.key)">
-                  <i *ngIf="!ip_show[item.key]" class="bi bi-chevron-down"></i>
-                  <i *ngIf="ip_show[item.key]" class="bi bi-chevron-up"></i>
+                <div class="clickable" (click)="toggleIPShow(ip)">
+                  <i *ngIf="!ip_show[ip]" class="bi bi-chevron-down"></i>
+                  <i *ngIf="ip_show[ip]" class="bi bi-chevron-up"></i>
                 </div>
               </td>
-              <td>{{ item.key }}</td>
-              <td>{{ item.value.length }}</td>
+              <td>{{ ip }}</td>
+              <td>{{ ip_connections[ip].length }}</td>
             </tr>
-            <tr *ngIf="ip_show[item.key]">
+            <tr *ngIf="ip_show[ip]">
               <td></td>
               <td colspan="2">
                 <table class="table table-dark">
@@ -58,7 +58,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let connection of item.value">
+                    <tr *ngFor="let connection of ip_connections[ip]">
                       <td>{{ connection.method }}</td>
                       <td>{{ connection.url }}</td>
                       <td>{{ connection.is_api ? "True" : "False" }}</td>

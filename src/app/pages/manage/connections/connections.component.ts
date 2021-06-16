@@ -12,7 +12,7 @@ export class ConnectionsComponent implements OnInit {
   authorized: boolean = false;
 
   total_connections: number = 0;
-  total_ips: number = 0;
+  ip_connections_list: string[] = [];
   ip_connections: { [ip: string]: Connection[] } = {};
   ip_show: { [ip: string]: boolean } = {};
   ip_show_all: boolean = false;
@@ -32,7 +32,15 @@ export class ConnectionsComponent implements OnInit {
 
         this.total_connections++;
       }
-      this.total_ips = Object.keys(this.ip_connections).length;
+
+      this.ip_connections_list = Object.keys(this.ip_connections);
+      this.ip_connections_list.sort((a: string, b: string) => {
+        const a_len = this.ip_connections[a].length;
+        const b_len = this.ip_connections[b].length;
+        if (a_len < b_len) return 1;
+        if (a_len > b_len) return -1;
+        return 0;
+      });
     });
   }
 
