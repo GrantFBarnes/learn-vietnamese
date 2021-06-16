@@ -1,32 +1,56 @@
-<div class="container">
+<app-unauthorized
+  *ngIf="!authorized"
+  (authorizeEvent)="authorize()"
+></app-unauthorized>
+
+<div *ngIf="authorized" class="container">
   <app-title
     [title]="{ english: 'Flash Card Categories', vietnamese: '' }"
   ></app-title>
 
+  <div class="row center mb-2">
+    <div class="col-12">
+      <button type="button" class="btn btn-secondary" (click)="togglePrimary()">
+        <i class="bi bi-arrow-left-right"></i>
+        Toggle Sides
+        <i class="bi bi-arrow-left-right"></i>
+      </button>
+    </div>
+  </div>
   <div class="row mb-2">
     <div class="col-md-6 mb-2">
       <div class="card bg-dark">
         <div class="card-body">
-          <h3 class="card-title">Flash Cards</h3>
+          <h3 class="card-title">
+            {{ primary_is_card ? "Flash Cards" : "Categories" }}
+          </h3>
           <div class="row">
-            <div class="col-10 left">Word</div>
-            <div class="col-2 right">Categories</div>
+            <div class="col-10 left">
+              {{ primary_is_card ? "Word" : "Category" }}
+            </div>
+            <div class="col-2 right">
+              {{ primary_is_card ? "Categories" : "Cards" }}
+            </div>
           </div>
-          <div id="cardList" class="card-text overflow-auto">
-            <ng-container *ngFor="let card of cards">
+          <div id="primaryList" class="card-text overflow-auto">
+            <ng-container *ngFor="let item of primary_list">
               <button
                 type="button"
                 [ngClass]="
-                  card_id === card.id ? 'btn btn-primary' : 'btn btn-ghost'
+                  primary_id === item.id ? 'btn btn-primary' : 'btn btn-ghost'
                 "
-                (click)="selectCard(card.id)"
+                (click)="selectPrimary(item.id)"
               >
                 <div class="row">
                   <div class="col-10 left">
-                    {{ card.translation }}
+                    {{ primary_is_card ? item.translation : item.name }}
                   </div>
                   <div class="col-2 right">
-                    {{ card_count[card.id] }}
+                    {{
+                      primary_is_card
+                        ? card_count[item.id]
+                        : category_count[item.id]
+                    }}
                   </div>
                 </div>
               </button>
@@ -39,32 +63,47 @@
     <div class="col-md-6 mb-2">
       <div class="card bg-dark">
         <div class="card-body">
-          <h3 class="card-title">Categories</h3>
+          <h3 class="card-title">
+            {{ primary_is_card ? "Categories" : "Flash Cards" }}
+          </h3>
           <div class="row">
-            <div class="col-10 left">Category</div>
-            <div class="col-2 right">Cards</div>
+            <div class="col-10 left">
+              {{ primary_is_card ? "Category" : "Word" }}
+            </div>
+            <div class="col-2 right">
+              {{ primary_is_card ? "Cards" : "Categories" }}
+            </div>
           </div>
-          <div id="categoryList" class="card-text overflow-auto">
-            <ng-container *ngFor="let category of categories">
-              <input type="checkbox" class="btn-check" autocomplete="off" />
-              <label
+          <div id="secondaryList" class="card-text overflow-auto">
+            <ng-container *ngFor="let item of secondary_list">
+              <button
+                type="button"
                 [ngClass]="
-                  cards_categories[card_id] &&
-                  cards_categories[card_id][category.id]
+                  primary_is_card
+                    ? cards_categories[primary_id] &&
+                      cards_categories[primary_id][item.id]
+                      ? 'btn btn-primary'
+                      : 'btn btn-ghost'
+                    : categories_cards[primary_id] &&
+                      categories_cards[primary_id][item.id]
                     ? 'btn btn-primary'
                     : 'btn btn-ghost'
                 "
-                (click)="toggleCategory(category.id)"
+                (click)="selectSecondary(item.id)"
               >
                 <div class="row">
                   <div class="col-10 left">
-                    {{ category.name }}
+                    {{ primary_is_card ? item.name : item.translation }}
                   </div>
                   <div class="col-2 right">
-                    {{ category_count[category.id] }}
+                    {{
+                      primary_is_card
+                        ? category_count[item.id]
+                        : card_count[item.id]
+                    }}
                   </div>
                 </div>
-              </label>
+              </button>
               <hr />
             </ng-container>
           </div>

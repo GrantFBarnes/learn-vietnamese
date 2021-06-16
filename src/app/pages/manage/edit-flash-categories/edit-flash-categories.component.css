@@ -8,7 +8,11 @@ hr {
   margin: 0px;
 }
 
-#cardList,
-#categoryList {
+.btn-secondary {
+  width: auto;
+}
+
+#primaryList,
+#secondaryList {
   max-height: 60vh;
 }

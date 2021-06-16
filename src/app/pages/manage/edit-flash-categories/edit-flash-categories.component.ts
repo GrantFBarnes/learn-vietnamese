@@ -12,34 +12,42 @@ import { Category } from '../../../shared/interfaces/category';
 export class EditFlashCategoriesComponent implements OnInit {
   authorized: boolean = false;
 
-  card_id: number = 0;
+  primary_is_card: boolean = true;
+  primary_id: number = 0;
+  primary_list: any[] = [];
+  secondary_list: any[] = [];
+
   cards: Card[] = [];
   categories: Category[] = [];
-  cards_categories: { [id: number]: { [id: number]: number } } = {};
+
   card_count: { [id: number]: number } = {};
   category_count: { [id: number]: number } = {};
+
+  cards_categories: { [id: number]: { [id: number]: number } } = {};
+  categories_cards: { [id: number]: { [id: number]: number } } = {};
 
   constructor(private httpService: HttpService) {}
 
   getCards(): void {
     this.httpService.get('/api/dump/cards').subscribe((data: any) => {
       data.sort((a: any, b: any) => {
-        const at = a.translation.toLowerCase();
-        const bt = b.translation.toLowerCase();
-        if (at < bt) return -1;
-        if (at > bt) return 1;
+        const a_translation = a.translation.toLowerCase();
+        const b_translation = b.translation.toLowerCase();
+        if (a_translation < b_translation) return -1;
+        if (a_translation > b_translation) return 1;
         return 0;
       });
       this.cards = data;
+      this.primary_list = data;
 
       for (let i in data) {
         const row = data[i];
         const card_id = row.id;
-        if (!this.cards_categories[card_id]) {
-          this.cards_categories[card_id] = {};
-        }
         if (!this.card_count[card_id]) {
           this.card_count[card_id] = 0;
+        }
+        if (!this.cards_categories[card_id]) {
+          this.cards_categories[card_id] = {};
         }
       }
     });
@@ -47,12 +55,24 @@ export class EditFlashCategoriesComponent implements OnInit {
 
   getCategories(): void {
     this.httpService.get('/api/dump/categories').subscribe((data: any) => {
+      data.sort((a: any, b: any) => {
+        const a_name = a.name.toLowerCase();
+        const b_name = b.name.toLowerCase();
+        if (a_name < b_name) return -1;
+        if (a_name > b_name) return 1;
+        return 0;
+      });
       this.categories = data;
+      this.secondary_list = data;
+
       for (let i in data) {
         const row = data[i];
         const category_id = row.id;
         if (!this.category_count[category_id]) {
           this.category_count[category_id] = 0;
+        }
+        if (!this.categories_cards[category_id]) {
+          this.categories_cards[category_id] = {};
         }
       }
     });
@@ -67,11 +87,6 @@ export class EditFlashCategoriesComponent implements OnInit {
           const card_id = row.card;
           const category_id = row.category;
 
-          if (!this.cards_categories[card_id]) {
-            this.cards_categories[card_id] = {};
-          }
-          this.cards_categories[card_id][category_id] = row.id;
-
           if (!this.card_count[card_id]) {
             this.card_count[card_id] = 0;
           }
@@ -81,6 +96,16 @@ export class EditFlashCategoriesComponent implements OnInit {
             this.category_count[category_id] = 0;
           }
           this.category_count[category_id]++;
+
+          if (!this.cards_categories[card_id]) {
+            this.cards_categories[card_id] = {};
+          }
+          this.cards_categories[card_id][category_id] = row.id;
+
+          if (!this.categories_cards[category_id]) {
+            this.categories_cards[category_id] = {};
+          }
+          this.categories_cards[category_id][card_id] = row.id;
         }
       });
   }
@@ -108,54 +133,86 @@ export class EditFlashCategoriesComponent implements OnInit {
     });
   }
 
-  selectCard(id: number): void {
-    this.card_id = id;
+  togglePrimary(): void {
+    this.primary_is_card = !this.primary_is_card;
+    this.primary_id = 0;
+    this.primary_list = this.primary_is_card ? this.cards : this.categories;
+    this.secondary_list = this.primary_is_card ? this.categories : this.cards;
   }
 
-  deleteCategory(id: number): void {
-    this.httpService
-      .delete('/api/card-category/' + this.cards_categories[this.card_id][id])
-      .subscribe({
-        next: () => {
-          delete this.cards_categories[this.card_id][id];
-          this.card_count[this.card_id]--;
-          this.category_count[id]--;
-        },
-        error: () => alert('Failed to delete category!'),
-      });
+  selectPrimary(id: number): void {
+    this.primary_id = id;
   }
 
-  addCategory(id: number): void {
-    const card_category = { card: this.card_id, category: id };
+  updateAfterDelete(card_id: number, category_id: number): void {
+    this.card_count[card_id]--;
+    this.category_count[category_id]--;
+    delete this.cards_categories[card_id][category_id];
+    delete this.categories_cards[category_id][card_id];
+  }
+
+  deleteSecondary(secondary_id: number): void {
+    const db_id = this.primary_is_card
+      ? this.cards_categories[this.primary_id][secondary_id]
+      : this.categories_cards[this.primary_id][secondary_id];
+    this.httpService.delete('/api/card-category/' + db_id).subscribe({
+      next: () => {
+        if (this.primary_is_card) {
+          this.updateAfterDelete(this.primary_id, secondary_id);
+        } else {
+          this.updateAfterDelete(secondary_id, this.primary_id);
+        }
+      },
+      error: () => alert('Failed to delete category!'),
+    });
+  }
+
+  updateAfterAdd(card_id: number, category_id: number, db_id: number): void {
+    if (!this.card_count[card_id]) {
+      this.card_count[card_id] = 0;
+    }
+    this.card_count[card_id]++;
+
+    if (!this.category_count[category_id]) {
+      this.category_count[category_id] = 0;
+    }
+    this.category_count[category_id]++;
+
+    if (!this.cards_categories[card_id]) {
+      this.cards_categories[card_id] = {};
+    }
+    this.cards_categories[card_id][category_id] = db_id;
+
+    if (!this.categories_cards[category_id]) {
+      this.categories_cards[category_id] = {};
+    }
+    this.categories_cards[category_id][card_id] = db_id;
+  }
+
+  addSecondary(secondary_id: number): void {
+    const card_category = this.primary_is_card
+      ? { card: this.primary_id, category: secondary_id }
+      : { card: secondary_id, category: this.primary_id };
     this.httpService.post('/api/card-category', card_category).subscribe({
       next: (res: any) => {
-        if (!this.cards_categories[this.card_id]) {
-          this.cards_categories[this.card_id] = {};
+        if (this.primary_is_card) {
+          this.updateAfterAdd(this.primary_id, secondary_id, res.insertId);
+        } else {
+          this.updateAfterAdd(secondary_id, this.primary_id, res.insertId);
         }
-        this.cards_categories[this.card_id][id] = res.insertId;
-
-        if (!this.card_count[this.card_id]) {
-          this.card_count[this.card_id] = 0;
-        }
-        this.card_count[this.card_id]++;
-
-        if (!this.category_count[id]) {
-          this.category_count[id] = 0;
-        }
-        this.category_count[id]++;
       },
       error: () => alert('Failed to add category!'),
     });
   }
 
-  toggleCategory(id: number): void {
-    if (
-      this.cards_categories[this.card_id] &&
-      this.cards_categories[this.card_id][id]
-    ) {
-      this.deleteCategory(id);
+  selectSecondary(secondary_id: number): void {
+    const obj = this.primary_is_card
+      ? this.cards_categories
+      : this.categories_cards;
+    if (obj[this.primary_id] && obj[this.primary_id][secondary_id]) {
+      this.deleteSecondary(secondary_id);
     } else {
-      this.addCategory(id);
+      this.addSecondary(secondary_id);
     }
   }
 }
