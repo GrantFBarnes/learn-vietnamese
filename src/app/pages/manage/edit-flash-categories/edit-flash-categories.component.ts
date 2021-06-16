@@ -16,6 +16,7 @@ export class EditFlashCategoriesComponent implements OnInit {
   cards: { [id: string]: Card } = {};
   categories: { [id: string]: Category } = {};
   cards_categories: { [id: string]: { [id: string]: number } } = {};
+  card_category_count: { [id: string]: number } = {};
 
   constructor(private httpService: HttpService) {}
 
@@ -23,7 +24,14 @@ export class EditFlashCategoriesComponent implements OnInit {
     this.httpService.get('/api/dump/cards').subscribe((data: any) => {
       for (let i in data) {
         const row = data[i];
-        this.cards[row.id.toString()] = row;
+        const card_id = row.id.toString();
+        this.cards[card_id] = row;
+        if (!this.cards_categories[card_id]) {
+          this.cards_categories[card_id] = {};
+        }
+        if (!this.card_category_count[card_id]) {
+          this.card_category_count[card_id] = 0;
+        }
       }
     });
   }
@@ -32,7 +40,8 @@ export class EditFlashCategoriesComponent implements OnInit {
     this.httpService.get('/api/dump/categories').subscribe((data: any) => {
       for (let i in data) {
         const row = data[i];
-        this.categories[row.id.toString()] = row;
+        const category_id = row.id.toString();
+        this.categories[category_id] = row;
       }
     });
   }
@@ -45,10 +54,16 @@ export class EditFlashCategoriesComponent implements OnInit {
           const row = data[i];
           const card_id = row.card.toString();
           const category_id = row.category.toString();
+
           if (!this.cards_categories[card_id]) {
             this.cards_categories[card_id] = {};
           }
           this.cards_categories[card_id][category_id] = row.id;
+
+          if (!this.card_category_count[card_id]) {
+            this.card_category_count[card_id] = 0;
+          }
+          this.card_category_count[card_id]++;
         }
       });
   }
@@ -84,7 +99,10 @@ export class EditFlashCategoriesComponent implements OnInit {
     this.httpService
       .delete('/api/card-category/' + this.cards_categories[this.card_id][id])
       .subscribe({
-        next: () => delete this.cards_categories[this.card_id][id],
+        next: () => {
+          delete this.cards_categories[this.card_id][id];
+          this.card_category_count[this.card_id]--;
+        },
         error: () => alert('Failed to delete category!'),
       });
   }
@@ -100,6 +118,11 @@ export class EditFlashCategoriesComponent implements OnInit {
           this.cards_categories[this.card_id] = {};
         }
         this.cards_categories[this.card_id][id] = res.insertId;
+
+        if (!this.card_category_count[this.card_id]) {
+          this.card_category_count[this.card_id] = 0;
+        }
+        this.card_category_count[this.card_id]++;
       },
       error: () => alert('Failed to add category!'),
     });
