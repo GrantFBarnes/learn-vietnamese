@@ -107,7 +107,7 @@ router.post("/api/token", (request, response) => {
 // Flash Cards
 
 // Get all flash card ids
-router.get("/api/cards", (request, response) => {
+router.get("/api/cards/ids", (request, response) => {
   logConnection(request);
   returnPromiseResponse(response, main.getCardIds());
 });
@@ -118,10 +118,16 @@ router.get("/api/card/:id", (request, response) => {
   returnPromiseResponse(response, main.getCard(request.params.id));
 });
 
+// Get flash card ids by category
+router.get("/api/cards/category/:id", (request, response) => {
+  logConnection(request);
+  returnPromiseResponse(response, main.getCardIdsByCategory(request.params.id));
+});
+
 // Get flash cards in bulk
 router.post("/api/cards/bulk", (request, response) => {
   logConnection(request);
-  returnPromiseResponse(response, main.getCards(request.body));
+  returnPromiseResponse(response, main.getCardsInBulk(request.body));
 });
 
 // Update flash card with new values
@@ -264,10 +270,10 @@ router.post("/api/audio/example/:id", (request, response) => {
 ////////////////////////////////////////////////////////////////////////////////
 // Categories
 
-// Get all category ids
+// Get all categories
 router.get("/api/categories", (request, response) => {
   logConnection(request);
-  returnPromiseResponse(response, main.getCategoryIds());
+  returnPromiseResponse(response, main.getCategories());
 });
 
 // Get category by id

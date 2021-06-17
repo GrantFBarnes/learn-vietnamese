@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../shared/services/http/http.service';
 import { Card } from '../../shared/interfaces/card';
 import { Example } from '../../shared/interfaces/example';
+import { Category } from '../../shared/interfaces/category';
 
 interface SectionsFlipped {
   word: boolean;
@@ -18,6 +19,10 @@ interface SectionsFlipped {
 })
 export class FlashComponent implements OnInit {
   loading: boolean = true;
+
+  category_id: number = 0;
+  category_name: string = 'All Categories';
+  categories: Category[] = [];
 
   card_ids: number[] = [];
   card_idx: number = 0;
@@ -41,10 +46,12 @@ export class FlashComponent implements OnInit {
   constructor(private httpService: HttpService) {}
 
   ngOnInit(): void {
-    this.httpService.get('/api/cards').subscribe((data: any) => {
-      this.card_ids = data;
-      this.onChange();
+    this.httpService.get('/api/categories').subscribe((data: any) => {
+      this.categories = data;
+      this.categories.unshift({ id: 0, name: 'All Categories' });
     });
+
+    this.getCards();
 
     window.document.onkeydown = (e) => {
       switch (e.key) {
@@ -77,14 +84,33 @@ export class FlashComponent implements OnInit {
   onChange(): void {
     this.loading = true;
     const id = this.card_ids[this.card_idx];
-    this.httpService.get('/api/card/' + id).subscribe((card: any) => {
-      this.card = card;
-      this.httpService.get('/api/examples/' + id).subscribe((examples: any) => {
-        this.examples = examples;
-        this.loading = false;
+    if (id) {
+      this.httpService.get('/api/card/' + id).subscribe((card: any) => {
+        this.card = card;
+        this.httpService
+          .get('/api/examples/' + id)
+          .subscribe((examples: any) => {
+            this.examples = examples;
+            this.loading = false;
+          });
       });
-    });
+    } else {
+      this.card = { id: 0, word: '', translation: '' };
+      this.examples = [];
+      this.loading = false;
+    }
     this.flipped = JSON.parse(JSON.stringify(this.flip_reset));
+  }
+
+  getCards(): void {
+    this.loading = true;
+    this.card_idx = 0;
+    this.httpService
+      .get('/api/cards/category/' + this.category_id)
+      .subscribe((data: any) => {
+        this.card_ids = data;
+        this.onChange();
+      });
   }
 
   previousCard(): void {
@@ -148,5 +174,11 @@ export class FlashComponent implements OnInit {
     };
     this.flipped = JSON.parse(JSON.stringify(this.flip_reset));
     this.flip_type = type;
+  }
+
+  setCategory(id: number, name: string): void {
+    this.category_id = id;
+    this.category_name = name;
+    this.getCards();
   }
 }

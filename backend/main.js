@@ -84,7 +84,38 @@ function getCard(id) {
   });
 }
 
-function getCards(ids) {
+function getCardIdsByCategory(category_id) {
+  return new Promise((resolve) => {
+    database
+      .innerJoin(
+        ["id"],
+        ["card_id"],
+        "cards",
+        "id",
+        ["category"],
+        ["category_id"],
+        "cards_categories",
+        "card"
+      )
+      .then((result) => {
+        category_id = parseInt(category_id);
+        let ids = new Set();
+        for (let i in result) {
+          const row = result[i];
+          if (category_id && category_id !== row.category_id) continue;
+          ids.add(row.card_id);
+        }
+        resolve({ statusCode: 200, data: [...ids] });
+        return;
+      })
+      .catch(() => {
+        resolve({ statusCode: 400, data: "failed to get card ids" });
+        return;
+      });
+  });
+}
+
+function getCardsInBulk(ids) {
   return new Promise((resolve) => {
     if (!ids) {
       resolve({ statusCode: 500, data: "ids not provided" });
@@ -275,21 +306,16 @@ function deleteExample(id) {
 ////////////////////////////////////////////////////////////////////////////////
 // Categories
 
-function getCategoryIds() {
+function getCategories() {
   return new Promise((resolve) => {
     database
-      .select("id", "categories", null, null)
+      .select("*", "categories", null, null)
       .then((result) => {
-        let ids = [];
-        for (let i in result) {
-          if (!result[i].id) continue;
-          ids.push(result[i].id);
-        }
-        resolve({ statusCode: 200, data: ids });
+        resolve({ statusCode: 200, data: result });
         return;
       })
       .catch(() => {
-        resolve({ statusCode: 400, data: "failed to get category ids" });
+        resolve({ statusCode: 400, data: "failed to get categories" });
         return;
       });
   });
@@ -434,7 +460,8 @@ module.exports.getDataDump = getDataDump;
 
 module.exports.getCardIds = getCardIds;
 module.exports.getCard = getCard;
-module.exports.getCards = getCards;
+module.exports.getCardIdsByCategory = getCardIdsByCategory;
+module.exports.getCardsInBulk = getCardsInBulk;
 module.exports.updateCard = updateCard;
 module.exports.createCard = createCard;
 module.exports.deleteCard = deleteCard;
@@ -444,7 +471,7 @@ module.exports.updateExample = updateExample;
 module.exports.createExample = createExample;
 module.exports.deleteExample = deleteExample;
 
-module.exports.getCategoryIds = getCategoryIds;
+module.exports.getCategories = getCategories;
 module.exports.getCategory = getCategory;
 module.exports.updateCategory = updateCategory;
 module.exports.createCategory = createCategory;

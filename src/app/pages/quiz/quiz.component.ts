@@ -22,7 +22,7 @@ export class QuizComponent implements OnInit {
   constructor(private httpService: HttpService) {}
 
   ngOnInit(): void {
-    this.httpService.get('/api/cards').subscribe((data: any) => {
+    this.httpService.get('/api/cards/ids').subscribe((data: any) => {
       this.all_card_ids = data;
       this.nextQuestion();
     });
