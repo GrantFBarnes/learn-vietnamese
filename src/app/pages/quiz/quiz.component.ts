@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../shared/services/http/http.service';
 import { Card } from '../../shared/interfaces/card';
+import { Category } from '../../shared/interfaces/category';
 
 @Component({
   selector: 'app-quiz',
@@ -10,22 +11,41 @@ import { Card } from '../../shared/interfaces/card';
 })
 export class QuizComponent implements OnInit {
   loading: boolean = true;
+
+  category_id: number = 0;
+  category_name: string = 'All Categories';
+  categories: Category[] = [];
+
   all_card_ids: number[] = [];
   correct_idx: number = 0;
   cards: Card[] = [];
+
   question_type: string = 'Vietnamese';
   question_type_selected: string = 'Vietnamese';
   question_type_options: string[] = ['Vietnamese', 'English', 'Random'];
+
   answer_count: number = 3;
   answer_count_options: number[] = [2, 3, 4, 5, 6];
 
   constructor(private httpService: HttpService) {}
 
+  getCards(): void {
+    this.loading = true;
+    this.httpService
+      .get('/api/cards/category/' + this.category_id)
+      .subscribe((data: any) => {
+        this.all_card_ids = data;
+        this.nextQuestion();
+      });
+  }
+
   ngOnInit(): void {
-    this.httpService.get('/api/cards/ids').subscribe((data: any) => {
-      this.all_card_ids = data;
-      this.nextQuestion();
+    this.httpService.get('/api/categories').subscribe((data: any) => {
+      this.categories = data;
+      this.categories.unshift({ id: 0, name: 'All Categories' });
     });
+
+    this.getCards();
 
     window.document.onkeydown = (e) => {
       switch (e.key) {
@@ -42,8 +62,15 @@ export class QuizComponent implements OnInit {
   }
 
   nextQuestion(): void {
-    if (!this.all_card_ids.length) return;
-    if (this.all_card_ids.length < this.answer_count) return;
+    if (
+      !this.all_card_ids.length ||
+      this.all_card_ids.length < this.answer_count
+    ) {
+      this.loading = false;
+      this.correct_idx = 0;
+      this.cards = [];
+      return;
+    }
     this.loading = true;
     let indexes = new Set();
     let card_ids = [];
@@ -78,5 +105,11 @@ export class QuizComponent implements OnInit {
   setAnswerCount(count: number): void {
     this.answer_count = count;
     this.nextQuestion();
+  }
+
+  setCategory(id: number, name: string): void {
+    this.category_id = id;
+    this.category_name = name;
+    this.getCards();
   }
 }

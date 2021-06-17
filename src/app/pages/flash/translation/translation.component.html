@@ -1,7 +1,7 @@
 <div class="card-body">
   <p class="card-title">English Translation</p>
   <h1 class="card-text" *ngIf="flipped; else flip">
-    {{ card.translation }}
+    {{ card.translation ? card.translation : "Not Enough Data" }}
   </h1>
 </div>
 

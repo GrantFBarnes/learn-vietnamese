@@ -16,9 +16,11 @@
           <p class="card-title">What does the following translate to?</p>
           <h1 class="card-text total-center">
             {{
-              question_type === "Vietnamese"
-                ? cards[correct_idx].word
-                : cards[correct_idx].translation
+              cards[correct_idx]
+                ? question_type === "Vietnamese"
+                  ? cards[correct_idx].word
+                  : cards[correct_idx].translation
+                : "Not Enough Data"
             }}
           </h1>
         </div>
@@ -28,6 +30,9 @@
       <div class="card bg-dark">
         <div class="card-body">
           <p class="card-title">Select an Answer</p>
+          <h1 *ngIf="!cards[correct_idx]" class="card-text total-center">
+            Not Enough Data
+          </h1>
           <ng-container *ngFor="let card of cards; let i = index">
             <app-quiz-answer
               [card]="card"
@@ -40,7 +45,7 @@
     </div>
   </div>
   <div class="row center">
-    <div class="col-md-6 mb-2">
+    <div class="col-md-4 mb-2">
       <div class="dropdown">
         <button
           class="btn btn-secondary dropdown-toggle"
@@ -67,7 +72,34 @@
         </ul>
       </div>
     </div>
-    <div class="col-md-6 mb-2">
+    <div class="col-md-4 mb-2">
+      <div class="dropdown">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+        >
+          {{ category_name }}
+        </button>
+        <ul class="dropdown-menu dropdown-menu-dark">
+          <ng-container *ngFor="let option of categories">
+            <li>
+              <a
+                [ngClass]="
+                  category_id == option.id
+                    ? 'dropdown-item active'
+                    : 'dropdown-item'
+                "
+                (click)="setCategory(option.id, option.name)"
+              >
+                {{ option.name }}
+              </a>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-4 mb-2">
       <div class="dropdown">
         <button
           class="btn btn-secondary dropdown-toggle"

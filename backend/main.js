@@ -39,26 +39,6 @@ function getDataDump(table) {
 ////////////////////////////////////////////////////////////////////////////////
 // Cards
 
-function getCardIds() {
-  return new Promise((resolve) => {
-    database
-      .select("id", "cards", null, null)
-      .then((result) => {
-        let ids = [];
-        for (let i in result) {
-          if (!result[i].id) continue;
-          ids.push(result[i].id);
-        }
-        resolve({ statusCode: 200, data: ids });
-        return;
-      })
-      .catch(() => {
-        resolve({ statusCode: 400, data: "failed to get card ids" });
-        return;
-      });
-  });
-}
-
 function getCard(id) {
   return new Promise((resolve) => {
     if (!id) {
@@ -458,7 +438,6 @@ function deleteCardCategory(id) {
 
 module.exports.getDataDump = getDataDump;
 
-module.exports.getCardIds = getCardIds;
 module.exports.getCard = getCard;
 module.exports.getCardIdsByCategory = getCardIdsByCategory;
 module.exports.getCardsInBulk = getCardsInBulk;

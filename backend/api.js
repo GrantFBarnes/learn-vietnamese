@@ -106,12 +106,6 @@ router.post("/api/token", (request, response) => {
 ////////////////////////////////////////////////////////////////////////////////
 // Flash Cards
 
-// Get all flash card ids
-router.get("/api/cards/ids", (request, response) => {
-  logConnection(request);
-  returnPromiseResponse(response, main.getCardIds());
-});
-
 // Get flash card by id
 router.get("/api/card/:id", (request, response) => {
   logConnection(request);

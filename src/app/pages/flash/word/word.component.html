@@ -1,7 +1,7 @@
 <div class="card-body">
   <p class="card-title">Vietnamese Word</p>
   <h1 class="card-text" *ngIf="flipped; else flip">
-    {{ card.word }}
+    {{ card.word ? card.word : "Not Enough Data" }}
   </h1>
   <div *ngIf="audio && !is_iphone" class="card-footer center">
     <button class="btn btn-info" (click)="playAudio()">
