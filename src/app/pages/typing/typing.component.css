@@ -9,3 +9,8 @@ table {
 ul {
   padding-left: 60px;
 }
+
+.badge {
+  width: 50px;
+  height: 40px;
+}

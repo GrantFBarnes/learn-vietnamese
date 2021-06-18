@@ -100,4 +100,36 @@
       <li>type "awwr" for <code>awr</code></li>
     </ul>
   </div>
+
+  <hr />
+  <div class="row mb-2 center">
+    <h1>Practice Typing</h1>
+    <h2>
+      <ng-container *ngFor="let c of characters">
+        &nbsp;
+        <span class="badge bg-secondary">{{ c.trim() ? c : "&nbsp;" }}</span>
+      </ng-container>
+    </h2>
+    <h2>
+      <ng-container *ngFor="let c of characters; index as idx">
+        &nbsp;
+        <span
+          *ngIf="input[idx]"
+          [ngClass]="
+            c === input[idx] ? 'badge bg-secondary' : 'badge bg-danger'
+          "
+        >
+          {{ input[idx].trim() ? input[idx] : "&nbsp;" }}
+        </span>
+        <span *ngIf="!input[idx]" class="badge bg-secondary">&nbsp;</span>
+      </ng-container>
+    </h2>
+    <input
+      type="text"
+      class="form-control bg-dark text-center"
+      [attr.maxlength]="characters.length"
+      [(ngModel)]="input"
+      (ngModelChange)="inputChanged()"
+    />
+  </div>
 </div>
