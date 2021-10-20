@@ -75,7 +75,8 @@ function getCardIdsByCategory(category_id) {
         ["category"],
         ["category_id"],
         "cards_categories",
-        "card"
+        "card",
+        "cards.word"
       )
       .then((result) => {
         category_id = parseInt(category_id);

@@ -42,7 +42,7 @@ function select(columns, table, field, values) {
   });
 }
 
-function innerJoin(c1, a1, t1, f1, c2, a2, t2, f2) {
+function innerJoin(c1, a1, t1, f1, c2, a2, t2, f2, orderby) {
   // c = array of column names
   // a = array of alias names
   // t = name of table
@@ -77,6 +77,10 @@ function innerJoin(c1, a1, t1, f1, c2, a2, t2, f2) {
     command = command.slice(0, -2);
     command += " FROM " + t1 + " INNER JOIN " + t2;
     command += " ON " + t1 + "." + f1 + "=" + t2 + "." + f2;
+
+    if (orderby) {
+      command += " ORDER BY " + orderby + " ASC";
+    }
 
     run(command)
       .then((res) => resolve(res))
