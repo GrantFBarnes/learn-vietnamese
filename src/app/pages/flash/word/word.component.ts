@@ -11,22 +11,19 @@ export class WordComponent implements OnInit {
   @Input() flipped: boolean = true;
   @Input() card: Card = { id: 0, word: '', translation: '' };
   @Output() showSectionEvent = new EventEmitter<string>();
-  is_iphone: boolean = false;
   audio: any;
 
   constructor(private httpService: HttpService) {}
 
-  ngOnInit(): void {
-    this.is_iphone = window.navigator.userAgent.includes('iPhone');
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(): void {
     this.audio = null;
-    if (this.is_iphone) return;
     this.httpService.getAudio('/api/audio/card/' + this.card.id).subscribe({
       next: (blob: Blob) => {
-        this.audio = {
-          play: () => new Audio(URL.createObjectURL(blob)).play(),
+        const audio = new Audio(URL.createObjectURL(blob));
+        audio.oncanplay = () => {
+          this.audio = audio;
         };
       },
       error: () => {},

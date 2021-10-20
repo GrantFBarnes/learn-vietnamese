@@ -21,7 +21,7 @@
           <th>ID</th>
           <th>Word</th>
           <th>English Translation</th>
-          <th class="center" *ngIf="!is_iphone">Audio</th>
+          <th class="center" *ngIf="can_play">Audio</th>
           <th class="center">Edit</th>
           <th class="center">Delete</th>
         </tr>
@@ -41,7 +41,7 @@
             <td>{{ card.id }}</td>
             <td>{{ card.word }}</td>
             <td>{{ card.translation }}</td>
-            <td class="center" *ngIf="!is_iphone">
+            <td class="center" *ngIf="can_play">
               <button
                 *ngIf="card_audio_files.includes(card.id)"
                 class="btn btn-info"
@@ -79,7 +79,7 @@
                     <th>ID</th>
                     <th>Example</th>
                     <th>English Translation</th>
-                    <th class="center" *ngIf="!is_iphone">Audio</th>
+                    <th class="center" *ngIf="can_play">Audio</th>
                     <th class="center">Edit</th>
                     <th class="center">Delete</th>
                   </tr>
@@ -92,7 +92,7 @@
                     <td>{{ example.id }}</td>
                     <td>{{ example.example }}</td>
                     <td>{{ example.translation }}</td>
-                    <td class="center" *ngIf="!is_iphone">
+                    <td class="center" *ngIf="can_play">
                       <button
                         *ngIf="example_audio_files.includes(example.id)"
                         class="btn btn-info"

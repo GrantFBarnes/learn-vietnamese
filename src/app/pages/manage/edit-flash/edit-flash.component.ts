@@ -10,7 +10,7 @@ import { Example } from '../../../shared/interfaces/example';
   styleUrls: ['./edit-flash.component.css'],
 })
 export class EditFlashComponent implements OnInit {
-  is_iphone: boolean = false;
+  can_play: boolean = false;
   authorized: boolean = false;
   card: Card = { id: 0, word: '', translation: '' };
   cards: Card[] = [];
@@ -34,10 +34,22 @@ export class EditFlashComponent implements OnInit {
   }
 
   getCardAudioIds(): void {
-    if (this.is_iphone) return;
-    this.httpService
-      .get('/api/audio/cards')
-      .subscribe((data: any) => (this.card_audio_files = data));
+    this.httpService.get('/api/audio/cards').subscribe((data: any) => {
+      this.card_audio_files = data;
+
+      if (this.card_audio_files.length) {
+        const id = this.card_audio_files[0];
+        this.httpService.getAudio('/api/audio/card/' + id).subscribe({
+          next: (blob: Blob) => {
+            const audio = new Audio(URL.createObjectURL(blob));
+            audio.oncanplay = () => {
+              this.can_play = true;
+            };
+          },
+          error: () => {},
+        });
+      }
+    });
   }
 
   getExamples(): void {
@@ -52,7 +64,6 @@ export class EditFlashComponent implements OnInit {
   }
 
   getExampleAudioIds(): void {
-    if (this.is_iphone) return;
     this.httpService
       .get('/api/audio/examples')
       .subscribe((data: any) => (this.example_audio_files = data));
@@ -80,7 +91,6 @@ export class EditFlashComponent implements OnInit {
       }
     }
 
-    this.is_iphone = window.navigator.userAgent.includes('iPhone');
     this.httpService.get('/api/authenticated').subscribe({
       next: () => this.authorize(),
       error: () => (this.authorized = false),
@@ -90,10 +100,10 @@ export class EditFlashComponent implements OnInit {
   playAudio(folder: string, id: number): void {
     this.httpService.getAudio('/api/audio/' + folder + '/' + id).subscribe({
       next: (blob: Blob) => {
-        const sound = new Audio(URL.createObjectURL(blob));
-        sound.addEventListener('canplaythrough', () => {
-          sound.play();
-        });
+        const audio = new Audio(URL.createObjectURL(blob));
+        audio.oncanplay = () => {
+          audio.play();
+        };
       },
       error: () => alert('No audio found'),
     });

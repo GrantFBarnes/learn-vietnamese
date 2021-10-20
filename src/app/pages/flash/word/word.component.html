@@ -3,7 +3,7 @@
   <h1 class="card-text" *ngIf="flipped; else flip">
     {{ card.word ? card.word : "Not Enough Data" }}
   </h1>
-  <div *ngIf="audio && !is_iphone" class="card-footer center">
+  <div *ngIf="audio" class="card-footer center">
     <button class="btn btn-info" (click)="playAudio()">
       <i class="bi bi-volume-up-fill"></i>
     </button>
