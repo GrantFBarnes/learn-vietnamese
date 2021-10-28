@@ -28,8 +28,6 @@ import { AnswerComponent } from './pages/quiz/answer/answer.component';
 
 import { ManageComponent } from './pages/manage/manage.component';
 
-import { ConnectionsComponent } from './pages/manage/connections/connections.component';
-
 import { EditCategoriesComponent } from './pages/manage/edit-categories/edit-categories.component';
 import { EditCategoryModalComponent } from './pages/manage/edit-categories/edit-category-modal/edit-category-modal.component';
 import { AddCategoryModalComponent } from './pages/manage/edit-categories/add-category-modal/add-category-modal.component';
@@ -67,8 +65,6 @@ import { EditFlashCategoriesComponent } from './pages/manage/edit-flash-categori
     AnswerComponent,
 
     ManageComponent,
-
-    ConnectionsComponent,
 
     EditCategoriesComponent,
     EditCategoryModalComponent,

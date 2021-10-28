@@ -16,7 +16,6 @@ function getDataDump(table) {
       "examples",
       "categories",
       "cards_categories",
-      "connections",
     ]);
     if (!tables.has(table)) {
       resolve({ statusCode: 500, data: "table not valid" });

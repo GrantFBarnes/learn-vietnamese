@@ -36,13 +36,3 @@ CREATE TABLE cards_categories (
     FOREIGN KEY (card) REFERENCES cards(id) ON DELETE CASCADE,
     FOREIGN KEY (category) REFERENCES categories(id) ON DELETE CASCADE
 );
-
-CREATE TABLE connections (
-    id INT NOT NULL AUTO_INCREMENT,
-    ip VARCHAR(40) NOT NULL,
-    method VARCHAR(16) NOT NULL,
-    url VARCHAR(128) NOT NULL,
-    is_api BOOLEAN,
-    time DATETIME NOT NULL,
-    PRIMARY KEY (id)
-);
