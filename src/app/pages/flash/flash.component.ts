@@ -20,6 +20,9 @@ interface SectionsFlipped {
 export class FlashComponent implements OnInit {
   loading: boolean = true;
 
+  auto_mode: boolean = false;
+  timeout: any = null;
+
   category_id: number = 0;
   category_name: string = 'All Categories';
   categories: Category[] = [];
@@ -100,6 +103,13 @@ export class FlashComponent implements OnInit {
       this.loading = false;
     }
     this.flipped = JSON.parse(JSON.stringify(this.flip_reset));
+
+    clearTimeout(this.timeout);
+    if (this.auto_mode) {
+      this.timeout = setTimeout(() => {
+        this.nextCard();
+      }, 3000);
+    }
   }
 
   getCards(): void {
@@ -180,5 +190,16 @@ export class FlashComponent implements OnInit {
     this.category_id = id;
     this.category_name = name;
     this.getCards();
+  }
+
+  startAutoMode(): void {
+    this.auto_mode = true;
+    this.setFlipType('Show All');
+    this.nextCard();
+  }
+
+  stopAutoMode(): void {
+    this.auto_mode = false;
+    clearTimeout(this.timeout);
   }
 }

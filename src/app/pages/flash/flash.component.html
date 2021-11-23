@@ -115,4 +115,14 @@
       </div>
     </div>
   </div>
+  <div class="row mb-2">
+    <div class="col-12 center">
+      <button *ngIf="!auto_mode" type="button" class="btn btn-primary" (click)="startAutoMode()">
+        Start Auto Mode
+      </button>
+      <button *ngIf="auto_mode" type="button" class="btn btn-danger" (click)="stopAutoMode()">
+        Stop Auto Mode
+      </button>
+    </div>
+  </div>
 </div>

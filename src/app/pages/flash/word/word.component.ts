@@ -24,6 +24,7 @@ export class WordComponent implements OnInit {
         const audio = new Audio(URL.createObjectURL(blob));
         audio.oncanplay = () => {
           this.audio = audio;
+          if (this.flipped) audio.play();
         };
       },
       error: () => {},
