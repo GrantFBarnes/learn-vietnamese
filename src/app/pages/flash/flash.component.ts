@@ -78,6 +78,10 @@ export class FlashComponent implements OnInit {
         case 'r':
           this.randomCard();
           break;
+        case ' ':
+          e.preventDefault();
+          this.toggleAutoMode();
+          break;
         default:
           break;
       }
@@ -201,5 +205,13 @@ export class FlashComponent implements OnInit {
   stopAutoMode(): void {
     this.auto_mode = false;
     clearTimeout(this.timeout);
+  }
+
+  toggleAutoMode(): void {
+    if (this.auto_mode) {
+      this.stopAutoMode();
+    } else {
+      this.startAutoMode();
+    }
   }
 }
