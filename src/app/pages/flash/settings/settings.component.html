@@ -18,6 +18,35 @@
                 type="button"
                 data-bs-toggle="dropdown"
               >
+                {{ flip_type }}
+              </button>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <ng-container *ngFor="let option of flip_type_options">
+                  <li>
+                    <a
+                      [ngClass]="
+                        flip_type == option
+                          ? 'dropdown-item active'
+                          : 'dropdown-item'
+                      "
+                      (click)="setFlipType(option)"
+                    >
+                      {{ option }}
+                    </a>
+                  </li>
+                </ng-container>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-12 center">
+            <div class="dropdown">
+              <button
+                class="btn btn-secondary dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+              >
                 {{ category_name }}
               </button>
               <ul class="dropdown-menu dropdown-menu-dark">

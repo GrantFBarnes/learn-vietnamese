@@ -7,6 +7,10 @@ import { Category } from '../../../shared/interfaces/category';
   styleUrls: ['./settings.component.css'],
 })
 export class SettingsComponent implements OnInit {
+  @Input() flip_type: string = '';
+  @Input() flip_type_options: string[] = [];
+  @Output() setFlipTypeEvent = new EventEmitter<string>();
+
   @Input() category_id: number = 0;
   @Input() category_name: string = '';
   @Input() categories: Category[] = [];
@@ -18,6 +22,10 @@ export class SettingsComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  setFlipType(option: string): void {
+    this.setFlipTypeEvent.emit(option);
+  }
 
   setCategory(option: any): void {
     this.setCategoryEvent.emit(option);
