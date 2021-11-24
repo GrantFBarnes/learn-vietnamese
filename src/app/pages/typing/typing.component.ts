@@ -17,15 +17,12 @@ export class TypingComponent implements OnInit {
   constructor(private httpService: HttpService) {}
 
   getNextValue(): void {
-    this.input = '';
-    this.value = '';
-    this.characters = [];
-
     const idx = Math.floor(Math.random() * this.card_ids.length);
     const id = this.card_ids[idx];
     if (id) {
       this.httpService.get('/api/card/' + id).subscribe((card: any) => {
-        this.value = card.word;
+        this.input = '';
+        this.value = card.word.toLowerCase() + ' ';
         this.characters = this.value.split('');
       });
     }
@@ -36,11 +33,15 @@ export class TypingComponent implements OnInit {
       this.card_ids = data;
       this.getNextValue();
     });
+
+    window.document.onkeydown = (e) => {
+      if (e.key == 'Enter') {
+        this.getNextValue();
+      }
+    };
   }
 
   inputChanged(): void {
-    if (this.input === this.value) {
-      this.getNextValue();
-    }
+    this.input = this.input.toLowerCase();
   }
 }
