@@ -190,9 +190,9 @@ export class FlashComponent implements OnInit {
     this.flip_type = type;
   }
 
-  setCategory(id: number, name: string): void {
-    this.category_id = id;
-    this.category_name = name;
+  setCategory(option: any): void {
+    this.category_id = option.id;
+    this.category_name = option.name;
     this.getCards();
   }
 

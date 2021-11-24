@@ -88,35 +88,6 @@
   </div>
   <div class="row mb-2">
     <div class="col-12 center">
-      <div class="dropdown">
-        <button
-          class="btn btn-secondary dropdown-toggle"
-          type="button"
-          data-bs-toggle="dropdown"
-        >
-          {{ category_name }}
-        </button>
-        <ul class="dropdown-menu dropdown-menu-dark">
-          <ng-container *ngFor="let option of categories">
-            <li>
-              <a
-                [ngClass]="
-                  category_id == option.id
-                    ? 'dropdown-item active'
-                    : 'dropdown-item'
-                "
-                (click)="setCategory(option.id, option.name)"
-              >
-                {{ option.name }}
-              </a>
-            </li>
-          </ng-container>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="row mb-2">
-    <div class="col-12 center">
       <button
         type="button"
         class="btn btn-secondary"
@@ -130,6 +101,10 @@
 </div>
 
 <app-flash-settings
+  [category_id]="category_id"
+  [category_name]="category_name"
+  [categories]="categories"
+  (setCategoryEvent)="setCategory($event)"
   [auto_mode]="auto_mode"
   (toggleAutoModeEvent)="toggleAutoMode()"
 ></app-flash-settings>
