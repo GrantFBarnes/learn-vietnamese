@@ -117,12 +117,19 @@
   </div>
   <div class="row mb-2">
     <div class="col-12 center">
-      <button *ngIf="!auto_mode" type="button" class="btn btn-primary" (click)="startAutoMode()">
-        Start Auto Mode
-      </button>
-      <button *ngIf="auto_mode" type="button" class="btn btn-danger" (click)="stopAutoMode()">
-        Stop Auto Mode
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-toggle="modal"
+        data-bs-target="#app-flash-settings"
+      >
+        Settings
       </button>
     </div>
   </div>
 </div>
+
+<app-flash-settings
+  [auto_mode]="auto_mode"
+  (toggleAutoModeEvent)="toggleAutoMode()"
+></app-flash-settings>

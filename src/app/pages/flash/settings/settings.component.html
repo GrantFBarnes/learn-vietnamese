@@ -1,0 +1,27 @@
+<div id="app-flash-settings" class="modal fade">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark">
+      <div class="modal-header">
+        <h5 class="modal-title">Flash Card Settings</h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-2">
+          <div class="col-12 center">
+            <button
+              type="button"
+              [ngClass]="auto_mode ? 'btn btn-danger' : 'btn btn-primary'"
+              (click)="toggleAutoMode()"
+            >
+              {{ auto_mode ? "Stop" : "Start" }} Auto Mode
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
