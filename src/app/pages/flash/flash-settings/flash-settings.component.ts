@@ -3,10 +3,10 @@ import { Category } from '../../../shared/interfaces/category';
 
 @Component({
   selector: 'app-flash-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css'],
+  templateUrl: './flash-settings.component.html',
+  styleUrls: ['./flash-settings.component.css'],
 })
-export class SettingsComponent implements OnInit {
+export class FlashSettingsComponent implements OnInit {
   @Output() setFlipTypeEvent = new EventEmitter<string>();
 
   @Input() category_id: number = 0;

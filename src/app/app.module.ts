@@ -22,7 +22,7 @@ import { TranslationComponent } from './pages/flash/translation/translation.comp
 import { ExamplesComponent } from './pages/flash/examples/examples.component';
 import { TranslationsComponent } from './pages/flash/translations/translations.component';
 import { FlipComponent } from './pages/flash/flip/flip.component';
-import { SettingsComponent } from './pages/flash/settings/settings.component';
+import { FlashSettingsComponent } from './pages/flash/flash-settings/flash-settings.component';
 
 import { QuizComponent } from './pages/quiz/quiz.component';
 import { AnswerComponent } from './pages/quiz/answer/answer.component';
@@ -61,7 +61,7 @@ import { EditFlashCategoriesComponent } from './pages/manage/edit-flash-categori
     ExamplesComponent,
     TranslationsComponent,
     FlipComponent,
-    SettingsComponent,
+    FlashSettingsComponent,
 
     QuizComponent,
     AnswerComponent,
