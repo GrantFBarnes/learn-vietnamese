@@ -22,6 +22,7 @@ export class FlashComponent implements OnInit {
 
   auto_mode: boolean = false;
   auto_play: boolean = true;
+  auto_next: string = 'next';
   timeout: any = null;
   timeout_seconds: number = 3;
 
@@ -107,7 +108,17 @@ export class FlashComponent implements OnInit {
     clearTimeout(this.timeout);
     if (this.auto_mode) {
       this.timeout = setTimeout(() => {
-        this.nextCard();
+        switch (this.auto_next) {
+          case 'prev':
+            this.previousCard();
+            break;
+          case 'random':
+            this.randomCard();
+            break;
+          default:
+            this.nextCard();
+            break;
+        }
       }, this.timeout_seconds * 1000);
     }
   }
@@ -194,7 +205,17 @@ export class FlashComponent implements OnInit {
   startAutoMode(): void {
     this.auto_mode = true;
     this.setFlipType('Both');
-    this.nextCard();
+    switch (this.auto_next) {
+      case 'prev':
+        this.previousCard();
+        break;
+      case 'random':
+        this.randomCard();
+        break;
+      default:
+        this.nextCard();
+        break;
+    }
   }
 
   stopAutoMode(): void {
@@ -212,6 +233,10 @@ export class FlashComponent implements OnInit {
 
   toggleAutoPlay(): void {
     this.auto_play = !this.auto_play;
+  }
+
+  setAutoNext(val: string): void {
+    this.auto_next = val;
   }
 
   setTimeoutSeconds(seconds: number): void {

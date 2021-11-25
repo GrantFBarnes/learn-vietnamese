@@ -94,16 +94,18 @@
           <p class="text-muted">Setup Auto Mode for streamlined learning</p>
         </div>
         <div class="row mb-2">
-          <div class="col-md-2 mb-2">
+          <div class="col-12 mb-2">
             <button
               type="button"
               [ngClass]="auto_mode ? 'btn btn-danger' : 'btn btn-success'"
               (click)="toggleAutoMode()"
             >
-              {{ auto_mode ? "Stop" : "Start" }}
+              {{ auto_mode ? "Stop" : "Start" }} Auto Mode
             </button>
           </div>
-          <div class="col-md-5 mb-2">
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-4 mb-2">
             <div class="btn-group" role="group">
               <input
                 type="checkbox"
@@ -112,11 +114,49 @@
                 [(ngModel)]="this.auto_play"
               />
               <label class="btn btn-outline-primary" (click)="toggleAutoPlay()">
-                {{ auto_play ? "Auto Playing Sound" : "No Auto Sound" }}
+                {{ auto_play ? "Stop" : "Start" }} Sound
               </label>
             </div>
           </div>
-          <div class="col-md-5 mb-2">
+          <div class="col-md-4 mb-2">
+            <div id="auto-next-group" class="btn-group" role="group">
+              <input
+                type="radio"
+                class="btn-check"
+                name="btnradio"
+                id="an-btnradio1"
+                autocomplete="off"
+                (click)="setAutoNext('prev')"
+              />
+              <label class="btn btn-outline-primary" for="an-btnradio1">
+                <i class="bi bi-skip-backward"></i>
+              </label>
+              <input
+                type="radio"
+                class="btn-check"
+                name="btnradio"
+                id="an-btnradio2"
+                autocomplete="off"
+                (click)="setAutoNext('random')"
+              />
+              <label class="btn btn-outline-primary" for="an-btnradio2">
+                <i class="bi bi-shuffle"></i>
+              </label>
+              <input
+                type="radio"
+                class="btn-check"
+                name="btnradio"
+                id="an-btnradio3"
+                autocomplete="off"
+                checked
+                (click)="setAutoNext('next')"
+              />
+              <label class="btn btn-outline-primary" for="an-btnradio3">
+                <i class="bi bi-skip-forward"></i>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-4 mb-2">
             <div class="input-group">
               <span class="input-group-text bg-dark">Timeout</span>
               <input

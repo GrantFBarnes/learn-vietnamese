@@ -16,9 +16,11 @@ export class FlashSettingsComponent implements OnInit {
 
   @Input() auto_mode: boolean = false;
   @Input() auto_play: boolean = true;
+  @Input() auto_next: string = 'next';
   @Input() timeout_seconds: number = 3;
   @Output() toggleAutoModeEvent = new EventEmitter<null>();
   @Output() toggleAutoPlayEvent = new EventEmitter<null>();
+  @Output() setAutoNextEvent = new EventEmitter<string>();
   @Output() setTimeoutSecondsEvent = new EventEmitter<number>();
 
   constructor() {}
@@ -39,6 +41,10 @@ export class FlashSettingsComponent implements OnInit {
 
   toggleAutoPlay(): void {
     this.toggleAutoPlayEvent.emit();
+  }
+
+  setAutoNext(val: string): void {
+    this.setAutoNextEvent.emit(val);
   }
 
   timeoutChange(): void {
