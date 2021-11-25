@@ -21,7 +21,9 @@ export class FlashComponent implements OnInit {
   loading: boolean = true;
 
   auto_mode: boolean = false;
+  auto_play: boolean = true;
   timeout: any = null;
+  timeout_seconds: number = 3;
 
   category_id: number = 0;
   category_name: string = 'All Categories';
@@ -106,7 +108,7 @@ export class FlashComponent implements OnInit {
     if (this.auto_mode) {
       this.timeout = setTimeout(() => {
         this.nextCard();
-      }, 3000);
+      }, this.timeout_seconds * 1000);
     }
   }
 
@@ -206,5 +208,13 @@ export class FlashComponent implements OnInit {
     } else {
       this.startAutoMode();
     }
+  }
+
+  toggleAutoPlay(): void {
+    this.auto_play = !this.auto_play;
+  }
+
+  setTimeoutSeconds(seconds: number): void {
+    this.timeout_seconds = seconds;
   }
 }

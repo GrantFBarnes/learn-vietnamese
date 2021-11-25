@@ -23,6 +23,7 @@
     <div class="col-md-6 mb-2">
       <div class="card bg-dark">
         <app-flash-word
+          [auto_play]="auto_play"
           [flipped]="flipped.word"
           [card]="card"
           (showSectionEvent)="showSection($event)"
@@ -80,5 +81,9 @@
   [categories]="categories"
   (setCategoryEvent)="setCategory($event)"
   [auto_mode]="auto_mode"
+  [auto_play]="auto_play"
+  [timeout_seconds]="timeout_seconds"
   (toggleAutoModeEvent)="toggleAutoMode()"
+  (toggleAutoPlayEvent)="toggleAutoPlay()"
+  (setTimeoutSecondsEvent)="setTimeoutSeconds($event)"
 ></app-flash-settings>

@@ -8,6 +8,7 @@ import { Card } from '../../../shared/interfaces/card';
   styleUrls: ['./word.component.css'],
 })
 export class WordComponent implements OnInit {
+  @Input() auto_play: boolean = true;
   @Input() flipped: boolean = true;
   @Input() card: Card = { id: 0, word: '', translation: '' };
   @Output() showSectionEvent = new EventEmitter<string>();
@@ -24,7 +25,7 @@ export class WordComponent implements OnInit {
         const audio = new Audio(URL.createObjectURL(blob));
         audio.oncanplay = () => {
           this.audio = audio;
-          if (this.flipped) audio.play();
+          if (this.auto_play && this.flipped) audio.play();
         };
       },
       error: () => {},

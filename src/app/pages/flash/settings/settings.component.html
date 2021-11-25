@@ -94,14 +94,40 @@
           <p class="text-muted">Setup Auto Mode for streamlined learning</p>
         </div>
         <div class="row mb-2">
-          <div class="col-12">
+          <div class="col-md-2 mb-2">
             <button
               type="button"
-              [ngClass]="auto_mode ? 'btn btn-danger' : 'btn btn-primary'"
+              [ngClass]="auto_mode ? 'btn btn-danger' : 'btn btn-success'"
               (click)="toggleAutoMode()"
             >
               {{ auto_mode ? "Stop" : "Start" }}
             </button>
+          </div>
+          <div class="col-md-5 mb-2">
+            <div class="btn-group" role="group">
+              <input
+                type="checkbox"
+                class="btn-check"
+                autocomplete="off"
+                [(ngModel)]="this.auto_play"
+              />
+              <label class="btn btn-outline-primary" (click)="toggleAutoPlay()">
+                {{ auto_play ? "Auto Playing Sound" : "No Auto Sound" }}
+              </label>
+            </div>
+          </div>
+          <div class="col-md-5 mb-2">
+            <div class="input-group">
+              <span class="input-group-text bg-dark">Timeout</span>
+              <input
+                type="number"
+                class="form-control"
+                min="1"
+                max="15"
+                (change)="timeoutChange()"
+                [(ngModel)]="this.timeout_seconds"
+              />
+            </div>
           </div>
         </div>
       </div>
