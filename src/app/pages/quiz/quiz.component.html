@@ -44,87 +44,27 @@
       </div>
     </div>
   </div>
-  <div class="row center">
-    <div class="col-md-4 mb-2">
-      <div class="dropdown">
-        <button
-          class="btn btn-secondary dropdown-toggle"
-          type="button"
-          data-bs-toggle="dropdown"
-        >
-          {{ question_type_selected }}
-        </button>
-        <ul class="dropdown-menu dropdown-menu-dark">
-          <ng-container *ngFor="let option of question_type_options">
-            <li>
-              <a
-                [ngClass]="
-                  question_type_selected == option
-                    ? 'dropdown-item active'
-                    : 'dropdown-item'
-                "
-                (click)="setQuestionType(option)"
-              >
-                {{ option }}
-              </a>
-            </li>
-          </ng-container>
-        </ul>
-      </div>
-    </div>
-    <div class="col-md-4 mb-2">
-      <div class="dropdown">
-        <button
-          class="btn btn-secondary dropdown-toggle"
-          type="button"
-          data-bs-toggle="dropdown"
-        >
-          {{ category_name }}
-        </button>
-        <ul class="dropdown-menu dropdown-menu-dark">
-          <ng-container *ngFor="let option of categories">
-            <li>
-              <a
-                [ngClass]="
-                  category_id == option.id
-                    ? 'dropdown-item active'
-                    : 'dropdown-item'
-                "
-                (click)="setCategory(option.id, option.name)"
-              >
-                {{ option.name }}
-              </a>
-            </li>
-          </ng-container>
-        </ul>
-      </div>
-    </div>
-    <div class="col-md-4 mb-2">
-      <div class="dropdown">
-        <button
-          class="btn btn-secondary dropdown-toggle"
-          type="button"
-          data-bs-toggle="dropdown"
-        >
-          {{ answer_count }} Options
-        </button>
-        <ul class="dropdown-menu dropdown-menu-dark">
-          <ng-container *ngFor="let option of answer_count_options">
-            <li>
-              <a
-                [ngClass]="
-                  answer_count == option
-                    ? 'dropdown-item active'
-                    : 'dropdown-item'
-                "
-                (click)="setAnswerCount(option)"
-              >
-                {{ option }} Options
-              </a>
-            </li>
-          </ng-container>
-        </ul>
-      </div>
+  <div class="row mb-2">
+    <div class="col-12 center">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-toggle="modal"
+        data-bs-target="#app-quiz-settings"
+      >
+        Settings
+      </button>
     </div>
   </div>
 </div>
+
+<app-quiz-settings
+  [question_type_selected]="question_type_selected"
+  (setQuestionTypeEvent)="setQuestionType($event)"
+  [category_id]="category_id"
+  [category_name]="category_name"
+  [categories]="categories"
+  (setCategoryEvent)="setCategory($event)"
+  [answer_count]="answer_count"
+  (setAnswerCountEvent)="setAnswerCount($event)"
+></app-quiz-settings>

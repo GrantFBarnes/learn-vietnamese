@@ -1,0 +1,112 @@
+<div id="app-quiz-settings" class="modal fade">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content bg-dark">
+      <div class="modal-header">
+        <h5 class="modal-title">Quiz Settings</h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body center">
+        <div class="row mb-2">
+          <h4>Question Type</h4>
+          <p class="text-muted">Choose what word you will be quizzed on</p>
+        </div>
+        <div class="row mb-2">
+          <div class="btn-group" role="group">
+            <input
+              type="radio"
+              class="btn-check"
+              name="btnradio"
+              id="qt-btnradio1"
+              autocomplete="off"
+              checked
+              (click)="setQuestionType('Vietnamese')"
+            />
+            <label class="btn btn-outline-primary" for="qt-btnradio1">
+              Vietnamese
+            </label>
+            <input
+              type="radio"
+              class="btn-check"
+              name="btnradio"
+              id="qt-btnradio2"
+              autocomplete="off"
+              (click)="setQuestionType('English')"
+            />
+            <label class="btn btn-outline-primary" for="qt-btnradio2">
+              English
+            </label>
+            <input
+              type="radio"
+              class="btn-check"
+              name="btnradio"
+              id="qt-btnradio3"
+              autocomplete="off"
+              (click)="setQuestionType('Random')"
+            />
+            <label class="btn btn-outline-primary" for="qt-btnradio3">
+              Random
+            </label>
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="row mb-2">
+          <h4>Category</h4>
+          <p class="text-muted">Choose what category of cards to practice</p>
+        </div>
+        <div class="row mb-2">
+          <div class="dropdown">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+            >
+              {{ category_name }}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <ng-container *ngFor="let option of categories">
+                <li>
+                  <a
+                    [ngClass]="
+                      category_id == option.id
+                        ? 'dropdown-item active'
+                        : 'dropdown-item'
+                    "
+                    (click)="setCategory(option)"
+                  >
+                    {{ option.name }}
+                  </a>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="row mb-2">
+          <h4>Answers</h4>
+          <p class="text-muted">Choose the amount of available answers</p>
+        </div>
+        <div class="row mb-2">
+          <div class="input-group">
+            <span class="input-group-text bg-dark">Answers</span>
+            <input
+              type="number"
+              class="form-control"
+              min="3"
+              max="8"
+              (change)="answerCountChange()"
+              [(ngModel)]="this.answer_count"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

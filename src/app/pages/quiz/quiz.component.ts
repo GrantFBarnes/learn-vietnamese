@@ -12,20 +12,18 @@ import { Category } from '../../shared/interfaces/category';
 export class QuizComponent implements OnInit {
   loading: boolean = true;
 
-  category_id: number = 0;
-  category_name: string = 'All Categories';
-  categories: Category[] = [];
-
   all_card_ids: number[] = [];
   correct_idx: number = 0;
   cards: Card[] = [];
 
   question_type: string = 'Vietnamese';
   question_type_selected: string = 'Vietnamese';
-  question_type_options: string[] = ['Vietnamese', 'English', 'Random'];
+
+  category_id: number = 0;
+  category_name: string = 'All Categories';
+  categories: Category[] = [];
 
   answer_count: number = 3;
-  answer_count_options: number[] = [2, 3, 4, 5, 6];
 
   constructor(private httpService: HttpService) {}
 
@@ -102,14 +100,14 @@ export class QuizComponent implements OnInit {
     this.nextQuestion();
   }
 
+  setCategory(option: any): void {
+    this.category_id = option.id;
+    this.category_name = option.name;
+    this.getCards();
+  }
+
   setAnswerCount(count: number): void {
     this.answer_count = count;
     this.nextQuestion();
-  }
-
-  setCategory(id: number, name: string): void {
-    this.category_id = id;
-    this.category_name = name;
-    this.getCards();
   }
 }

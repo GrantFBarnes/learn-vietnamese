@@ -26,6 +26,7 @@ import { FlashSettingsComponent } from './pages/flash/flash-settings/flash-setti
 
 import { QuizComponent } from './pages/quiz/quiz.component';
 import { AnswerComponent } from './pages/quiz/answer/answer.component';
+import { QuizSettingsComponent } from './pages/quiz/quiz-settings/quiz-settings.component';
 
 import { ManageComponent } from './pages/manage/manage.component';
 
@@ -65,6 +66,7 @@ import { EditFlashCategoriesComponent } from './pages/manage/edit-flash-categori
 
     QuizComponent,
     AnswerComponent,
+    QuizSettingsComponent,
 
     ManageComponent,
 
