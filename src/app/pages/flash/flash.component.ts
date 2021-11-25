@@ -39,12 +39,6 @@ export class FlashComponent implements OnInit {
     translations: true,
   };
   flipped: SectionsFlipped = JSON.parse(JSON.stringify(this.flip_reset));
-  flip_type: string = 'Show All';
-  flip_type_options: string[] = [
-    'Show All',
-    'Show Vietnamese Only',
-    'Show English Only',
-  ];
 
   constructor(private httpService: HttpService) {}
 
@@ -178,8 +172,8 @@ export class FlashComponent implements OnInit {
   }
 
   setFlipType(type: string): void {
-    const viet = type.includes('All') || type.includes('Vietnamese');
-    const eng = type.includes('All') || type.includes('English');
+    const viet = type == 'Both' || type == 'Vietnamese';
+    const eng = type == 'Both' || type == 'English';
     this.flip_reset = {
       word: viet,
       translation: eng,
@@ -187,7 +181,6 @@ export class FlashComponent implements OnInit {
       translations: eng,
     };
     this.flipped = JSON.parse(JSON.stringify(this.flip_reset));
-    this.flip_type = type;
   }
 
   setCategory(option: any): void {
@@ -198,7 +191,7 @@ export class FlashComponent implements OnInit {
 
   startAutoMode(): void {
     this.auto_mode = true;
-    this.setFlipType('Show All');
+    this.setFlipType('Both');
     this.nextCard();
   }
 

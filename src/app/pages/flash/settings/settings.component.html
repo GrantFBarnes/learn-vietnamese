@@ -1,5 +1,5 @@
 <div id="app-flash-settings" class="modal fade">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content bg-dark">
       <div class="modal-header">
         <h5 class="modal-title">Flash Card Settings</h5>
@@ -9,73 +9,98 @@
           data-bs-dismiss="modal"
         ></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body center">
         <div class="row mb-2">
-          <div class="col-12 center">
-            <div class="dropdown">
-              <button
-                class="btn btn-secondary dropdown-toggle"
-                type="button"
-                data-bs-toggle="dropdown"
-              >
-                {{ flip_type }}
-              </button>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <ng-container *ngFor="let option of flip_type_options">
-                  <li>
-                    <a
-                      [ngClass]="
-                        flip_type == option
-                          ? 'dropdown-item active'
-                          : 'dropdown-item'
-                      "
-                      (click)="setFlipType(option)"
-                    >
-                      {{ option }}
-                    </a>
-                  </li>
-                </ng-container>
-              </ul>
-            </div>
-          </div>
+          <h4>Flip Type</h4>
+          <p class="text-muted">Choose what cards are shown by default</p>
         </div>
         <div class="row mb-2">
-          <div class="col-12 center">
-            <div class="dropdown">
-              <button
-                class="btn btn-secondary dropdown-toggle"
-                type="button"
-                data-bs-toggle="dropdown"
-              >
-                {{ category_name }}
-              </button>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <ng-container *ngFor="let option of categories">
-                  <li>
-                    <a
-                      [ngClass]="
-                        category_id == option.id
-                          ? 'dropdown-item active'
-                          : 'dropdown-item'
-                      "
-                      (click)="setCategory(option)"
-                    >
-                      {{ option.name }}
-                    </a>
-                  </li>
-                </ng-container>
-              </ul>
-            </div>
+          <div class="btn-group" role="group">
+            <input
+              type="radio"
+              class="btn-check"
+              name="btnradio"
+              id="ft-btnradio1"
+              autocomplete="off"
+              checked
+              (click)="setFlipType('Both')"
+            />
+            <label class="btn btn-outline-primary" for="ft-btnradio1">
+              Both
+            </label>
+            <input
+              type="radio"
+              class="btn-check"
+              name="btnradio"
+              id="ft-btnradio2"
+              autocomplete="off"
+              (click)="setFlipType('Vietnamese')"
+            />
+            <label class="btn btn-outline-primary" for="ft-btnradio2">
+              Vietnamese
+            </label>
+            <input
+              type="radio"
+              class="btn-check"
+              name="btnradio"
+              id="ft-btnradio3"
+              autocomplete="off"
+              (click)="setFlipType('English')"
+            />
+            <label class="btn btn-outline-primary" for="ft-btnradio3">
+              English
+            </label>
           </div>
         </div>
+
+        <hr />
+
         <div class="row mb-2">
-          <div class="col-12 center">
+          <h4>Category</h4>
+          <p class="text-muted">Choose what category of cards to practice</p>
+        </div>
+        <div class="row mb-2">
+          <div class="dropdown">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+            >
+              {{ category_name }}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <ng-container *ngFor="let option of categories">
+                <li>
+                  <a
+                    [ngClass]="
+                      category_id == option.id
+                        ? 'dropdown-item active'
+                        : 'dropdown-item'
+                    "
+                    (click)="setCategory(option)"
+                  >
+                    {{ option.name }}
+                  </a>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="row mb-2">
+          <h4>Auto Mode</h4>
+          <p class="text-muted">Setup Auto Mode for streamlined learning</p>
+        </div>
+        <div class="row mb-2">
+          <div class="col-12">
             <button
               type="button"
               [ngClass]="auto_mode ? 'btn btn-danger' : 'btn btn-primary'"
               (click)="toggleAutoMode()"
             >
-              {{ auto_mode ? "Stop" : "Start" }} Auto Mode
+              {{ auto_mode ? "Stop" : "Start" }}
             </button>
           </div>
         </div>

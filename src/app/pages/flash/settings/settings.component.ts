@@ -7,8 +7,6 @@ import { Category } from '../../../shared/interfaces/category';
   styleUrls: ['./settings.component.css'],
 })
 export class SettingsComponent implements OnInit {
-  @Input() flip_type: string = '';
-  @Input() flip_type_options: string[] = [];
   @Output() setFlipTypeEvent = new EventEmitter<string>();
 
   @Input() category_id: number = 0;
