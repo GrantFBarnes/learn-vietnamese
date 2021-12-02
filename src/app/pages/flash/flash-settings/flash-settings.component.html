@@ -19,9 +19,8 @@
             <input
               type="radio"
               class="btn-check"
-              name="btnradio"
+              name="ft-btnradio"
               id="ft-btnradio1"
-              autocomplete="off"
               checked
               (click)="setFlipType('Both')"
             />
@@ -31,9 +30,8 @@
             <input
               type="radio"
               class="btn-check"
-              name="btnradio"
+              name="ft-btnradio"
               id="ft-btnradio2"
-              autocomplete="off"
               (click)="setFlipType('Vietnamese')"
             />
             <label class="btn btn-outline-primary" for="ft-btnradio2">
@@ -42,9 +40,8 @@
             <input
               type="radio"
               class="btn-check"
-              name="btnradio"
+              name="ft-btnradio"
               id="ft-btnradio3"
-              autocomplete="off"
               (click)="setFlipType('English')"
             />
             <label class="btn btn-outline-primary" for="ft-btnradio3">
@@ -110,7 +107,6 @@
               <input
                 type="checkbox"
                 class="btn-check"
-                autocomplete="off"
                 [(ngModel)]="this.auto_play"
               />
               <label class="btn btn-outline-primary" (click)="toggleAutoPlay()">
@@ -123,9 +119,8 @@
               <input
                 type="radio"
                 class="btn-check"
-                name="btnradio"
+                name="an-btnradio"
                 id="an-btnradio1"
-                autocomplete="off"
                 (click)="setAutoNext('prev')"
               />
               <label class="btn btn-outline-primary" for="an-btnradio1">
@@ -134,9 +129,8 @@
               <input
                 type="radio"
                 class="btn-check"
-                name="btnradio"
+                name="an-btnradio"
                 id="an-btnradio2"
-                autocomplete="off"
                 (click)="setAutoNext('random')"
               />
               <label class="btn btn-outline-primary" for="an-btnradio2">
@@ -145,9 +139,8 @@
               <input
                 type="radio"
                 class="btn-check"
-                name="btnradio"
+                name="an-btnradio"
                 id="an-btnradio3"
-                autocomplete="off"
                 checked
                 (click)="setAutoNext('next')"
               />

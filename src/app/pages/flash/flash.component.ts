@@ -21,7 +21,7 @@ export class FlashComponent implements OnInit {
   loading: boolean = true;
 
   auto_mode: boolean = false;
-  auto_play: boolean = true;
+  auto_play: boolean = false;
   auto_next: string = 'next';
   timeout: any = null;
   timeout_seconds: number = 3;

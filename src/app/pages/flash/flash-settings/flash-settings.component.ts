@@ -15,7 +15,7 @@ export class FlashSettingsComponent implements OnInit {
   @Output() setCategoryEvent = new EventEmitter<any>();
 
   @Input() auto_mode: boolean = false;
-  @Input() auto_play: boolean = true;
+  @Input() auto_play: boolean = false;
   @Input() auto_next: string = 'next';
   @Input() timeout_seconds: number = 3;
   @Output() toggleAutoModeEvent = new EventEmitter<null>();

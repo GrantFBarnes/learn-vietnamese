@@ -8,7 +8,7 @@ import { Card } from '../../../shared/interfaces/card';
   styleUrls: ['./word.component.css'],
 })
 export class WordComponent implements OnInit {
-  @Input() auto_play: boolean = true;
+  @Input() auto_play: boolean = false;
   @Input() flipped: boolean = true;
   @Input() card: Card = { id: 0, word: '', translation: '' };
   @Output() showSectionEvent = new EventEmitter<string>();
