@@ -20,6 +20,14 @@ export class EditFlashCategoriesComponent implements OnInit {
   cards: Card[] = [];
   categories: Category[] = [];
 
+  sort_method: string = 'Alphabetical';
+  sort_methods: string[] = [
+    'Alphabetical',
+    'Alphabetical (reversed)',
+    'ID',
+    'ID (reversed)',
+  ];
+
   card_count: { [id: number]: number } = {};
   category_count: { [id: number]: number } = {};
 
@@ -28,15 +36,31 @@ export class EditFlashCategoriesComponent implements OnInit {
 
   constructor(private httpService: HttpService) {}
 
+  sortByTranslation(a: any, b: any): number {
+    const a_translation = a.translation.toLowerCase();
+    const b_translation = b.translation.toLowerCase();
+    if (a_translation < b_translation) return -1;
+    if (a_translation > b_translation) return 1;
+    return 0;
+  }
+
+  sortByName(a: any, b: any): number {
+    const a_name = a.name.toLowerCase();
+    const b_name = b.name.toLowerCase();
+    if (a_name < b_name) return -1;
+    if (a_name > b_name) return 1;
+    return 0;
+  }
+
+  sortByID(a: any, b: any): number {
+    if (a.id < b.id) return -1;
+    if (a.id > b.id) return 1;
+    return 0;
+  }
+
   getCards(): void {
     this.httpService.get('/api/dump/cards').subscribe((data: any) => {
-      data.sort((a: any, b: any) => {
-        const a_translation = a.translation.toLowerCase();
-        const b_translation = b.translation.toLowerCase();
-        if (a_translation < b_translation) return -1;
-        if (a_translation > b_translation) return 1;
-        return 0;
-      });
+      data.sort(this.sortByTranslation);
       this.cards = data;
       this.primary_list = data;
 
@@ -55,13 +79,7 @@ export class EditFlashCategoriesComponent implements OnInit {
 
   getCategories(): void {
     this.httpService.get('/api/dump/categories').subscribe((data: any) => {
-      data.sort((a: any, b: any) => {
-        const a_name = a.name.toLowerCase();
-        const b_name = b.name.toLowerCase();
-        if (a_name < b_name) return -1;
-        if (a_name > b_name) return 1;
-        return 0;
-      });
+      data.sort(this.sortByName);
       this.categories = data;
       this.secondary_list = data;
 
@@ -131,6 +149,28 @@ export class EditFlashCategoriesComponent implements OnInit {
       next: () => this.authorize(),
       error: () => (this.authorized = false),
     });
+  }
+
+  setSortMethod(method: string): void {
+    this.sort_method = method;
+    switch (method) {
+      case 'Alphabetical':
+      case 'Alphabetical (reversed)':
+        this.cards = this.cards.sort(this.sortByTranslation);
+        this.categories = this.categories.sort(this.sortByName);
+        break;
+      case 'ID':
+      case 'ID (reversed)':
+        this.cards = this.cards.sort(this.sortByID);
+        this.categories = this.categories.sort(this.sortByID);
+        break;
+      default:
+        break;
+    }
+    if (method.indexOf('reverse') >= 0) {
+      this.cards.reverse();
+      this.categories.reverse();
+    }
   }
 
   togglePrimary(): void {

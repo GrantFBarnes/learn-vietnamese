@@ -17,6 +17,35 @@
       </button>
     </div>
   </div>
+  <div class="row center mb-2">
+    <div class="col-12">
+      <div class="dropdown">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+        >
+          Sort By: {{ sort_method }}
+        </button>
+        <ul class="dropdown-menu dropdown-menu-dark">
+          <ng-container *ngFor="let option of sort_methods">
+            <li>
+              <a
+                [ngClass]="
+                  sort_method == option
+                    ? 'dropdown-item active'
+                    : 'dropdown-item'
+                "
+                (click)="setSortMethod(option)"
+              >
+                {{ option }}
+              </a>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+  </div>
   <div class="row mb-2">
     <div class="col-md-6 mb-2">
       <div class="card bg-dark">
@@ -25,10 +54,10 @@
             {{ primary_is_card ? "Flash Cards" : "Categories" }}
           </h3>
           <div class="row">
-            <div class="col-10 left">
+            <div class="col-6 left">
               {{ primary_is_card ? "Word" : "Category" }}
             </div>
-            <div class="col-2 right">
+            <div class="col-6 right">
               {{ primary_is_card ? "Categories" : "Cards" }}
             </div>
           </div>
@@ -67,10 +96,10 @@
             {{ primary_is_card ? "Categories" : "Flash Cards" }}
           </h3>
           <div class="row">
-            <div class="col-10 left">
+            <div class="col-6 left">
               {{ primary_is_card ? "Category" : "Word" }}
             </div>
-            <div class="col-2 right">
+            <div class="col-6 right">
               {{ primary_is_card ? "Cards" : "Categories" }}
             </div>
           </div>
