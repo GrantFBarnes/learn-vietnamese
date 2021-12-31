@@ -13,7 +13,17 @@
     <div class="col-md-6 mb-2">
       <div class="card bg-dark">
         <div class="card-body">
-          <p class="card-title">What does the following translate to?</p>
+          <div class="card-title row">
+            <div class="col-10 left">What does the following translate to?</div>
+            <div
+              class="col-2 right"
+              *ngIf="question_type === 'Vietnamese' && audio"
+            >
+              <button class="btn btn-sm btn-info" (click)="playAudio()">
+                <i class="bi bi-volume-up-fill"></i>
+              </button>
+            </div>
+          </div>
           <h1 class="card-text total-center">
             {{
               cards[correct_idx]

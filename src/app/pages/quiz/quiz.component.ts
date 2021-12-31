@@ -16,6 +16,8 @@ export class QuizComponent implements OnInit {
   correct_idx: number = 0;
   cards: Card[] = [];
 
+  audio: any;
+
   question_type: string = 'Vietnamese';
   question_type_selected: string = 'Vietnamese';
 
@@ -92,7 +94,26 @@ export class QuizComponent implements OnInit {
       .subscribe((data: any) => {
         this.cards = data;
         this.loading = false;
+
+        this.audio = null;
+        if (this.question_type === 'Vietnamese') {
+          this.httpService
+            .getAudio('/api/audio/card/' + this.cards[this.correct_idx].id)
+            .subscribe({
+              next: (blob: Blob) => {
+                const audio = new Audio(URL.createObjectURL(blob));
+                audio.oncanplay = () => {
+                  this.audio = audio;
+                };
+              },
+              error: () => {},
+            });
+        }
       });
+  }
+
+  playAudio(): void {
+    if (this.audio) this.audio.play();
   }
 
   setQuestionType(type: string): void {
