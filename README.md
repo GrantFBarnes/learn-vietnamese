@@ -1,28 +1,53 @@
 # Learn Vietnamese
 
-This is NodeJS and Angular website to help learn and practice the Vietnamese language.
+This is a website used to help learn and practice the Vietnamese language.
 
-## Environment Variables
+## Technology
 
-You will need to set the following environment variables
+This website has a Node.js backend with an Angular frontend.
+
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+## Prerequisites
+
+You will need to install [Node.js](https://nodejs.org/en/download/) on your local machine.
+
+You will first need to install all required node modules
 
 ```
-JWT_SECRET // secret to encrypt tokens
-GFB_EDIT_SECRET // secret to allow edit access
-GFB_HOSTING_ENV // prod or something else
-MYSQL_TU_PASSWORD // MySQL DB trusted user password
+npm i
 ```
 
-_Note that these can change to what ever values desired for deployment._
+Then you will need to build
 
-## Development server
+```
+npm run build
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+This is the same as running `ng build`. You can add the `--prod` flag for a production build.
 
-## Build
+## Backend
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+The backend server for this site is now in the [home-page](https://github.com/GrantFBarnes/home-page) repository.
 
-## Deploy
+Have both repositories cloned in the same directory on your system, and then you can run
 
-Run `node backend/server.js` to host the backend and display the static UI files generated from the production build.
+```
+node ../home-page/backend/server.js
+```
+
+Instructions to host in production can be found in the other `home-page` repository.
+
+## Frontend
+
+If UI development is planned, then in a new session (keep server running) start up the UI. This will auto refresh the page for each save made in a UI file.
+
+```
+npm run start
+```
+
+This is the same as running `ng serve`.
+
+Open the page in your browser http://localhost:8080/, or if doing UI development use http://localhost:4200

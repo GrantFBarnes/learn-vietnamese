@@ -1,7 +1,7 @@
 const express = require("express");
 
 const audio = require("./audio.js");
-const authentication = require("./authentication.js");
+const authentication = require("../../home-page/backend/authentication.js");
 const main = require("./main.js");
 
 const router = express.Router();

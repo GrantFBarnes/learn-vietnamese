@@ -26,7 +26,6 @@ const routes: Routes = [
     component: EditFlashCategoriesComponent,
   },
   { path: 'vietnamese', redirectTo: '/vietnamese/home', pathMatch: 'full' },
-  { path: '', redirectTo: '/vietnamese/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];
 
