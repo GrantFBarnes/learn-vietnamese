@@ -20,16 +20,18 @@ export class WordComponent implements OnInit {
 
   ngOnChanges(): void {
     this.audio = null;
-    this.httpService.getAudio('/api/audio/card/' + this.card.id).subscribe({
-      next: (blob: Blob) => {
-        const audio = new Audio(URL.createObjectURL(blob));
-        audio.oncanplay = () => {
-          this.audio = audio;
-          if (this.auto_play && this.flipped) audio.play();
-        };
-      },
-      error: () => {},
-    });
+    this.httpService
+      .getAudio('/api/vietnamese/audio/card/' + this.card.id)
+      .subscribe({
+        next: (blob: Blob) => {
+          const audio = new Audio(URL.createObjectURL(blob));
+          audio.oncanplay = () => {
+            this.audio = audio;
+            if (this.auto_play && this.flipped) audio.play();
+          };
+        },
+        error: () => {},
+      });
   }
 
   playAudio(): void {

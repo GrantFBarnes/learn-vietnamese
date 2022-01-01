@@ -46,10 +46,12 @@ export class FlashComponent implements OnInit {
   constructor(private httpService: HttpService) {}
 
   ngOnInit(): void {
-    this.httpService.get('/api/categories').subscribe((data: any) => {
-      this.categories = data;
-      this.categories.unshift({ id: 0, name: 'All Categories' });
-    });
+    this.httpService
+      .get('/api/vietnamese/categories')
+      .subscribe((data: any) => {
+        this.categories = data;
+        this.categories.unshift({ id: 0, name: 'All Categories' });
+      });
 
     this.getCards();
 
@@ -89,15 +91,17 @@ export class FlashComponent implements OnInit {
     this.loading = true;
     const id = this.card_ids[this.card_idx];
     if (id) {
-      this.httpService.get('/api/card/' + id).subscribe((card: any) => {
-        this.card = card;
-        this.httpService
-          .get('/api/examples/' + id)
-          .subscribe((examples: any) => {
-            this.examples = examples;
-            this.loading = false;
-          });
-      });
+      this.httpService
+        .get('/api/vietnamese/card/' + id)
+        .subscribe((card: any) => {
+          this.card = card;
+          this.httpService
+            .get('/api/vietnamese/examples/' + id)
+            .subscribe((examples: any) => {
+              this.examples = examples;
+              this.loading = false;
+            });
+        });
     } else {
       this.card = { id: 0, word: '', translation: '' };
       this.examples = [];
@@ -127,7 +131,7 @@ export class FlashComponent implements OnInit {
     this.loading = true;
     this.card_idx = 0;
     this.httpService
-      .get('/api/cards/category/' + this.category_id)
+      .get('/api/vietnamese/cards/category/' + this.category_id)
       .subscribe((data: any) => {
         this.card_ids = data;
         this.onChange();

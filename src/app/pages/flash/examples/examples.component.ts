@@ -17,27 +17,31 @@ export class ExamplesComponent implements OnInit {
   constructor(private httpService: HttpService) {}
 
   ngOnInit(): void {
-    this.httpService.get('/api/audio/examples').subscribe((data: any) => {
-      this.example_audio_files = data;
+    this.httpService
+      .get('/api/vietnamese/audio/examples')
+      .subscribe((data: any) => {
+        this.example_audio_files = data;
 
-      if (this.example_audio_files.length) {
-        const id = this.example_audio_files[0];
-        this.httpService.getAudio('/api/audio/example/' + id).subscribe({
-          next: (blob: Blob) => {
-            const audio = new Audio(URL.createObjectURL(blob));
-            audio.oncanplay = () => {
-              this.can_play = true;
-            };
-          },
-          error: () => {},
-        });
-      }
-    });
+        if (this.example_audio_files.length) {
+          const id = this.example_audio_files[0];
+          this.httpService
+            .getAudio('/api/vietnamese/audio/example/' + id)
+            .subscribe({
+              next: (blob: Blob) => {
+                const audio = new Audio(URL.createObjectURL(blob));
+                audio.oncanplay = () => {
+                  this.can_play = true;
+                };
+              },
+              error: () => {},
+            });
+        }
+      });
   }
 
   playAudio(id: number): void {
     if (!this.can_play) return;
-    this.httpService.getAudio('/api/audio/example/' + id).subscribe({
+    this.httpService.getAudio('/api/vietnamese/audio/example/' + id).subscribe({
       next: (blob: Blob) => {
         const audio = new Audio(URL.createObjectURL(blob));
         audio.oncanplay = () => {

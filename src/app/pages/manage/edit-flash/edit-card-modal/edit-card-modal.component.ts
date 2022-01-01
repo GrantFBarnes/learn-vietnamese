@@ -28,16 +28,18 @@ export class EditCardModalComponent implements OnInit {
   ngOnChanges() {
     // update card to have accurate audio
     this.audio = null;
-    this.httpService.getAudio('/api/audio/card/' + this.card.id).subscribe({
-      next: (blob: Blob) => {
-        const audio = new Audio(URL.createObjectURL(blob));
-        audio.oncanplay = () => {
-          this.audio = this.newAudio(blob);
-          this.cleanAudioURL();
-        };
-      },
-      error: () => {},
-    });
+    this.httpService
+      .getAudio('/api/vietnamese/audio/card/' + this.card.id)
+      .subscribe({
+        next: (blob: Blob) => {
+          const audio = new Audio(URL.createObjectURL(blob));
+          audio.oncanplay = () => {
+            this.audio = this.newAudio(blob);
+            this.cleanAudioURL();
+          };
+        },
+        error: () => {},
+      });
   }
 
   cleanAudioURL(): void {

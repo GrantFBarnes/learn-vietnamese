@@ -31,7 +31,7 @@ export class EditExampleModalComponent implements OnInit {
     // update example to have accurate audio
     this.audio = null;
     this.httpService
-      .getAudio('/api/audio/example/' + this.example.id)
+      .getAudio('/api/vietnamese/audio/example/' + this.example.id)
       .subscribe({
         next: (blob: Blob) => {
           const audio = new Audio(URL.createObjectURL(blob));

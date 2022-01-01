@@ -2,7 +2,6 @@ const express = require("express");
 
 const audio = require("./audio.js");
 const authentication = require("./authentication.js");
-const database = require("./database.js");
 const main = require("./main.js");
 
 const router = express.Router();
@@ -50,12 +49,12 @@ function returnPromiseResponse(response, promise) {
 // Generic
 
 // Heartbeat to make sure server is running
-router.get("/api/heartbeat", (request, response) => {
+router.get("/api/vietnamese/heartbeat", (request, response) => {
   returnSuccess(response);
 });
 
 // Get all data from table
-router.get("/api/dump/:table", (request, response) => {
+router.get("/api/vietnamese/dump/:table", (request, response) => {
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -67,7 +66,7 @@ router.get("/api/dump/:table", (request, response) => {
 // Authorization
 
 // Check if user is authenticated
-router.get("/api/authenticated", (request, response) => {
+router.get("/api/vietnamese/authenticated", (request, response) => {
   if (authentication.isAuthorized(request)) {
     returnSuccess(response);
   } else {
@@ -76,7 +75,7 @@ router.get("/api/authenticated", (request, response) => {
 });
 
 // Get edit token if body is correct
-router.post("/api/token", (request, response) => {
+router.post("/api/vietnamese/token", (request, response) => {
   if (authentication.requestToken(request.body)) {
     authentication.setTokenCookie(response);
     returnSuccess(response);
@@ -89,22 +88,22 @@ router.post("/api/token", (request, response) => {
 // Flash Cards
 
 // Get flash card by id
-router.get("/api/card/:id", (request, response) => {
+router.get("/api/vietnamese/card/:id", (request, response) => {
   returnPromiseResponse(response, main.getCard(request.params.id));
 });
 
 // Get flash card ids by category
-router.get("/api/cards/category/:id", (request, response) => {
+router.get("/api/vietnamese/cards/category/:id", (request, response) => {
   returnPromiseResponse(response, main.getCardIdsByCategory(request.params.id));
 });
 
 // Get flash cards in bulk
-router.post("/api/cards/bulk", (request, response) => {
+router.post("/api/vietnamese/cards/bulk", (request, response) => {
   returnPromiseResponse(response, main.getCardsInBulk(request.body));
 });
 
 // Update flash card with new values
-router.put("/api/card", (request, response) => {
+router.put("/api/vietnamese/card", (request, response) => {
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -113,7 +112,7 @@ router.put("/api/card", (request, response) => {
 });
 
 // Create new flash card
-router.post("/api/card", (request, response) => {
+router.post("/api/vietnamese/card", (request, response) => {
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -122,7 +121,7 @@ router.post("/api/card", (request, response) => {
 });
 
 // Delete flash card by id
-router.delete("/api/card/:id", (request, response) => {
+router.delete("/api/vietnamese/card/:id", (request, response) => {
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -134,7 +133,7 @@ router.delete("/api/card/:id", (request, response) => {
 // Card Audio Files
 
 // Get all card audio file ids
-router.get("/api/audio/cards", (request, response) => {
+router.get("/api/vietnamese/audio/cards", (request, response) => {
   returnResponse(response, {
     statusCode: 200,
     data: audio.getAudioIds("cards"),
@@ -142,7 +141,7 @@ router.get("/api/audio/cards", (request, response) => {
 });
 
 // Get audio recording by card id
-router.get("/api/audio/card/:id", (request, response) => {
+router.get("/api/vietnamese/audio/card/:id", (request, response) => {
   const file = audio.getAudio("cards", request.params.id);
   if (file) {
     response.sendFile(file);
@@ -152,7 +151,7 @@ router.get("/api/audio/card/:id", (request, response) => {
 });
 
 // Save card audio recording blob as a file
-router.post("/api/audio/card/:id", (request, response) => {
+router.post("/api/vietnamese/audio/card/:id", (request, response) => {
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -165,12 +164,12 @@ router.post("/api/audio/card/:id", (request, response) => {
 // Flash Card Examples
 
 // Get all examples by card id
-router.get("/api/examples/:id", (request, response) => {
+router.get("/api/vietnamese/examples/:id", (request, response) => {
   returnPromiseResponse(response, main.getCardExamples(request.params.id));
 });
 
 // Update example with new values
-router.put("/api/example", (request, response) => {
+router.put("/api/vietnamese/example", (request, response) => {
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -179,7 +178,7 @@ router.put("/api/example", (request, response) => {
 });
 
 // Create new example
-router.post("/api/example", (request, response) => {
+router.post("/api/vietnamese/example", (request, response) => {
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -188,7 +187,7 @@ router.post("/api/example", (request, response) => {
 });
 
 // Delete example by id
-router.delete("/api/example/:id", (request, response) => {
+router.delete("/api/vietnamese/example/:id", (request, response) => {
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -200,7 +199,7 @@ router.delete("/api/example/:id", (request, response) => {
 // Example Audio Files
 
 // Get all example audio file ids
-router.get("/api/audio/examples", (request, response) => {
+router.get("/api/vietnamese/audio/examples", (request, response) => {
   returnResponse(response, {
     statusCode: 200,
     data: audio.getAudioIds("examples"),
@@ -208,7 +207,7 @@ router.get("/api/audio/examples", (request, response) => {
 });
 
 // Get audio recording by example id
-router.get("/api/audio/example/:id", (request, response) => {
+router.get("/api/vietnamese/audio/example/:id", (request, response) => {
   const file = audio.getAudio("examples", request.params.id);
   if (file) {
     response.sendFile(file);
@@ -218,7 +217,7 @@ router.get("/api/audio/example/:id", (request, response) => {
 });
 
 // Save example audio recording blob as a file
-router.post("/api/audio/example/:id", (request, response) => {
+router.post("/api/vietnamese/audio/example/:id", (request, response) => {
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -231,17 +230,17 @@ router.post("/api/audio/example/:id", (request, response) => {
 // Categories
 
 // Get all categories
-router.get("/api/categories", (request, response) => {
+router.get("/api/vietnamese/categories", (request, response) => {
   returnPromiseResponse(response, main.getCategories());
 });
 
 // Get category by id
-router.get("/api/category/:id", (request, response) => {
+router.get("/api/vietnamese/category/:id", (request, response) => {
   returnPromiseResponse(response, main.getCategory(request.params.id));
 });
 
 // Update category with new values
-router.put("/api/category", (request, response) => {
+router.put("/api/vietnamese/category", (request, response) => {
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -250,7 +249,7 @@ router.put("/api/category", (request, response) => {
 });
 
 // Create new category
-router.post("/api/category", (request, response) => {
+router.post("/api/vietnamese/category", (request, response) => {
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -259,7 +258,7 @@ router.post("/api/category", (request, response) => {
 });
 
 // Delete category by id
-router.delete("/api/category/:id", (request, response) => {
+router.delete("/api/vietnamese/category/:id", (request, response) => {
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -271,7 +270,7 @@ router.delete("/api/category/:id", (request, response) => {
 // Flash Card Categories
 
 // Create new flash card category relationship
-router.post("/api/card-category", (request, response) => {
+router.post("/api/vietnamese/card-category", (request, response) => {
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;
@@ -280,7 +279,7 @@ router.post("/api/card-category", (request, response) => {
 });
 
 // Delete flash card category by id
-router.delete("/api/card-category/:id", (request, response) => {
+router.delete("/api/vietnamese/card-category/:id", (request, response) => {
   if (!authentication.isAuthorized(request)) {
     rejectUnauthorized(response);
     return;

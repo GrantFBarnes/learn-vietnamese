@@ -16,9 +16,11 @@ export class EditCategoriesComponent implements OnInit {
   constructor(private httpService: HttpService) {}
 
   getCategories(): void {
-    this.httpService.get('/api/dump/categories').subscribe((data: any) => {
-      this.categories = data;
-    });
+    this.httpService
+      .get('/api/vietnamese/dump/categories')
+      .subscribe((data: any) => {
+        this.categories = data;
+      });
   }
 
   authorize(): void {
@@ -36,7 +38,7 @@ export class EditCategoriesComponent implements OnInit {
       }
     }
 
-    this.httpService.get('/api/authenticated').subscribe({
+    this.httpService.get('/api/vietnamese/authenticated').subscribe({
       next: () => this.authorize(),
       error: () => (this.authorized = false),
     });
@@ -47,7 +49,7 @@ export class EditCategoriesComponent implements OnInit {
   }
 
   saveCategory(category: Category): void {
-    this.httpService.put('/api/category', category).subscribe({
+    this.httpService.put('/api/vietnamese/category', category).subscribe({
       next: () => this.authorize(),
       error: () => alert('Failed to save changes!'),
     });
@@ -57,7 +59,7 @@ export class EditCategoriesComponent implements OnInit {
     if (
       window.confirm('Are you sure you want to delete category ' + id + '?')
     ) {
-      this.httpService.delete('/api/category/' + id).subscribe({
+      this.httpService.delete('/api/vietnamese/category/' + id).subscribe({
         next: () => this.authorize(),
         error: () => alert('Failed to delete category!'),
       });
@@ -65,7 +67,7 @@ export class EditCategoriesComponent implements OnInit {
   }
 
   addCategory(category: Category): void {
-    this.httpService.post('/api/category', category).subscribe({
+    this.httpService.post('/api/vietnamese/category', category).subscribe({
       next: () => this.authorize(),
       error: () => alert('Failed to add category!'),
     });

@@ -32,7 +32,7 @@ export class QuizComponent implements OnInit {
   getCards(): void {
     this.loading = true;
     this.httpService
-      .get('/api/cards/category/' + this.category_id)
+      .get('/api/vietnamese/cards/category/' + this.category_id)
       .subscribe((data: any) => {
         this.all_card_ids = data;
         this.nextQuestion();
@@ -40,10 +40,12 @@ export class QuizComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.httpService.get('/api/categories').subscribe((data: any) => {
-      this.categories = data;
-      this.categories.unshift({ id: 0, name: 'All Categories' });
-    });
+    this.httpService
+      .get('/api/vietnamese/categories')
+      .subscribe((data: any) => {
+        this.categories = data;
+        this.categories.unshift({ id: 0, name: 'All Categories' });
+      });
 
     this.getCards();
 
@@ -90,7 +92,7 @@ export class QuizComponent implements OnInit {
     }
 
     this.httpService
-      .post('/api/cards/bulk', card_ids)
+      .post('/api/vietnamese/cards/bulk', card_ids)
       .subscribe((data: any) => {
         this.cards = data;
         this.loading = false;
@@ -98,7 +100,9 @@ export class QuizComponent implements OnInit {
         this.audio = null;
         if (this.question_type === 'Vietnamese') {
           this.httpService
-            .getAudio('/api/audio/card/' + this.cards[this.correct_idx].id)
+            .getAudio(
+              '/api/vietnamese/audio/card/' + this.cards[this.correct_idx].id
+            )
             .subscribe({
               next: (blob: Blob) => {
                 const audio = new Audio(URL.createObjectURL(blob));

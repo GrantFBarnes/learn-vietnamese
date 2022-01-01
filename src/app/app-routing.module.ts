@@ -13,16 +13,20 @@ import { EditFlashCategoriesComponent } from './pages/manage/edit-flash-categori
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'learn', component: LearnComponent },
-  { path: 'typing', component: TypingComponent },
-  { path: 'flash', component: FlashComponent },
-  { path: 'quiz', component: QuizComponent },
-  { path: 'manage', component: ManageComponent },
-  { path: 'manage/categories', component: EditCategoriesComponent },
-  { path: 'manage/flash', component: EditFlashComponent },
-  { path: 'manage/flash-categories', component: EditFlashCategoriesComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'vietnamese/home', component: HomeComponent },
+  { path: 'vietnamese/learn', component: LearnComponent },
+  { path: 'vietnamese/typing', component: TypingComponent },
+  { path: 'vietnamese/flash', component: FlashComponent },
+  { path: 'vietnamese/quiz', component: QuizComponent },
+  { path: 'vietnamese/manage', component: ManageComponent },
+  { path: 'vietnamese/manage/categories', component: EditCategoriesComponent },
+  { path: 'vietnamese/manage/flash', component: EditFlashComponent },
+  {
+    path: 'vietnamese/manage/flash-categories',
+    component: EditFlashCategoriesComponent,
+  },
+  { path: 'vietnamese', redirectTo: '/vietnamese/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/vietnamese/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];
 

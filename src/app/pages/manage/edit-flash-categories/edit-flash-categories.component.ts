@@ -59,46 +59,50 @@ export class EditFlashCategoriesComponent implements OnInit {
   }
 
   getCards(): void {
-    this.httpService.get('/api/dump/cards').subscribe((data: any) => {
-      data.sort(this.sortByTranslation);
-      this.cards = data;
-      this.primary_list = data;
+    this.httpService
+      .get('/api/vietnamese/dump/cards')
+      .subscribe((data: any) => {
+        data.sort(this.sortByTranslation);
+        this.cards = data;
+        this.primary_list = data;
 
-      for (let i in data) {
-        const row = data[i];
-        const card_id = row.id;
-        if (!this.card_count[card_id]) {
-          this.card_count[card_id] = 0;
+        for (let i in data) {
+          const row = data[i];
+          const card_id = row.id;
+          if (!this.card_count[card_id]) {
+            this.card_count[card_id] = 0;
+          }
+          if (!this.cards_categories[card_id]) {
+            this.cards_categories[card_id] = {};
+          }
         }
-        if (!this.cards_categories[card_id]) {
-          this.cards_categories[card_id] = {};
-        }
-      }
-    });
+      });
   }
 
   getCategories(): void {
-    this.httpService.get('/api/dump/categories').subscribe((data: any) => {
-      data.sort(this.sortByName);
-      this.categories = data;
-      this.secondary_list = data;
+    this.httpService
+      .get('/api/vietnamese/dump/categories')
+      .subscribe((data: any) => {
+        data.sort(this.sortByName);
+        this.categories = data;
+        this.secondary_list = data;
 
-      for (let i in data) {
-        const row = data[i];
-        const category_id = row.id;
-        if (!this.category_count[category_id]) {
-          this.category_count[category_id] = 0;
+        for (let i in data) {
+          const row = data[i];
+          const category_id = row.id;
+          if (!this.category_count[category_id]) {
+            this.category_count[category_id] = 0;
+          }
+          if (!this.categories_cards[category_id]) {
+            this.categories_cards[category_id] = {};
+          }
         }
-        if (!this.categories_cards[category_id]) {
-          this.categories_cards[category_id] = {};
-        }
-      }
-    });
+      });
   }
 
   getCardCategories(): void {
     this.httpService
-      .get('/api/dump/cards_categories')
+      .get('/api/vietnamese/dump/cards_categories')
       .subscribe((data: any) => {
         for (let i in data) {
           const row = data[i];
@@ -145,7 +149,7 @@ export class EditFlashCategoriesComponent implements OnInit {
       }
     }
 
-    this.httpService.get('/api/authenticated').subscribe({
+    this.httpService.get('/api/vietnamese/authenticated').subscribe({
       next: () => this.authorize(),
       error: () => (this.authorized = false),
     });
@@ -195,16 +199,18 @@ export class EditFlashCategoriesComponent implements OnInit {
     const db_id = this.primary_is_card
       ? this.cards_categories[this.primary_id][secondary_id]
       : this.categories_cards[this.primary_id][secondary_id];
-    this.httpService.delete('/api/card-category/' + db_id).subscribe({
-      next: () => {
-        if (this.primary_is_card) {
-          this.updateAfterDelete(this.primary_id, secondary_id);
-        } else {
-          this.updateAfterDelete(secondary_id, this.primary_id);
-        }
-      },
-      error: () => alert('Failed to delete category!'),
-    });
+    this.httpService
+      .delete('/api/vietnamese/card-category/' + db_id)
+      .subscribe({
+        next: () => {
+          if (this.primary_is_card) {
+            this.updateAfterDelete(this.primary_id, secondary_id);
+          } else {
+            this.updateAfterDelete(secondary_id, this.primary_id);
+          }
+        },
+        error: () => alert('Failed to delete category!'),
+      });
   }
 
   updateAfterAdd(card_id: number, category_id: number, db_id: number): void {
@@ -233,16 +239,18 @@ export class EditFlashCategoriesComponent implements OnInit {
     const card_category = this.primary_is_card
       ? { card: this.primary_id, category: secondary_id }
       : { card: secondary_id, category: this.primary_id };
-    this.httpService.post('/api/card-category', card_category).subscribe({
-      next: (res: any) => {
-        if (this.primary_is_card) {
-          this.updateAfterAdd(this.primary_id, secondary_id, res.insertId);
-        } else {
-          this.updateAfterAdd(secondary_id, this.primary_id, res.insertId);
-        }
-      },
-      error: () => alert('Failed to add category!'),
-    });
+    this.httpService
+      .post('/api/vietnamese/card-category', card_category)
+      .subscribe({
+        next: (res: any) => {
+          if (this.primary_is_card) {
+            this.updateAfterAdd(this.primary_id, secondary_id, res.insertId);
+          } else {
+            this.updateAfterAdd(secondary_id, this.primary_id, res.insertId);
+          }
+        },
+        error: () => alert('Failed to add category!'),
+      });
   }
 
   selectSecondary(secondary_id: number): void {
