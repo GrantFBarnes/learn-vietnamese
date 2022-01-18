@@ -99,7 +99,7 @@ export class EditFlashComponent implements OnInit {
       }
     }
 
-    this.httpService.get('/api/vietnamese/authenticated').subscribe({
+    this.httpService.get('/api/authenticated').subscribe({
       next: () => this.authorize(),
       error: () => (this.authorized = false),
     });

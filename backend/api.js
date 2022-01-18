@@ -48,11 +48,6 @@ function returnPromiseResponse(response, promise) {
 ////////////////////////////////////////////////////////////////////////////////
 // Generic
 
-// Heartbeat to make sure server is running
-router.get("/api/vietnamese/heartbeat", (request, response) => {
-  returnSuccess(response);
-});
-
 // Get all data from table
 router.get("/api/vietnamese/dump/:table", (request, response) => {
   if (!authentication.isAuthorized(request)) {
@@ -60,28 +55,6 @@ router.get("/api/vietnamese/dump/:table", (request, response) => {
     return;
   }
   returnPromiseResponse(response, main.getDataDump(request.params.table));
-});
-
-////////////////////////////////////////////////////////////////////////////////
-// Authorization
-
-// Check if user is authenticated
-router.get("/api/vietnamese/authenticated", (request, response) => {
-  if (authentication.isAuthorized(request)) {
-    returnSuccess(response);
-  } else {
-    rejectUnauthorized(response);
-  }
-});
-
-// Get edit token if body is correct
-router.post("/api/vietnamese/token", (request, response) => {
-  if (authentication.requestToken(request.body)) {
-    authentication.setTokenCookie(response);
-    returnSuccess(response);
-  } else {
-    rejectUnauthorized(response);
-  }
 });
 
 ////////////////////////////////////////////////////////////////////////////////

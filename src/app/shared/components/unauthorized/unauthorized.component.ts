@@ -17,7 +17,7 @@ export class UnauthorizedComponent implements OnInit {
 
   submit(): void {
     this.httpService
-      .post('/api/vietnamese/token', { edit_secret: this.edit_secret })
+      .post('/api/token', { edit_secret: this.edit_secret })
       .subscribe({
         next: () => this.authorizeEvent.emit(),
         error: () => alert('Access Denied'),
