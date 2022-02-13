@@ -1,6 +1,6 @@
 -- Run to create db
--- mysql -u grant -p < setup.sql
--- mysqldump -u grant learn_vietnamese > backup.sql
+-- mariadb -u grant -p < setup.sql
+-- mariadb-dump learn_vietnamese > backup.sql
 
 DROP DATABASE IF EXISTS learn_vietnamese;
 CREATE DATABASE learn_vietnamese;
