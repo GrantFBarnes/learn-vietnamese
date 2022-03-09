@@ -31,6 +31,7 @@ export class FlashComponent implements OnInit {
   categories: Category[] = [];
 
   card_ids: number[] = [];
+  random_card_ids: number[] = [];
   card_idx: number = 0;
   card: Card = { id: 0, word: '', translation: '' };
   examples: Example[] = [];
@@ -150,7 +151,12 @@ export class FlashComponent implements OnInit {
 
   randomCard(): void {
     if (!this.card_ids.length) return;
-    this.card_idx = Math.floor(Math.random() * this.card_ids.length);
+    if (!this.random_card_ids.length) {
+      this.random_card_ids = JSON.parse(JSON.stringify(this.card_ids));
+    }
+    const pos = Math.floor(Math.random() * this.random_card_ids.length);
+    this.card_idx = this.card_ids.indexOf(this.random_card_ids[pos]);
+    this.random_card_ids.splice(pos, 1);
     this.onChange();
   }
 
