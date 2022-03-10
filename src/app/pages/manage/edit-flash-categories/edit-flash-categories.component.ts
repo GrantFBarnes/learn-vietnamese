@@ -3,6 +3,8 @@ import { HttpService } from '../../../shared/services/http/http.service';
 import { Card } from '../../../shared/interfaces/card';
 import { Category } from '../../../shared/interfaces/category';
 
+import * as sort from 'src/app/shared/methods/sort';
+
 @Component({
   selector: 'app-edit-flash-categories',
   templateUrl: './edit-flash-categories.component.html',
@@ -36,33 +38,11 @@ export class EditFlashCategoriesComponent implements OnInit {
 
   constructor(private httpService: HttpService) {}
 
-  sortByTranslation(a: any, b: any): number {
-    const a_translation = a.translation.toLowerCase();
-    const b_translation = b.translation.toLowerCase();
-    if (a_translation < b_translation) return -1;
-    if (a_translation > b_translation) return 1;
-    return 0;
-  }
-
-  sortByName(a: any, b: any): number {
-    const a_name = a.name.toLowerCase();
-    const b_name = b.name.toLowerCase();
-    if (a_name < b_name) return -1;
-    if (a_name > b_name) return 1;
-    return 0;
-  }
-
-  sortByID(a: any, b: any): number {
-    if (a.id < b.id) return -1;
-    if (a.id > b.id) return 1;
-    return 0;
-  }
-
   getCards(): void {
     this.httpService
       .get('/api/vietnamese/dump/cards')
       .subscribe((data: any) => {
-        data.sort(this.sortByTranslation);
+        data.sort(sort.translation);
         this.cards = data;
         this.primary_list = data;
 
@@ -83,7 +63,7 @@ export class EditFlashCategoriesComponent implements OnInit {
     this.httpService
       .get('/api/vietnamese/dump/categories')
       .subscribe((data: any) => {
-        data.sort(this.sortByName);
+        data.sort(sort.name);
         this.categories = data;
         this.secondary_list = data;
 
@@ -160,13 +140,13 @@ export class EditFlashCategoriesComponent implements OnInit {
     switch (method) {
       case 'Alphabetical':
       case 'Alphabetical (reversed)':
-        this.cards = this.cards.sort(this.sortByTranslation);
-        this.categories = this.categories.sort(this.sortByName);
+        this.cards = this.cards.sort(sort.translation);
+        this.categories = this.categories.sort(sort.name);
         break;
       case 'ID':
       case 'ID (reversed)':
-        this.cards = this.cards.sort(this.sortByID);
-        this.categories = this.categories.sort(this.sortByID);
+        this.cards = this.cards.sort(sort.id);
+        this.categories = this.categories.sort(sort.id);
         break;
       default:
         break;

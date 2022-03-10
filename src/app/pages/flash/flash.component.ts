@@ -4,6 +4,8 @@ import { Card } from '../../shared/interfaces/card';
 import { Example } from '../../shared/interfaces/example';
 import { Category } from '../../shared/interfaces/category';
 
+import * as sort from 'src/app/shared/methods/sort';
+
 interface SectionsFlipped {
   word: boolean;
   translation: boolean;
@@ -51,6 +53,7 @@ export class FlashComponent implements OnInit {
       .get('/api/vietnamese/categories')
       .subscribe((data: any) => {
         this.categories = data;
+        this.categories.sort(sort.name);
         this.categories.unshift({ id: 0, name: 'All Categories' });
       });
 

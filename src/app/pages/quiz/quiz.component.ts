@@ -3,6 +3,8 @@ import { HttpService } from '../../shared/services/http/http.service';
 import { Card } from '../../shared/interfaces/card';
 import { Category } from '../../shared/interfaces/category';
 
+import * as sort from 'src/app/shared/methods/sort';
+
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
@@ -44,6 +46,7 @@ export class QuizComponent implements OnInit {
       .get('/api/vietnamese/categories')
       .subscribe((data: any) => {
         this.categories = data;
+        this.categories.sort(sort.name);
         this.categories.unshift({ id: 0, name: 'All Categories' });
       });
 
