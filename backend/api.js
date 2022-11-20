@@ -6,6 +6,8 @@ const main = require("./main.js");
 
 const router = express.Router();
 
+const managerCookieName = "gfb_manager_token";
+
 function returnSuccess(response) {
   response.writeHead(200, { "Content-Type": "application/json" });
   response.write(JSON.stringify({ status: "ok" }));
@@ -13,7 +15,7 @@ function returnSuccess(response) {
 }
 
 function rejectUnauthorized(response) {
-  authentication.removeTokenCookie(response);
+  authentication.removeAuthentication(response, managerCookieName);
   response.writeHead(401, { "Content-Type": "application/json" });
   response.write(JSON.stringify({ status: "unauthorized" }));
   response.end();
@@ -50,7 +52,7 @@ function returnPromiseResponse(response, promise) {
 
 // Get all data from table
 router.get("/api/vietnamese/dump/:table", (request, response) => {
-  if (!authentication.isAuthorized(request)) {
+  if (!authentication.getAuthentication(request, managerCookieName)) {
     rejectUnauthorized(response);
     return;
   }
@@ -77,7 +79,7 @@ router.post("/api/vietnamese/cards/bulk", (request, response) => {
 
 // Update flash card with new values
 router.put("/api/vietnamese/card", (request, response) => {
-  if (!authentication.isAuthorized(request)) {
+  if (!authentication.getAuthentication(request, managerCookieName)) {
     rejectUnauthorized(response);
     return;
   }
@@ -86,7 +88,7 @@ router.put("/api/vietnamese/card", (request, response) => {
 
 // Create new flash card
 router.post("/api/vietnamese/card", (request, response) => {
-  if (!authentication.isAuthorized(request)) {
+  if (!authentication.getAuthentication(request, managerCookieName)) {
     rejectUnauthorized(response);
     return;
   }
@@ -95,7 +97,7 @@ router.post("/api/vietnamese/card", (request, response) => {
 
 // Delete flash card by id
 router.delete("/api/vietnamese/card/:id", (request, response) => {
-  if (!authentication.isAuthorized(request)) {
+  if (!authentication.getAuthentication(request, managerCookieName)) {
     rejectUnauthorized(response);
     return;
   }
@@ -125,7 +127,7 @@ router.get("/api/vietnamese/audio/card/:id", (request, response) => {
 
 // Save card audio recording blob as a file
 router.post("/api/vietnamese/audio/card/:id", (request, response) => {
-  if (!authentication.isAuthorized(request)) {
+  if (!authentication.getAuthentication(request, managerCookieName)) {
     rejectUnauthorized(response);
     return;
   }
@@ -143,7 +145,7 @@ router.get("/api/vietnamese/examples/:id", (request, response) => {
 
 // Update example with new values
 router.put("/api/vietnamese/example", (request, response) => {
-  if (!authentication.isAuthorized(request)) {
+  if (!authentication.getAuthentication(request, managerCookieName)) {
     rejectUnauthorized(response);
     return;
   }
@@ -152,7 +154,7 @@ router.put("/api/vietnamese/example", (request, response) => {
 
 // Create new example
 router.post("/api/vietnamese/example", (request, response) => {
-  if (!authentication.isAuthorized(request)) {
+  if (!authentication.getAuthentication(request, managerCookieName)) {
     rejectUnauthorized(response);
     return;
   }
@@ -161,7 +163,7 @@ router.post("/api/vietnamese/example", (request, response) => {
 
 // Delete example by id
 router.delete("/api/vietnamese/example/:id", (request, response) => {
-  if (!authentication.isAuthorized(request)) {
+  if (!authentication.getAuthentication(request, managerCookieName)) {
     rejectUnauthorized(response);
     return;
   }
@@ -191,7 +193,7 @@ router.get("/api/vietnamese/audio/example/:id", (request, response) => {
 
 // Save example audio recording blob as a file
 router.post("/api/vietnamese/audio/example/:id", (request, response) => {
-  if (!authentication.isAuthorized(request)) {
+  if (!authentication.getAuthentication(request, managerCookieName)) {
     rejectUnauthorized(response);
     return;
   }
@@ -214,7 +216,7 @@ router.get("/api/vietnamese/category/:id", (request, response) => {
 
 // Update category with new values
 router.put("/api/vietnamese/category", (request, response) => {
-  if (!authentication.isAuthorized(request)) {
+  if (!authentication.getAuthentication(request, managerCookieName)) {
     rejectUnauthorized(response);
     return;
   }
@@ -223,7 +225,7 @@ router.put("/api/vietnamese/category", (request, response) => {
 
 // Create new category
 router.post("/api/vietnamese/category", (request, response) => {
-  if (!authentication.isAuthorized(request)) {
+  if (!authentication.getAuthentication(request, managerCookieName)) {
     rejectUnauthorized(response);
     return;
   }
@@ -232,7 +234,7 @@ router.post("/api/vietnamese/category", (request, response) => {
 
 // Delete category by id
 router.delete("/api/vietnamese/category/:id", (request, response) => {
-  if (!authentication.isAuthorized(request)) {
+  if (!authentication.getAuthentication(request, managerCookieName)) {
     rejectUnauthorized(response);
     return;
   }
@@ -244,7 +246,7 @@ router.delete("/api/vietnamese/category/:id", (request, response) => {
 
 // Create new flash card category relationship
 router.post("/api/vietnamese/card-category", (request, response) => {
-  if (!authentication.isAuthorized(request)) {
+  if (!authentication.getAuthentication(request, managerCookieName)) {
     rejectUnauthorized(response);
     return;
   }
@@ -253,7 +255,7 @@ router.post("/api/vietnamese/card-category", (request, response) => {
 
 // Delete flash card category by id
 router.delete("/api/vietnamese/card-category/:id", (request, response) => {
-  if (!authentication.isAuthorized(request)) {
+  if (!authentication.getAuthentication(request, managerCookieName)) {
     rejectUnauthorized(response);
     return;
   }
