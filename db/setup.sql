@@ -1,9 +1,7 @@
--- Run to create db
--- mariadb -u grant -p < setup.sql
--- mariadb-dump learn_vietnamese > backup.sql
-
 DROP DATABASE IF EXISTS learn_vietnamese;
-CREATE DATABASE learn_vietnamese;
+CREATE DATABASE learn_vietnamese
+  CHARACTER SET = 'utf8mb4'
+  COLLATE = 'utf8mb4_unicode_ci';
 USE learn_vietnamese;
 
 CREATE TABLE cards (
